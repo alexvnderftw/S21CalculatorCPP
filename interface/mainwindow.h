@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSignalMapper>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,8 +17,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void pushButtonToPrevious_clicked();
-    void pushButtonToNext_clicked();
+    void switchPage(QWidget* page);
+    void quit();
+//    void pushButtonToPrevious_clicked();
+//    void pushButtonToNext_clicked();
 
 private:
     Ui::MainWindow *ui;
