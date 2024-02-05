@@ -12,7 +12,7 @@ void Controller::setRadian() { calculator_.SetRadian(); }
 
 void Controller::setDegree() { calculator_.SetDegree(); }
 
-/* Call this after calculate */
+/* For valid response call it after at least one call of calculate */
 bool Controller::isSuccessful() {
   return calculator_.GetStatus() != calculator_.COMPLETED ? false : true;
 }

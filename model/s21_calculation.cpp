@@ -102,13 +102,6 @@ void Calculation::Parse() {
 
 void Calculation::Calculate() {
   double x1 = NAN, x2 = NAN;
-  // if (!output_queue_.empty()) {
-  //   if (output_queue_.front().type != NUM && output_queue_.front().type != X)
-  //   {
-  //     status_ = CALCULATE_ERROR;
-  //     return;
-  //   }
-  // }
   for (Token token : output_queue_) {
     if (token.type == NUM) {
       calc_stack_.push(token.number);
@@ -119,20 +112,7 @@ void Calculation::Calculate() {
         status_ = CALCULATE_ERROR;
         return;
       }
-      x1 = calc_stack_.top();
-      calc_stack_.pop();
-      if (trig_value_ == DEG) {
-        if (IsFunction(token.type) &&
-            GetFunctionType(token.type) == TRIGONOMICAL_STRAIGHT)
-          calc_stack_.push(GetUnaryCallback(token.type)(x1 * M_PI / 180.0));
-        else if (IsFunction(token.type) &&
-                 GetFunctionType(token.type) == TRIGONOMICAL_ARC)
-          calc_stack_.push(GetUnaryCallback(token.type)(x1) * 180.0 / M_PI);
-        else
-          calc_stack_.push(GetUnaryCallback(token.type)(x1));
-      } else
-        calc_stack_.push(GetUnaryCallback(token.type)(x1));
-
+      CalculateUnaryOrFunction(token.type);
     } else if (IsBinaryOperator(token.type)) {
       if (calc_stack_.empty()) {
         status_ = CALCULATE_ERROR;
@@ -158,6 +138,22 @@ void Calculation::Calculate() {
 }
 
 /* Misc */
+
+void Calculation::CalculateUnaryOrFunction(TokenType token_type) {
+  double x1 = calc_stack_.top();
+  calc_stack_.pop();
+  if (trig_value_ == DEG) {
+    if (IsFunction(token_type) &&
+        GetFunctionType(token_type) == TRIGONOMICAL_STRAIGHT)
+      calc_stack_.push(GetUnaryCallback(token_type)(x1 * M_PI / 180.0));
+    else if (IsFunction(token_type) &&
+             GetFunctionType(token_type) == TRIGONOMICAL_ARC)
+      calc_stack_.push(GetUnaryCallback(token_type)(x1) * 180.0 / M_PI);
+    else
+      calc_stack_.push(GetUnaryCallback(token_type)(x1));
+  } else
+    calc_stack_.push(GetUnaryCallback(token_type)(x1));
+}
 
 void Calculation::ParseToken() {
   bool parsed = false;
@@ -195,7 +191,6 @@ bool Calculation::CheckNumber(std::string::iterator input) {
     double number = 0.0;
     sscanf(&input[0], "%lf%n", &number, &shift);
     if (shift > 0 && prev_ != X && prev_ != NUM && prev_ != RIGHT_PAR) {
-      // if (prev_ == NUM || prev_ == X) status_ = PARSE_ERROR;
       output_queue_.push_back(Token{NUM, number});
       prev_ = NUM;
       iter_ += shift;
@@ -207,15 +202,6 @@ bool Calculation::CheckNumber(std::string::iterator input) {
 
 bool Calculation::CheckX(std::string::iterator input) {
   if (*input == 'x' && prev_ != X && prev_ != RIGHT_PAR) {
-    /* if (prev_ == NUM && space_parsed_ == false) {
-      while (!stack_.empty() && IsBinaryOperator(stack_.top()) &&
-             GetPriority(stack_.top()) >= GetPriority(MULT)) {
-        output_queue_.push_back(Token{stack_.top(), NAN});
-        stack_.pop();
-      }
-      stack_.push(MULT);
-    } else if (prev_ == NUM || prev_ == X)
-      status_ = PARSE_ERROR; */
     output_queue_.push_back(Token{X, NAN});
     prev_ = X;
     iter_++;
@@ -375,6 +361,7 @@ void Calculation::TrimSpaces(std::string& str) {
   }
 }
 
+/* Replace all commas in the string with dots. */
 void Calculation::CommaToDot(std::string& str) {
   std::string::iterator iter = str.begin();
   for (iter = str.begin(); iter != str.end(); iter++) {

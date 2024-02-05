@@ -2,10 +2,6 @@
 
 TEST(CalculationSuite, RegularValues) {
   s21::Calculation instance;
-
-  // instance.SetExpression("2 + 2");
-  // std::cout << instance.GetStatus() << std::endl;
-  // EXPECT_EQ(instance.GetStatus(), PARSE_ERROR);
   EXPECT_NEAR(instance.GetResult("0"), 0.0, EPS);
   EXPECT_EQ(instance.GetStatus(), s21::Calculation::COMPLETED);
   EXPECT_EQ(instance.GetExpression(), "0");
@@ -41,7 +37,6 @@ TEST(CalculationSuite, RegularValues) {
   EXPECT_NEAR(instance.GetResult("tan(2.8) + 2.9"), 2.544470168348824, EPS);
   EXPECT_NEAR(instance.GetResult("(2.8) + 2.9"), 5.7, EPS);
   EXPECT_NEAR(instance.GetResult("2.8 + .9"), 3.7, EPS);
-  //  EXPECT_NEAR(instance.GetResult(""), , EPS);
 }
 
 TEST(CalculationSuite, ErrorValues) {
