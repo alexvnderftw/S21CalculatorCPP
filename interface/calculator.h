@@ -44,7 +44,7 @@ private:
     double min_x = 0.0, max_x = 0.0,
         min_y = 0.0, max_y = 0.0;
     int size;
-    QVector<double> x, y;
+    QVector<double> x{NAN}, y{NAN};
 
 
     bool hasDot(const QString str);

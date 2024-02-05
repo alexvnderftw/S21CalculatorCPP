@@ -1,19 +1,10 @@
 #include "calculator.h"
 #include "ui_calculator.h"
 
-/* 1. Convert number up to 7 digits. (done)
-    2. Accelerate plotting.
- */
-
 Calculator::Calculator(QWidget *parent)
     : QWidget(parent), ui(new Ui::Calculator) {
     ui->setupUi(this);
     ctrl.setRadian();
-    //ui->widgetPlot->setOpenGl(true);
-    //ui->widgetPlot->setBufferDevicePixelRatio(2.0);
-    //ui->widgetPlot->yAxis->setScaleRatio(ui->widgetPlot->xAxis, 1.0);
-    //ui->widgetPlot->setViewport(rect());
-    //ui->widgetPlot->setSurfaceType(QWindow::OpenGLSurface);
     initializeGraph();
 
     connect(ui->widgetPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeX(QCPRange)));
@@ -190,7 +181,7 @@ void Calculator::plotGraph() {
         x[i] = min_x + i * step;
         y[i] = ctrl.calculate(x[i]);
     }
-    ui->widgetPlot->graph(0)->setData(x, y);
+    ui->widgetPlot->graph(0)->setData(x, y, true);
     ui->widgetPlot->replot();
 }
 
@@ -210,6 +201,8 @@ void Calculator::initializeGraph() {
     size = ui->widgetPlot->width();
     x.resize(size);
     y.resize(size);
+    ui->widgetPlot->setAttribute(Qt::WA_OpaquePaintEvent);
+    ui->widgetPlot->setNoAntialiasingOnDrag(true);
     ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
     ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
     ui->widgetPlot->addGraph();
