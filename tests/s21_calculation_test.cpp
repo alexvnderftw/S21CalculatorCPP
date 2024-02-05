@@ -47,7 +47,7 @@ TEST(CalculationSuite, RegularValues) {
 TEST(CalculationSuite, ErrorValues) {
   s21::Calculation instance;
   EXPECT_EQ(std::isnan(instance.GetResult("")), std::isnan(NAN));
-  EXPECT_EQ(instance.GetStatus(), s21::Calculation::PARSE_ERROR);
+  EXPECT_EQ(instance.GetStatus(), s21::Calculation::EMPTY);
   EXPECT_EQ(std::isnan(instance.GetResult("    ")), std::isnan(NAN));
   EXPECT_EQ(std::isnan(instance.GetResult("1 ~2")), std::isnan(NAN));
   EXPECT_EQ(std::isnan(instance.GetResult("aa +  2  ")), std::isnan(NAN));
@@ -206,13 +206,6 @@ TEST(CalculationSuite, Others) {
   s21::Calculation instance;
   EXPECT_NEAR(instance.GetResult("2.8 + x + 2", 2.1), 6.9, EPS);
   EXPECT_NEAR(instance.GetResult("  2.8*1.9 + (-2)^ x", 9.0), -506.68, EPS);
-  // #ifdef __linux__
-  //   EXPECT_NEAR(instance.GetResult("  2.8*1.9 + (-2)^ x", 9999), -INFINITY,
-  //   EPS);
-  // #elif __APPLE__
-  //   EXPECT_NEAR(instance.GetResult("  2.8*1.9 + (-2)^ x", 9999), INFINITY,
-  //   EPS);
-  // #endif
   EXPECT_EQ(std::isinf(instance.GetResult("  2.8*1.9 + (-2)^ x", 9999)), true);
   EXPECT_EQ(std::isnan(instance.GetResult("  x*1.9 + sqrt(-2)", 1.0)),
             std::isnan(NAN));
@@ -235,4 +228,23 @@ TEST(CalculationSuite, Others) {
   EXPECT_NEAR(instance.GetResult("(((2.8*1.9)^x)) +-cos(sin(0.09012))", 7.2),
               168484.977910919, EPS);
   EXPECT_NEAR(instance.GetResult("2^2x", 7.2), 28.8, EPS);
+}
+
+TEST(CalculationSuite, UsingX) {
+  s21::Calculation instance;
+  EXPECT_NEAR(instance.GetResult("2.8 + x + 2", 2.1), 6.9, EPS);
+  EXPECT_NEAR(instance.GetResult(9.0), 13.8, EPS);
+  EXPECT_NEAR(instance.GetResult(0.000012), 4.800012, EPS);
+  EXPECT_NEAR(instance.GetResult("x*tan(x)*sin(x)^x", -3), 152.1640877, EPS);
+  EXPECT_NEAR(instance.GetResult(2.123), -2.448564523, EPS);
+}
+
+TEST(CalculationSuite, UsingComma) {
+  s21::Calculation instance;
+  EXPECT_NEAR(instance.GetResult("  2,8*1,9 + 5,19sqrt(2)"), 12.659768389, EPS);
+  EXPECT_NEAR(instance.GetResult("  2,8*1,9 + -2sqrt(2)", -2.7), 2.491572875,
+              EPS);
+  EXPECT_NEAR(instance.GetResult("2,8 + x + 2", "2,1"), 6.9, EPS);
+  EXPECT_NEAR(instance.GetResult(9.0), 13.8, EPS);
+  EXPECT_NEAR(instance.GetResult(0.000012), 4.800012, EPS);
 }
