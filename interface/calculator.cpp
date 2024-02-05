@@ -1,7 +1,7 @@
 #include "calculator.h"
 #include "ui_calculator.h"
 
-/* 1. Convert number up to 7 digits.
+/* 1. Convert number up to 7 digits. (done)
     2. Accelerate plotting.
  */
 
@@ -9,6 +9,11 @@ Calculator::Calculator(QWidget *parent)
     : QWidget(parent), ui(new Ui::Calculator) {
     ui->setupUi(this);
     ctrl.setRadian();
+    //ui->widgetPlot->setOpenGl(true);
+    //ui->widgetPlot->setBufferDevicePixelRatio(2.0);
+    //ui->widgetPlot->yAxis->setScaleRatio(ui->widgetPlot->xAxis, 1.0);
+    //ui->widgetPlot->setViewport(rect());
+    //ui->widgetPlot->setSurfaceType(QWindow::OpenGLSurface);
     initializeGraph();
 
     connect(ui->widgetPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeX(QCPRange)));
@@ -130,9 +135,43 @@ void Calculator::backspaceLineText() {
 
 QString Calculator::doubleToQString(double value) {
 //        std::ostringstream os;
-//        os << value;
+//    os << value << std::setprecision(8);
 //        return QString::fromLocal8Bit(os.str().c_str());
-    return QString::number(value, 'G', 8);
+    QString str = QString::number(value, 'g', 16);
+    if (hasDot(str) && !hasExp(str)) {
+        while (str.back() == '0') {
+            str.chop(1);
+        }
+        if (str.back() == '.') str.chop(1);
+    } else if (hasDot(str) && hasExp(str)) {
+        int exp_pos = findExp(str);
+        while (str[exp_pos - 1] == '0') {
+            str.remove(exp_pos - 1, 1);
+            exp_pos--;
+        }
+    }
+    return str;
+}
+
+int Calculator::findExp(const QString str) {
+    for (int i = 0; i < str.size(); ++i) {
+        if (str[i] == 'e' || str[i] == 'E') return i;
+    }
+    return -1;
+}
+
+bool Calculator::hasDot(const QString str) {
+    for (int i = 0; i < str.size(); ++i) {
+    if (str[i] == '.') return true;
+    }
+    return false;
+}
+
+bool Calculator::hasExp(const QString str) {
+    for (int i = 0; i < str.size(); ++i) {
+    if (str[i] == 'e' || str[i] == 'E') return true;
+    }
+    return false;
 }
 
 void Calculator::calculateResult() {

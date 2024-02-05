@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QLineEdit>
 
-#include <sstream>
+//#include <sstream>
+//#include <iomanip>
 
 #include "../controller/s21_controller.h"
 #include "qcustomplot.h"
@@ -45,6 +46,10 @@ private:
     int size;
     QVector<double> x, y;
 
+
+    bool hasDot(const QString str);
+    bool hasExp(const QString str);
+    int findExp(const QString str);
     void initializeGraph();
     bool isLimitsChanged();
     QString doubleToQString(double value);

@@ -2,7 +2,7 @@
 #define S21_CALCULATION_H
 
 // TO ADD:
-// 1. Changing comma to dot, and so in output
+// 1. Changing comma to dot, and so in output (need test)
 // 2. Calculate X
 
 #include <algorithm>
