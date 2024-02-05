@@ -174,7 +174,7 @@ void Calculator::initializeGraph() {
     ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
     ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
     ui->widgetPlot->addGraph();
-    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 1.5));
+    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 1));
     ui->widgetPlot->xAxis->setLabel("X axis");
     ui->widgetPlot->yAxis->setLabel("Y axis");
     setRange();
