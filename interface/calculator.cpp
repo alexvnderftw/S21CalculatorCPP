@@ -1,14 +1,29 @@
 #include "calculator.h"
 #include "ui_calculator.h"
 
+/* 1. Convert number up to 7 digits.
+    2. Accelerate plotting.
+ */
+
 Calculator::Calculator(QWidget *parent)
     : QWidget(parent), ui(new Ui::Calculator) {
     ui->setupUi(this);
-    plotGraph();
     ctrl.setRadian();
+    setRange();
 
-    connect(ui->widgetPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(xAxisChanged(QCPRange)));
-    connect(ui->widgetPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(yAxisChanged(QCPRange)));
+    size = ui->widgetPlot->width();
+    x.resize(size);
+    y.resize(size);
+    ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
+    ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
+    ui->widgetPlot->addGraph();
+    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 1.5));
+    ui->widgetPlot->xAxis->setLabel("X axis");
+    ui->widgetPlot->yAxis->setLabel("Y axis");
+    plotGraph();
+
+    connect(ui->widgetPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeX(QCPRange)));
+    connect(ui->widgetPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeY(QCPRange)));
 
     connect(ui->pushButtonDelete, SIGNAL(clicked()), this, SLOT(deleteLineText()));
     connect(ui->pushButtonBackspace, SIGNAL(clicked()), this, SLOT(backspaceLineText()));
@@ -17,6 +32,11 @@ Calculator::Calculator(QWidget *parent)
     connect(ui->lineEditX, SIGNAL(returnPressed()), this, SLOT(calculateResult()));
     connect(ui->radioButtonRad, SIGNAL(clicked()), this, SLOT(setRadian()));
     connect(ui->radioButtonDeg, SIGNAL(clicked()), this, SLOT(setDegree()));
+    connect(ui->pushButtonPlot, SIGNAL(clicked()), this, SLOT(replotClicked()));
+//    connect(ui->doubleSpinBoxMinX, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
+//    connect(ui->doubleSpinBoxMaxX, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
+//    connect(ui->doubleSpinBoxMinY, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
+//    connect(ui->doubleSpinBoxMaxY, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
 
     QSignalMapper* signalMapper = new QSignalMapper(this);
     connect(ui->pushButton0, SIGNAL(clicked()), signalMapper, SLOT(map()));
@@ -80,7 +100,6 @@ Calculator::Calculator(QWidget *parent)
     signalMapper->setMapping(ui->pushButtonAsin, appendLeftPar(ui->pushButtonAsin->text()));
     signalMapper->setMapping(ui->pushButtonAcos, appendLeftPar(ui->pushButtonAcos->text()));
     signalMapper->setMapping(ui->pushButtonAtan, appendLeftPar(ui->pushButtonAtan->text()));
-
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(inputLineText(QString)));
 }
 
@@ -121,9 +140,10 @@ void Calculator::backspaceLineText() {
 }
 
 QString Calculator::doubleToQString(double value) {
-        std::ostringstream os;
-        os << value;
-        return QString::fromLocal8Bit(os.str().c_str());
+//        std::ostringstream os;
+//        os << value;
+//        return QString::fromLocal8Bit(os.str().c_str());
+    return QString::number(value, 'G', 8);
 }
 
 void Calculator::calculateResult() {
@@ -133,29 +153,16 @@ void Calculator::calculateResult() {
       else if (ctrl.isSuccessful() == false)
         result = "Error";
     ui->lineEditResult->setText(result);
-    plotGraph();
+    replotClicked();
 }
 
 void Calculator::plotGraph() {
-    int size = ui->widgetPlot->width();
-    double min_x = ui->doubleSpinBoxMinX->value(), max_x = ui->doubleSpinBoxMaxX->value(),
-        min_y = ui->doubleSpinBoxMinY->value(), max_y = ui->doubleSpinBoxMaxY->value();
-    QVector<double> x(size), y(size);
     double step = (max_x - min_x) / size;
     for (int i = 0; i < size; ++i) {
         x[i] = min_x + i * step;
         y[i] = ctrl.calculate(x[i]);
     }
-    ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
-    ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
-    ui->widgetPlot->addGraph();
     ui->widgetPlot->graph(0)->setData(x, y);
-    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 2.0));
-    ui->widgetPlot->xAxis->setLabel("X axis");
-    ui->widgetPlot->yAxis->setLabel("Y axis");
-    ui->widgetPlot->graph(0)->setData(x, y);
-    ui->widgetPlot->xAxis->setRange(min_x, max_x);
-    ui->widgetPlot->yAxis->setRange(min_y, max_y);
     ui->widgetPlot->replot();
 }
 
@@ -171,11 +178,50 @@ void Calculator::setDegree() {
     ctrl.setDegree();
 }
 
-//void Calculator::mousePressEvent(QMouseEvent* move) {}
+void Calculator::setRange() {
+    min_x = ui->doubleSpinBoxMinX->value(), max_x = ui->doubleSpinBoxMaxX->value(),
+    min_y = ui->doubleSpinBoxMinY->value(), max_y = ui->doubleSpinBoxMaxY->value();
+    ui->widgetPlot->xAxis->setRange(min_x, max_x);
+    ui->widgetPlot->yAxis->setRange(min_y, max_y);
+}
 
-//void Calculator::mouseMoveEvent(QMouseEvent* move) {
+void Calculator::replotClicked() {
+    setRange();
+    plotGraph();
+}
 
-//}
-//void Calculator::wheelEvent(QWheelEvent* move) {
+void Calculator::changeRangeX(const QCPRange &range)
+{
+    QCPRange new_range = range;
 
-//}
+    if (new_range.lower < MIN_PLOT_RANGE) {
+        new_range.lower = MIN_PLOT_RANGE;
+        new_range.upper = MIN_PLOT_RANGE + new_range.size();
+    } else if (new_range.upper > MAX_PLOT_RANGE) {
+        new_range.upper = MAX_PLOT_RANGE;
+        new_range.lower = MAX_PLOT_RANGE - new_range.size();
+    }
+
+    ui->widgetPlot->xAxis->setRange(new_range);
+    min_x = new_range.lower;
+    max_x = new_range.upper;
+    plotGraph();
+}
+
+void Calculator::changeRangeY(const QCPRange &range)
+{
+    QCPRange new_range = range;
+
+    if (new_range.lower < MIN_PLOT_RANGE) {
+        new_range.lower = MIN_PLOT_RANGE;
+        new_range.upper = MIN_PLOT_RANGE + new_range.size();
+    } else if (new_range.upper > MAX_PLOT_RANGE) {
+        new_range.upper = MAX_PLOT_RANGE;
+        new_range.lower = MAX_PLOT_RANGE - new_range.size();
+    }
+
+    ui->widgetPlot->yAxis->setRange(new_range);
+    min_y = new_range.lower;
+    max_y = new_range.upper;
+    plotGraph();
+}

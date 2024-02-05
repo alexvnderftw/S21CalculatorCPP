@@ -6,9 +6,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+#ifdef __APPLE__
+    foreach (QLineEdit *line, findChildren<QLineEdit *>()) {
+        line->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    }
+    foreach (QDoubleSpinBox *box, findChildren<QDoubleSpinBox *>()) {
+        box->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    }
+#endif
+
     QSignalMapper* signalMapper = new QSignalMapper(this);
-    //connect(ui->pushButtonToCalculator, SIGNAL(clicked()), this, [this]{switchPage(ui->pageCalculator); });
-    //connect(ui->pushButtonToPrevious, SIGNAL(clicked()), this, SLOT(pushButtonToPrevious_clicked()));
     connect(ui->pushButtonMenu, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->pushButtonToCalculator, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->pushButtonToCredit, SIGNAL(clicked()), signalMapper, SLOT(map()));
@@ -30,7 +37,6 @@ void MainWindow::switchPage(QWidget *page) {
     ui->stackedWidget->setCurrentWidget(page);
     if (page == ui->pageCalculator) {
         ui->pageCalculator->setDefaultFocus();
-        //ui->pageCalculator->setDefaultButton();
     }
 }
 
@@ -38,37 +44,4 @@ void MainWindow::quit() {
     QApplication::quit();
 }
 
-//void MainWindow::pushButtonToPrevious_clicked()
-//{
-//    if (ui->stackedWidget->currentWidget() == ui->pageCalculator) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageDeposit);
-//        ui->pushButtonToPrevious->setText("Credit");
-//        ui->pushButtonToNext->setText("Calculator");
-//    } else if (ui->stackedWidget->currentWidget() == ui->pageCredit) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageCalculator);
-//        ui->pushButtonToPrevious->setText("Deposit");
-//        ui->pushButtonToNext->setText("Credit");
-//    } else if (ui->stackedWidget->currentWidget() == ui->pageDeposit) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageCredit);
-//        ui->pushButtonToPrevious->setText("Calculator");
-//        ui->pushButtonToNext->setText("Deposit");
-//    }
-//}
-
-//void MainWindow::pushButtonToNext_clicked()
-//{
-//    if (ui->stackedWidget->currentWidget() == ui->pageCalculator) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageCredit);
-//        ui->pushButtonToPrevious->setText("Calculator");
-//        ui->pushButtonToNext->setText("Deposit");
-//    } else if (ui->stackedWidget->currentWidget() == ui->pageCredit) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageDeposit);
-//        ui->pushButtonToPrevious->setText("Credit");
-//        ui->pushButtonToNext->setText("Calculator");
-//    } else if (ui->stackedWidget->currentWidget() == ui->pageDeposit) {
-//        ui->stackedWidget->setCurrentWidget(ui->pageCalculator);
-//        ui->pushButtonToPrevious->setText("Deposit");
-//        ui->pushButtonToNext->setText("Credit");
-//    }
-//}
 

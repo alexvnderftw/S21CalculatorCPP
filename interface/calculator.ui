@@ -34,7 +34,8 @@ background: none;
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton {
+      <string notr="true">
+QPushButton {
 color: black;
 border-style: outset;
 border-width: 1.5px;
@@ -57,15 +58,53 @@ border-color: rgba(130, 127, 255, 133);
 padding: 0 8px;
 background-color: rgba(218, 216, 255, 130);
 selection-background-color: rgba(130, 127, 255, 133);
-selection-color: rgba(130, 127, 255, 133);
+selection-color: black;
 }
 
-QLineEdit:focus {
-border: 2px solid #006080;
+QLineEdit::input:focus {
+/*border: 2px solid #006080;
+border-color: rgba(130, 127, 255, 133);*/
+background-color: rgba(130, 127, 255, 133);
+}
+
+QDoubleSpinBox {
+color: black;
+border: 2px solid;
+border-style: inset;
+border-radius: 5px;
 border-color: rgba(130, 127, 255, 133);
+background-color: rgba(218, 216, 255, 130);
 selection-background-color: rgba(130, 127, 255, 133);
-selection-color: rgba(130, 127, 255, 133);
-}</string>
+selection-color: black;
+}
+
+QLabel {
+color: black;
+font: 13pt &quot;Drexs&quot;;
+}
+
+QRadioButton {
+    color: black;
+    font: 13pt &quot;Drexs&quot;;
+}
+
+QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:       rgba(255, 48, 74, 143);
+    border:                 2px solid black;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid black;
+}
+
+</string>
      </property>
      <widget class="QLineEdit" name="lineEditExpression">
       <property name="geometry">
@@ -98,6 +137,9 @@ selection-color: rgba(130, 127, 255, 133);
       <property name="readOnly">
        <bool>true</bool>
       </property>
+      <property name="placeholderText">
+       <string>Result</string>
+      </property>
      </widget>
      <widget class="QLineEdit" name="lineEditX">
       <property name="geometry">
@@ -108,8 +150,14 @@ selection-color: rgba(130, 127, 255, 133);
         <height>31</height>
        </rect>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhNone</set>
+      </property>
+      <property name="inputMask">
+       <string/>
+      </property>
       <property name="placeholderText">
-       <string>Enter X</string>
+       <string>X</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton1">
@@ -961,7 +1009,7 @@ selection-color: rgba(130, 127, 255, 133);
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>340</y>
+        <y>330</y>
         <width>51</width>
         <height>20</height>
        </rect>
@@ -976,8 +1024,8 @@ selection-color: rgba(130, 127, 255, 133);
      <widget class="QRadioButton" name="radioButtonDeg">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>370</y>
+        <x>80</x>
+        <y>330</y>
         <width>51</width>
         <height>20</height>
        </rect>
@@ -989,14 +1037,23 @@ selection-color: rgba(130, 127, 255, 133);
      <widget class="QDoubleSpinBox" name="doubleSpinBoxMinX">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>340</y>
+        <x>30</x>
+        <y>360</y>
         <width>101</width>
-        <height>22</height>
+        <height>31</height>
        </rect>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="wrapping">
+       <bool>false</bool>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::PlusMinus</enum>
+      </property>
       <property name="decimals">
-       <number>2</number>
+       <number>7</number>
       </property>
       <property name="minimum">
        <double>-1000000.000000000000000</double>
@@ -1014,14 +1071,26 @@ selection-color: rgba(130, 127, 255, 133);
      <widget class="QDoubleSpinBox" name="doubleSpinBoxMinY">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>370</y>
+        <x>30</x>
+        <y>390</y>
         <width>101</width>
-        <height>22</height>
+        <height>31</height>
        </rect>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::PlusMinus</enum>
+      </property>
+      <property name="correctionMode">
+       <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+      </property>
       <property name="decimals">
-       <number>2</number>
+       <number>7</number>
       </property>
       <property name="minimum">
        <double>-1000000.000000000000000</double>
@@ -1039,17 +1108,23 @@ selection-color: rgba(130, 127, 255, 133);
      <widget class="QDoubleSpinBox" name="doubleSpinBoxMaxX">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>340</y>
+        <x>170</x>
+        <y>360</y>
         <width>101</width>
-        <height>22</height>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::PlusMinus</enum>
       </property>
       <property name="showGroupSeparator" stdset="0">
        <bool>false</bool>
       </property>
       <property name="decimals">
-       <number>2</number>
+       <number>7</number>
       </property>
       <property name="minimum">
        <double>-1000000.000000000000000</double>
@@ -1067,14 +1142,20 @@ selection-color: rgba(130, 127, 255, 133);
      <widget class="QDoubleSpinBox" name="doubleSpinBoxMaxY">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>370</y>
+        <x>170</x>
+        <y>390</y>
         <width>101</width>
-        <height>22</height>
+        <height>31</height>
        </rect>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::PlusMinus</enum>
+      </property>
       <property name="decimals">
-       <number>2</number>
+       <number>7</number>
       </property>
       <property name="minimum">
        <double>-1000000.000000000000000</double>
@@ -1087,6 +1168,67 @@ selection-color: rgba(130, 127, 255, 133);
       </property>
       <property name="value">
        <double>1.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonPlot">
+      <property name="geometry">
+       <rect>
+        <x>277</x>
+        <y>370</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="../misc/resource.qrc">
+        <normaloff>:/icons/start_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/start_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelX">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>360</y>
+        <width>21</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelY">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>390</y>
+        <width>21</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>

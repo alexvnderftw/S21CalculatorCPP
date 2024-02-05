@@ -9,6 +9,7 @@ void Calculation::SetX(const std::string x_str) {
   int shift = 0;
   std::string str = x_str;
   TrimSpaces(str);
+  CommaToDot(str);
   sscanf(str.c_str(), "%lf%n", &x, &shift);
   if (shift == 0 || shift != static_cast<int>(str.size()))
     SetX(NAN);
@@ -75,6 +76,7 @@ void Calculation::Parse() {
     status_ = EMPTY;
     return;
   }
+  CommaToDot(expr_);
   iter_ = expr_.begin();
   while (iter_ != expr_.end()) {
     if (*iter_ == ' ') {
@@ -370,6 +372,13 @@ void Calculation::TrimSpaces(std::string& str) {
 
   for (iter = str.begin(); iter != str.end(); iter++) {
     if (*iter == ' ' && *(iter + 1) == ' ') iter = str.erase(iter) - 1;
+  }
+}
+
+void Calculation::CommaToDot(std::string& str) {
+  std::string::iterator iter = str.begin();
+  for (iter = str.begin(); iter != str.end(); iter++) {
+    if (*iter == ',') *iter = '.';
   }
 }
 

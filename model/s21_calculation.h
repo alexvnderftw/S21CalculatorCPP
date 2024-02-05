@@ -109,6 +109,7 @@ class Calculation {
   void Calculate();
   void ParseToken();
   void TrimSpaces(std::string& str);
+  void CommaToDot(std::string& str);
 
   void CheckHiddenMultiplication();
   bool CheckNumber(std::string::iterator input);

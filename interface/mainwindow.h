@@ -19,8 +19,6 @@ public:
 private slots:
     void switchPage(QWidget* page);
     void quit();
-//    void pushButtonToPrevious_clicked();
-//    void pushButtonToNext_clicked();
 
 private:
     Ui::MainWindow *ui;
