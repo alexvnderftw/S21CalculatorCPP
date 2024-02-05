@@ -34,18 +34,19 @@ private slots:
     void setDegree();
     void setRadian();
     void setRange();
-    void replotClicked();
     void changeRangeX(const QCPRange &range);
     void changeRangeY(const QCPRange &range);
 
 private:
     Ui::Calculator *ui;
     s21::Controller ctrl;
-    double min_x, max_x,
-        min_y, max_y;
+    double min_x = 0.0, max_x = 0.0,
+        min_y = 0.0, max_y = 0.0;
     int size;
     QVector<double> x, y;
 
+    void initializeGraph();
+    bool isLimitsChanged();
     QString doubleToQString(double value);
     const QString appendLeftPar(const QString str);
 };

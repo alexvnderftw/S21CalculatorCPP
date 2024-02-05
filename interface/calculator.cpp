@@ -9,18 +9,7 @@ Calculator::Calculator(QWidget *parent)
     : QWidget(parent), ui(new Ui::Calculator) {
     ui->setupUi(this);
     ctrl.setRadian();
-    setRange();
-
-    size = ui->widgetPlot->width();
-    x.resize(size);
-    y.resize(size);
-    ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
-    ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
-    ui->widgetPlot->addGraph();
-    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 1.5));
-    ui->widgetPlot->xAxis->setLabel("X axis");
-    ui->widgetPlot->yAxis->setLabel("Y axis");
-    plotGraph();
+    initializeGraph();
 
     connect(ui->widgetPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeX(QCPRange)));
     connect(ui->widgetPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(changeRangeY(QCPRange)));
@@ -32,7 +21,7 @@ Calculator::Calculator(QWidget *parent)
     connect(ui->lineEditX, SIGNAL(returnPressed()), this, SLOT(calculateResult()));
     connect(ui->radioButtonRad, SIGNAL(clicked()), this, SLOT(setRadian()));
     connect(ui->radioButtonDeg, SIGNAL(clicked()), this, SLOT(setDegree()));
-    connect(ui->pushButtonPlot, SIGNAL(clicked()), this, SLOT(replotClicked()));
+    connect(ui->pushButtonPlot, SIGNAL(clicked()), this, SLOT(setRange()));
 //    connect(ui->doubleSpinBoxMinX, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
 //    connect(ui->doubleSpinBoxMaxX, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
 //    connect(ui->doubleSpinBoxMinY, SIGNAL(editingFinished()), this, SLOT(replotClicked()));
@@ -153,7 +142,7 @@ void Calculator::calculateResult() {
       else if (ctrl.isSuccessful() == false)
         result = "Error";
     ui->lineEditResult->setText(result);
-    replotClicked();
+    setRange();
 }
 
 void Calculator::plotGraph() {
@@ -178,22 +167,38 @@ void Calculator::setDegree() {
     ctrl.setDegree();
 }
 
+void Calculator::initializeGraph() {
+    size = ui->widgetPlot->width();
+    x.resize(size);
+    y.resize(size);
+    ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
+    ui->widgetPlot->setInteraction(QCP::iRangeZoom, true);
+    ui->widgetPlot->addGraph();
+    ui->widgetPlot->graph(0)->setPen(QPen(Qt::black, 1.5));
+    ui->widgetPlot->xAxis->setLabel("X axis");
+    ui->widgetPlot->yAxis->setLabel("Y axis");
+    setRange();
+}
+
 void Calculator::setRange() {
+    if (isLimitsChanged() == true) {
     min_x = ui->doubleSpinBoxMinX->value(), max_x = ui->doubleSpinBoxMaxX->value(),
     min_y = ui->doubleSpinBoxMinY->value(), max_y = ui->doubleSpinBoxMaxY->value();
     ui->widgetPlot->xAxis->setRange(min_x, max_x);
     ui->widgetPlot->yAxis->setRange(min_y, max_y);
+    } else {
+    plotGraph();
+    }
 }
 
-void Calculator::replotClicked() {
-    setRange();
-    plotGraph();
+bool Calculator::isLimitsChanged() {
+    return min_x != ui->doubleSpinBoxMinX->value() || max_x != ui->doubleSpinBoxMaxX->value()
+           || min_y != ui->doubleSpinBoxMinY->value() || max_y != ui->doubleSpinBoxMaxY->value();
 }
 
 void Calculator::changeRangeX(const QCPRange &range)
 {
     QCPRange new_range = range;
-
     if (new_range.lower < MIN_PLOT_RANGE) {
         new_range.lower = MIN_PLOT_RANGE;
         new_range.upper = MIN_PLOT_RANGE + new_range.size();
@@ -201,7 +206,6 @@ void Calculator::changeRangeX(const QCPRange &range)
         new_range.upper = MAX_PLOT_RANGE;
         new_range.lower = MAX_PLOT_RANGE - new_range.size();
     }
-
     ui->widgetPlot->xAxis->setRange(new_range);
     min_x = new_range.lower;
     max_x = new_range.upper;
@@ -211,7 +215,6 @@ void Calculator::changeRangeX(const QCPRange &range)
 void Calculator::changeRangeY(const QCPRange &range)
 {
     QCPRange new_range = range;
-
     if (new_range.lower < MIN_PLOT_RANGE) {
         new_range.lower = MIN_PLOT_RANGE;
         new_range.upper = MIN_PLOT_RANGE + new_range.size();
@@ -219,7 +222,6 @@ void Calculator::changeRangeY(const QCPRange &range)
         new_range.upper = MAX_PLOT_RANGE;
         new_range.lower = MAX_PLOT_RANGE - new_range.size();
     }
-
     ui->widgetPlot->yAxis->setRange(new_range);
     min_y = new_range.lower;
     max_y = new_range.upper;
