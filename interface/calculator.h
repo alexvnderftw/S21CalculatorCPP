@@ -4,8 +4,8 @@
 #include <QLineEdit>
 #include <QWidget>
 
-#include "../controller/s21_controller.h"
 #include "qcustomplot.h"
+#include "../controller/s21_controller.h"
 
 #define MIN_PLOT_RANGE -1000000.0
 #define MAX_PLOT_RANGE 1000000.0

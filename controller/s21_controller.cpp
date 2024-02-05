@@ -21,6 +21,4 @@ bool Controller::isEmpty() {
   return calculator_.GetStatus() == calculator_.EMPTY ? true : false;
 }
 
-// RAD DEG switching
-
 }  // namespace s21

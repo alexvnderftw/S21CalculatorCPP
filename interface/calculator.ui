@@ -1008,10 +1008,10 @@ QRadioButton::indicator:unchecked {
      <widget class="QRadioButton" name="radioButtonRad">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>180</x>
         <y>330</y>
         <width>51</width>
-        <height>20</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -1024,10 +1024,10 @@ QRadioButton::indicator:unchecked {
      <widget class="QRadioButton" name="radioButtonDeg">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>230</x>
         <y>330</y>
         <width>51</width>
-        <height>20</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
