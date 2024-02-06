@@ -7,9 +7,6 @@
 #include "qcustomplot.h"
 #include "../controller/s21_controller.h"
 
-#define MIN_PLOT_RANGE -1000000.0
-#define MAX_PLOT_RANGE 1000000.0
-
 namespace Ui {
 class Calculator;
 }
@@ -39,6 +36,10 @@ class Calculator : public QWidget {
  private:
   Ui::Calculator *ui;
   s21::Controller ctrl;
+
+  const double MIN_PLOT_RANGE = -1000000.0;
+  const double MAX_PLOT_RANGE = 1000000.0;
+
   double min_x = 0.0, max_x = 0.0, min_y = 0.0, max_y = 0.0;
   int size;
   QVector<double> x{NAN}, y{NAN};
@@ -53,7 +54,7 @@ class Calculator : public QWidget {
   bool hasExp(const QString str);
   int findExp(const QString str);
   bool isLimitsChanged();
-  const QString appendLeftPar(const QString str);
+  QString appendLeftPar(const QString str);
 };
 
 #endif  // CALCULATOR_H

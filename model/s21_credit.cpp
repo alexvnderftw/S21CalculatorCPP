@@ -8,6 +8,10 @@ void Credit::SetTime(int months) { time_ = months; }
 void Credit::SetRate(double rate) { rate_ = rate; }
 void Credit::SetCredit(double credit) { credit_ = credit; }
 
+Type Credit::GetType() { return payment_type_; }
+void Credit::GetTime(int months) { time_ = months; }
+void Credit::GetRate(double rate) { rate_ = rate; }
+void Credit::GetCredit(double credit) { credit_ = credit; }
 double Credit::GetSummaryPaid() { return sum_paid_; }
 double Credit::GetSummaryMainPart() { return sum_main_paid_; }
 double Credit::GetSummaryRatePart() { return sum_rate_paid_; }
@@ -47,15 +51,11 @@ bool Credit::Validate() {
   return ValidateCredit() && ValidateRate() && ValidateTime();
 }
 
-bool Credit::ValidateCredit() {
-  return credit_ >= 0.01 && credit_ < 1000000000 && !std::isnan(credit_);
-}
+bool Credit::ValidateCredit() { return credit_ > 0.0 && !std::isnan(credit_); }
 
-bool Credit::ValidateRate() {
-  return rate_ >= 0.0001 && rate_ < 10.0 && !std::isnan(rate_);
-}
+bool Credit::ValidateRate() { return rate_ > 0.0 && !std::isnan(rate_); }
 
-bool Credit::ValidateTime() { return time_ >= 1 && time_ <= 600; }
+bool Credit::ValidateTime() { return time_ > 0; }
 
 void Credit::CalculateAnnuity() {
   data_[0].month_ = start_month_;

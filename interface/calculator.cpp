@@ -288,7 +288,7 @@ bool Calculator::isLimitsChanged() {
 }
 
 /* Append '(' to function names in QLineEdit */
-const QString Calculator::appendLeftPar(const QString str) {
+QString Calculator::appendLeftPar(const QString str) {
   QString ret = str;
   ret.push_back('(');
   return ret;

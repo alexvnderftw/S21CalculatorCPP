@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CreditCalculator</class>
+ <widget class="QWidget" name="CreditCalculator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>741</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <widget class="QSpinBox" name="spinBoxTime">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>20</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>50</number>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxTimeType">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>20</y>
+      <width>103</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>years</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>years</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>months</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButtonFillCredit">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>20</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Calculate</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxCreditType">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>60</y>
+      <width>103</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>Annuity</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Annuity</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Differential</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QSpinBox" name="spinBoxCredit">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>1000000000</number>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+    </property>
+    <property name="value">
+     <number>100000</number>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBoxRate">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>60</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>0.010000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>1000.000000000000000</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+    </property>
+    <property name="value">
+     <double>10.000000000000000</double>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QTableWidget" name="tableWidgetCredit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>210</y>
+     <width>691</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="sizeAdjustPolicy">
+    <enum>QAbstractScrollArea::AdjustToContents</enum>
+   </property>
+   <column>
+    <property name="text">
+     <string>№</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Month</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Payment</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Main part</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Interest part</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Remainder</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

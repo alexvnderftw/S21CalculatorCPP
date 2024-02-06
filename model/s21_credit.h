@@ -49,12 +49,10 @@ class Credit {
   bool Calculate();
 
  private:
-  enum Type { ANNUITY, DIFFERENTIAL };
-
   int start_month_, start_year_;
-  double credit_;
-  int time_;
-  double rate_;
+  double credit_ = 0.0;
+  int time_ = 0;
+  double rate_ = 0;
   int payment_type_ = ANNUITY;
   double sum_paid_ = 0.0;
   double sum_main_paid_ = 0.0;

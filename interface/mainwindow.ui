@@ -46,7 +46,7 @@ border: none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageMenu">
        <property name="styleSheet">
@@ -67,7 +67,7 @@ border: none;
          </spacer>
         </item>
         <item row="3" column="1">
-         <widget class="QWidget" name="widget" native="true">
+         <widget class="QWidget" name="widgetMenu" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -208,12 +208,12 @@ border-style: inset;
        </layout>
       </widget>
       <widget class="Calculator" name="pageCalculator"/>
-      <widget class="QWidget" name="pageCredit"/>
+      <widget class="CreditCalculator" name="pageCredit"/>
       <widget class="QWidget" name="pageDeposit"/>
      </widget>
     </item>
     <item row="2" column="0" rowspan="3">
-     <widget class="QWidget" name="widget_2" native="true">
+     <widget class="QWidget" name="widgetTopMenu" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -355,6 +355,12 @@ border-radius: 4px;
    <class>Calculator</class>
    <extends>QWidget</extends>
    <header>calculator.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CreditCalculator</class>
+   <extends>QWidget</extends>
+   <header>creditcalculator.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

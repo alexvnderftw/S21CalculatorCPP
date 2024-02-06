@@ -30,7 +30,7 @@ background: none;
      <property name="minimumSize">
       <size>
        <width>335</width>
-       <height>0</height>
+       <height>426</height>
       </size>
      </property>
      <property name="styleSheet">
