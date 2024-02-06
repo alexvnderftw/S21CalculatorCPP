@@ -33,12 +33,18 @@ class Credit {
     double leftover_;
   };
 
+  enum Type { ANNUITY, DIFFERENTIAL };
+
   void SetAnnuity();
   void SetDifferential();
   void SetTime(int months);
   void SetRate(double rate);
   void SetCredit(double credit);
 
+  Type GetType() { return payment_type_; }
+  int GetTime() { return time_; }
+  double GetRate() { return rate_; }
+  double GetCredit() { return credit_; }
   double GetSummaryPaid();
   double GetSummaryMainPart();
   double GetSummaryRatePart();
@@ -53,7 +59,7 @@ class Credit {
   double credit_ = 0.0;
   int time_ = 0;
   double rate_ = 0;
-  int payment_type_ = ANNUITY;
+  Type payment_type_ = ANNUITY;
   double sum_paid_ = 0.0;
   double sum_main_paid_ = 0.0;
   double sum_rate_paid_ = 0.0;

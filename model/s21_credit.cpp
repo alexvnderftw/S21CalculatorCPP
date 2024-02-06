@@ -8,10 +8,10 @@ void Credit::SetTime(int months) { time_ = months; }
 void Credit::SetRate(double rate) { rate_ = rate; }
 void Credit::SetCredit(double credit) { credit_ = credit; }
 
-Type Credit::GetType() { return payment_type_; }
-void Credit::GetTime(int months) { time_ = months; }
-void Credit::GetRate(double rate) { rate_ = rate; }
-void Credit::GetCredit(double credit) { credit_ = credit; }
+Credit::Type Credit::GetType() { return payment_type_; }
+int Credit::GetTime() { return time_; }
+double Credit::GetRate() { return rate_; }
+double Credit::GetCredit() { return credit_; }
 double Credit::GetSummaryPaid() { return sum_paid_; }
 double Credit::GetSummaryMainPart() { return sum_main_paid_; }
 double Credit::GetSummaryRatePart() { return sum_rate_paid_; }
