@@ -13,8 +13,22 @@ class ControllerCredit {
   void setDifferential();
   void setData(double credit, double rate, int time);
 
+  bool isAnnuity();
+  bool isDifferential();
+
   bool calculate();
   bool calculate(double credit, double rate, int time);
+
+  double getSumPaid();
+  double getSumMainPart();
+  double getSumRatePart();
+  int getMonth(size_t pos);
+  int getYear(size_t pos);
+  double getPayment(size_t pos);
+  double getMainPart(size_t pos);
+  double getRatePart(size_t pos);
+  double getLeftover(size_t pos);
+  size_t getDataSize();
 
  private:
   Credit credit_;

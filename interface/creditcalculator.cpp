@@ -1,131 +1,149 @@
 #include "creditcalculator.h"
+
 #include "ui_creditcalculator.h"
 
-CreditCalculator::CreditCalculator(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CreditCalculator)
-{
-    ui->setupUi(this);
-    setLimits();
-    setData();
-    connectSignals();
+CreditCalculator::CreditCalculator(QWidget *parent)
+    : QWidget(parent), ui(new Ui::CreditCalculator) {
+  ui->setupUi(this);
+  ui->tableWidgetCredit->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  ui->tableWidgetCredit->horizontalHeader()->setSectionResizeMode(
+      QHeaderView::Stretch);
+  setLimits();
+  setData();
+  connectSignals();
 }
 
-CreditCalculator::~CreditCalculator()
-{
-    delete ui;
-}
+CreditCalculator::~CreditCalculator() { delete ui; }
 
-void CreditCalculator::calculate() {
-    setData();
-    ui->tableWidgetCredit->clearContents();
-    if (data.Calculate() == true) {
-        fillTable();
-    }
-}
-
-void CreditCalculator::fillTable() {
-    ui->tableWidgetCredit->setRowCount(data.GetDataSize());
-    for (size_t i = 0; i < data.GetDataSize(); ++i) {
-        //ui->tableWidgetCredit->insertRow(i);
-        ui->tableWidgetCredit->setItem(i, 0, new QTableWidgetItem(i + 1));
-        ui->tableWidgetCredit->setItem(i, 1, new QTableWidgetItem(getDateString(data[i].GetMonth(), data[i].GetYear())));
-        ui->tableWidgetCredit->setItem(i, 2, new QTableWidgetItem(QString::number(data[i].GetPayment(), 'f', 2)));
-        ui->tableWidgetCredit->setItem(i, 3, new QTableWidgetItem(QString::number(data[i].GetMainPart(), 'f', 2)));
-        ui->tableWidgetCredit->setItem(i, 4, new QTableWidgetItem(QString::number(data[i].GetRatePart(), 'f', 2)));
-        ui->tableWidgetCredit->setItem(i, 5, new QTableWidgetItem(QString::number(data[i].GetLeftover(), 'f', 2)));
-    }
+void CreditCalculator::setDefaultFocus() {
+  ui->pushButtonFillCredit->setFocus();
 }
 
 void CreditCalculator::connectSignals() {
-    connect(ui->pushButtonFillCredit, SIGNAL(clicked()), this,
-            SLOT(calculate()));
-    connect(ui->comboBoxTimeType, SIGNAL(currentIndexChanged(int)), this,
-            SLOT(limitTime(int)));
-    connect(ui->comboBoxCreditType, SIGNAL(currentIndexChanged(int)), this,
-            SLOT(setType(int)));
+  connect(ui->pushButtonFillCredit, SIGNAL(clicked()), this, SLOT(calculate()));
+  connect(ui->comboBoxTimeType, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(limitTime(int)));
+  connect(ui->comboBoxCreditType, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(setType(int)));
+  //    connect(ui->spinBoxCredit, SIGNAL(returnPressed()), this,
+  //            SLOT(calculate()));
+  //    connect(ui->spinBoxTime, SIGNAL(returnPressed()), this,
+  //            SLOT(calculate()));
+  //    connect(ui->doubleSpinBoxRate, SIGNAL(returnPressed()), this,
+  //            SLOT(calculate()));
+}
+
+void CreditCalculator::calculate() {
+  setData();
+  clearContent();
+  if (ctrl.calculate() == true) {
+    fillTable();
+    fillLines();
+  }
+}
+
+void CreditCalculator::fillTable() {
+  ui->tableWidgetCredit->setRowCount(ctrl.getDataSize() + 1);
+  for (size_t i = 0; i < ctrl.getDataSize(); ++i) {
+    ui->tableWidgetCredit->setItem(
+        i, 0,
+        new QTableWidgetItem(getDateString(ctrl.getMonth(i), ctrl.getYear(i))));
+    ui->tableWidgetCredit->setItem(
+        i, 1,
+        new QTableWidgetItem(QString::number(ctrl.getPayment(i), 'f', 2)));
+    ui->tableWidgetCredit->setItem(
+        i, 2,
+        new QTableWidgetItem(QString::number(ctrl.getMainPart(i), 'f', 2)));
+    ui->tableWidgetCredit->setItem(
+        i, 3,
+        new QTableWidgetItem(QString::number(ctrl.getRatePart(i), 'f', 2)));
+    ui->tableWidgetCredit->setItem(
+        i, 4,
+        new QTableWidgetItem(QString::number(ctrl.getLeftover(i), 'f', 2)));
+  }
+  ui->tableWidgetCredit->setItem(ctrl.getDataSize(), 0,
+                                 new QTableWidgetItem("Total:"));
+  ui->tableWidgetCredit->setItem(
+      ctrl.getDataSize(), 1,
+      new QTableWidgetItem(QString::number(ctrl.getSumPaid(), 'f', 2) +
+                           "\nTotal paid"));
+  ui->tableWidgetCredit->setItem(
+      ctrl.getDataSize(), 2,
+      new QTableWidgetItem(QString::number(ctrl.getSumMainPart(), 'f', 2) +
+                           "\nDebt paid"));
+  ui->tableWidgetCredit->setItem(
+      ctrl.getDataSize(), 3,
+      new QTableWidgetItem(QString::number(ctrl.getSumRatePart(), 'f', 2) +
+                           "\nInterest paid"));
+  // ui->tableWidgetCredit->resizeColumnsToContents();
+  ui->tableWidgetCredit->resizeRowsToContents();
+}
+
+void CreditCalculator::fillLines() {
+  if (ctrl.isAnnuity() == true)
+    ui->lineEditPayment->setText(QString::number(ctrl.getPayment(0), 'f', 2));
+  else if (ctrl.isDifferential() == true) {
+    ui->lineEditPayment->setText(QString::number(ctrl.getPayment(0), 'f', 2));
+    if (ctrl.getDataSize() > 1)
+      ui->lineEditPayment->insert(
+          "-" +
+          QString::number(ctrl.getPayment(ctrl.getDataSize() - 1), 'f', 2));
+  }
+  ui->lineEditInterest->setText(QString::number(ctrl.getSumRatePart(), 'f', 2));
+  ui->lineEditTotal->setText(
+      QString::number(ctrl.getSumRatePart() + ctrl.getSumMainPart(), 'f', 2));
+}
+
+void CreditCalculator::clearContent() {
+  ui->tableWidgetCredit->clearContents();
+  ui->lineEditPayment->clear();
+  ui->lineEditInterest->clear();
+  ui->lineEditTotal->clear();
 }
 
 void CreditCalculator::setLimits() {
-    ui->comboBoxCreditType->setCurrentIndex(0);
-    ui->spinBoxCredit->setMinimum(MIN_CREDIT);
-    ui->spinBoxCredit->setMaximum(MAX_CREDIT);
-    ui->doubleSpinBoxRate->setMinimum(MIN_RATE);
-    ui->doubleSpinBoxRate->setMaximum(MAX_RATE);
-    ui->spinBoxTime->setMinimum(MIN_TIME);
-    limitTime(ui->comboBoxCreditType->currentIndex());
+  ui->comboBoxCreditType->setCurrentIndex(0);
+  ui->spinBoxCredit->setMinimum(MIN_CREDIT);
+  ui->spinBoxCredit->setMaximum(MAX_CREDIT);
+  ui->doubleSpinBoxRate->setMinimum(MIN_RATE);
+  ui->doubleSpinBoxRate->setMaximum(MAX_RATE);
+  ui->spinBoxTime->setMinimum(MIN_TIME);
+  limitTime(ui->comboBoxCreditType->currentIndex());
 }
 
 void CreditCalculator::setData() {
-    data.SetCredit(ui->spinBoxCredit->value());
-    data.SetRate(ui->doubleSpinBoxRate->value() / 100.0);
-    setType(ui->comboBoxCreditType->currentIndex());
-    setTime();
+  ctrl.setData(ui->spinBoxCredit->value(),
+               ui->doubleSpinBoxRate->value() / 100.0, getTime());
+  setType(ui->comboBoxCreditType->currentIndex());
 }
 
-void CreditCalculator::setTime() {
-    if (ui->comboBoxTimeType->currentIndex() == 0) data.SetTime(ui->spinBoxTime->value() * 12);
-    else if (ui->comboBoxTimeType->currentIndex() == 1) data.SetTime(ui->spinBoxTime->value());
+int CreditCalculator::getTime() {
+  if (ui->comboBoxTimeType->currentIndex() == 0)
+    return ui->spinBoxTime->value() * 12;
+  else
+    return ui->spinBoxTime->value();
 }
 
 void CreditCalculator::setType(int index) {
-    if (index == 0) data.SetAnnuity();
-    else if (index == 1) data.SetDifferential();
+  if (index == 0)
+    ctrl.setAnnuity();
+  else if (index == 1)
+    ctrl.setDifferential();
 }
 
 /* Slots */
 
 void CreditCalculator::limitTime(int index) {
-    //if (index == 0 && ui->spinBoxTime->value() > MAX_TIME_Y) ui->spinBoxTime->setValue(MAX_TIME_Y);
-    if (index == 0) ui->spinBoxTime->setMaximum(MAX_TIME_Y);
-    else if (index == 1) ui->spinBoxTime->setMaximum(MAX_TIME_M);
+  // if (index == 0 && ui->spinBoxTime->value() > MAX_TIME_Y)
+  // ui->spinBoxTime->setValue(MAX_TIME_Y);
+  if (index == 0)
+    ui->spinBoxTime->setMaximum(MAX_TIME_Y);
+  else if (index == 1)
+    ui->spinBoxTime->setMaximum(MAX_TIME_M);
 }
 
 /* Misc */
 
 QString CreditCalculator::getDateString(int month, int year) {
-    return MONTHS[month - 1] + " " + QString::number(year);
+  return MONTHS[month - 1] + " " + QString::number(year);
 }
-
-//QString CreditCalculator::getMonth(int month) {
-//    switch (month) {
-//        case 1:
-//        return "January";
-//        break;
-//        case 2:
-//        return "January";
-//        break;
-//        case 3:
-//        return "January";
-//        break;
-//        case 4:
-//        return "January";
-//        break;
-//        case 5:
-//        return "January";
-//        break;
-//        case 6:
-//        return "January";
-//        break;
-//        case 7:
-//        return "January";
-//        break;
-//        case 8:
-//        return "January";
-//        break;
-//        case 9:
-//        return "January";
-//        break;
-//        case 10:
-//        return "January";
-//        break;
-//        case 11:
-//        return "January";
-//        break;
-//        case 12:
-//        return "January";
-//        break;
-//        default:
-//        return "";
-//    }
-//}

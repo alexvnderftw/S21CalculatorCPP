@@ -4,8 +4,8 @@
 #include <QLineEdit>
 #include <QWidget>
 
-#include "qcustomplot.h"
 #include "../controller/s21_controller.h"
+#include "qcustomplot.h"
 
 namespace Ui {
 class Calculator;

@@ -87,7 +87,6 @@ class Credit {
   void CalculateSummary();
   void RoundData();
   double BankRoundTwoDecimal(double number);
-  double BankRound(double number);
 };
 }  // namespace s21
 

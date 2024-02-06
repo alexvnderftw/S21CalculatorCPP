@@ -12,8 +12,16 @@ MainWindow::MainWindow(QWidget *parent)
   foreach (QDoubleSpinBox *box, findChildren<QDoubleSpinBox *>()) {
     box->setAttribute(Qt::WA_MacShowFocusRect, 0);
   }
+  foreach (QSpinBox *box, findChildren<QSpinBox *>()) {
+    box->setAttribute(Qt::WA_MacShowFocusRect, 0);
+  }
 #endif
+  connectSignals();
+}
 
+MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::connectSignals() {
   QSignalMapper *signalMapper = new QSignalMapper(this);
   connect(ui->pushButtonMenu, SIGNAL(clicked()), signalMapper, SLOT(map()));
   connect(ui->pushButtonToCalculator, SIGNAL(clicked()), signalMapper,
@@ -30,12 +38,12 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui->pushButtonExit, SIGNAL(clicked()), this, SLOT(quit()));
 }
 
-MainWindow::~MainWindow() { delete ui; }
-
 void MainWindow::switchPage(QWidget *page) {
   ui->stackedWidget->setCurrentWidget(page);
   if (page == ui->pageCalculator) {
     ui->pageCalculator->setDefaultFocus();
+  } else if (page == ui->pageCredit) {
+    ui->pageCredit->setDefaultFocus();
   }
 }
 

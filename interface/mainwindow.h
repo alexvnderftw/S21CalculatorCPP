@@ -23,6 +23,6 @@ class MainWindow : public QMainWindow {
 
  private:
   Ui::MainWindow *ui;
-
+  void connectSignals();
 };
 #endif  // MAINWINDOW_H
