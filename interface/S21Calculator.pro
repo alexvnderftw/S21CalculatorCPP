@@ -15,6 +15,7 @@ SOURCES += \
     ../controller/s21_controller.cpp \
     ../controller/s21_controller_credit.cpp \
     ../model/s21_calculation.cpp \
+    ../model/s21_common.cpp \
     ../model/s21_credit.cpp \
     calculator.cpp \
     creditcalculator.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     ../controller/s21_controller.h \
     ../controller/s21_controller_credit.h \
     ../model/s21_calculation.h \
+    ../model/s21_common.h \
     ../model/s21_credit.h \
     calculator.h \
     creditcalculator.h \

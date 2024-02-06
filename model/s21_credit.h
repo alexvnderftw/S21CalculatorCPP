@@ -1,8 +1,9 @@
 #ifndef S21_CREDIT_H
 #define S21_CREDIT_H
 
-#include <cmath>
 #include <vector>
+
+#include "s21_common.h"
 
 namespace s21 {
 class Credit {
