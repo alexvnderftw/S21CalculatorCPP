@@ -58,7 +58,7 @@ void CreditCalculator::setLimits() {
 
 void CreditCalculator::setData() {
     data.SetCredit(ui->spinBoxCredit->value());
-    data.SetRate(ui->doubleSpinBoxRate->value());
+    data.SetRate(ui->doubleSpinBoxRate->value() / 100.0);
     setType(ui->comboBoxCreditType->currentIndex());
     setTime();
 }

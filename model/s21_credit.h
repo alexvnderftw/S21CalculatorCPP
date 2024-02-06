@@ -41,10 +41,10 @@ class Credit {
   void SetRate(double rate);
   void SetCredit(double credit);
 
-  Type GetType() { return payment_type_; }
-  int GetTime() { return time_; }
-  double GetRate() { return rate_; }
-  double GetCredit() { return credit_; }
+  Type GetType();
+  int GetTime();
+  double GetRate();
+  double GetCredit();
   double GetSummaryPaid();
   double GetSummaryMainPart();
   double GetSummaryRatePart();
