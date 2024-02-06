@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "../model/s21_calculation.h"
+#include "../model/s21_credit.h"
 
 #define EPS 1e-07
 

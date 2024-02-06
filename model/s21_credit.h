@@ -40,11 +40,15 @@ class Credit {
   void SetTime(int months);
   void SetRate(double rate);
   void SetCredit(double credit);
+  void SetStartDate();
+  void SetStartDate(int month, int year);
 
   Type GetType();
   int GetTime();
   double GetRate();
   double GetCredit();
+  int GetStartMonth();
+  int GetStartYear();
   double GetSummaryPaid();
   double GetSummaryMainPart();
   double GetSummaryRatePart();
@@ -55,7 +59,13 @@ class Credit {
   bool Calculate();
 
  private:
-  int start_month_, start_year_;
+  const int MAX_TIME_ = 1000;
+  const double MAX_RATE_ = 10.0;
+  const double MAX_CREDIT_ = 100000000000.0;
+  const int MAX_YEAR_ = 2700;
+  const int MIN_YEAR_ = 1900;
+
+  int start_month_ = 0, start_year_ = 0;
   double credit_ = 0.0;
   int time_ = 0;
   double rate_ = 0;
@@ -70,11 +80,11 @@ class Credit {
   bool ValidateCredit();
   bool ValidateRate();
   bool ValidateTime();
+  bool ValidateStartDate();
   void CalculateAnnuity();
   void CalculateDifferential();
   void CalculateSummary();
   void RoundData();
-  void SetStartDate();
   double BankRoundTwoDecimal(double number);
   double BankRound(double number);
 };

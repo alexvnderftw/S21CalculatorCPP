@@ -3,20 +3,49 @@
 namespace s21 {
 
 void Credit::SetAnnuity() { payment_type_ = ANNUITY; }
+
 void Credit::SetDifferential() { payment_type_ = DIFFERENTIAL; }
+
 void Credit::SetTime(int months) { time_ = months; }
+
 void Credit::SetRate(double rate) { rate_ = rate; }
+
 void Credit::SetCredit(double credit) { credit_ = credit; }
 
+void Credit::SetStartDate(int month, int year) {
+  start_month_ = month;
+  start_year_ = year;
+}
+
+void Credit::SetStartDate() {
+  time_t t = std::time(NULL);
+  struct tm time_data = *localtime(&t);
+  start_month_ = time_data.tm_mon + 1;
+  start_year_ = time_data.tm_year + 1900;
+}
+
 Credit::Type Credit::GetType() { return payment_type_; }
+
 int Credit::GetTime() { return time_; }
+
 double Credit::GetRate() { return rate_; }
+
 double Credit::GetCredit() { return credit_; }
+
+int Credit::GetStartMonth() { return start_month_; }
+
+int Credit::GetStartYear() { return start_year_; }
+
 double Credit::GetSummaryPaid() { return sum_paid_; }
+
 double Credit::GetSummaryMainPart() { return sum_main_paid_; }
+
 double Credit::GetSummaryRatePart() { return sum_rate_paid_; }
+
 Credit::CreditMonth Credit::operator[](size_t pos) { return data_[pos]; }
+
 size_t Credit::GetDataSize() { return data_.size(); }
+
 std::vector<Credit::CreditMonth>::iterator Credit::GetData() {
   return data_.begin();
 }
@@ -27,8 +56,8 @@ If some data incorrect returns false. */
 bool Credit::Calculate() {
   if (Validate() == true) {
     Reset();
-    SetStartDate();
     data_.resize(time_);
+    data_.shrink_to_fit();
     if (payment_type_ == ANNUITY)
       CalculateAnnuity();
     else
@@ -48,14 +77,26 @@ void Credit::Reset() {
 }
 
 bool Credit::Validate() {
-  return ValidateCredit() && ValidateRate() && ValidateTime();
+  return ValidateCredit() && ValidateRate() && ValidateTime() &&
+         ValidateStartDate();
 }
 
-bool Credit::ValidateCredit() { return credit_ > 0.0 && !std::isnan(credit_); }
+bool Credit::ValidateCredit() {
+  return credit_ > 0.0 && credit_ <= MAX_CREDIT_ && !std::isnan(credit_) &&
+         !std::isinf(credit_);
+}
 
-bool Credit::ValidateRate() { return rate_ > 0.0 && !std::isnan(rate_); }
+bool Credit::ValidateRate() {
+  return rate_ > 0.0 && rate_ <= MAX_RATE_ && !std::isnan(rate_) &&
+         !std::isinf(rate_);
+}
 
-bool Credit::ValidateTime() { return time_ > 0; }
+bool Credit::ValidateTime() { return time_ > 0 && time_ <= MAX_TIME_; }
+
+bool Credit::ValidateStartDate() {
+  return start_month_ > 0 && start_month_ <= 12 && start_year_ >= MIN_YEAR_ &&
+         start_year_ <= MAX_YEAR_;
+}
 
 void Credit::CalculateAnnuity() {
   data_[0].month_ = start_month_;
@@ -129,13 +170,6 @@ void Credit::RoundData() {
   sum_paid_ = BankRoundTwoDecimal(sum_paid_);
   sum_main_paid_ = BankRoundTwoDecimal(sum_main_paid_);
   sum_rate_paid_ = BankRoundTwoDecimal(sum_rate_paid_);
-}
-
-void Credit::SetStartDate() {
-  time_t t = std::time(NULL);
-  struct tm time_data = *localtime(&t);
-  start_month_ = time_data.tm_mon + 1;
-  start_year_ = time_data.tm_year + 1900;
 }
 
 /* Bank rounding of number to number with two decimal digits. */
