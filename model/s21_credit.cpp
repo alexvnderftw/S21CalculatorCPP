@@ -19,7 +19,7 @@ void Credit::SetStartDate(int month, int year) {
 
 void Credit::SetStartDate() {
   time_t t = std::time(NULL);
-  struct tm time_data = *localtime(&t);
+  struct tm time_data = *std::localtime(&t);
   start_month_ = time_data.tm_mon + 1;
   start_year_ = time_data.tm_year + 1900;
 }
