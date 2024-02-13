@@ -14,11 +14,14 @@ RESOURCES = \
 SOURCES += \
     ../controller/s21_controller.cpp \
     ../controller/s21_controller_credit.cpp \
+    ../controller/s21_controller_deposit.cpp \
     ../model/s21_calculation.cpp \
     ../model/s21_common.cpp \
     ../model/s21_credit.cpp \
+    ../model/s21_deposit.cpp \
     calculator.cpp \
     creditcalculator.cpp \
+    depositcalculator.cpp \
     qcustomplot.cpp \
     main.cpp \
     mainwindow.cpp
@@ -26,17 +29,21 @@ SOURCES += \
 HEADERS += \
     ../controller/s21_controller.h \
     ../controller/s21_controller_credit.h \
+    ../controller/s21_controller_deposit.h \
     ../model/s21_calculation.h \
     ../model/s21_common.h \
     ../model/s21_credit.h \
+    ../model/s21_deposit.h \
     calculator.h \
     creditcalculator.h \
+    depositcalculator.h \
     qcustomplot.h \
     mainwindow.h
 
 FORMS += \
     calculator.ui \
     creditcalculator.ui \
+    depositcalculator.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -24,18 +24,36 @@ class Date {
   int getDay();
   int getMonth();
   int getYear();
-  int getDiff(const Date& first, const Date& second);
-  friend int operator-(const Date& first, const Date& second);
+  int subtract(const Date& sub) const;
+  int operator|(const Date& sub) const;
+  // friend int operator-(const Date& first, const Date& second);
   friend Date operator+(int days, const Date& date);
+  Date operator+(int days);
+  Date operator-(int days);
+  Date operator+=(int days);
+  Date operator-=(int days);
+  Date operator++(int);
+  Date operator--(int);
+  Date operator++();
+  Date operator--();
   void addDays(int days);
+  void addMonths(int months);
+  void addYears(int years);
 
-  bool isDateValid(int d, int m, int y);
+  bool operator==(const Date& date) const;
+  bool operator!=(const Date& date) const;
+  bool operator>=(const Date& date) const;
+  bool operator<=(const Date& date) const;
+  bool operator>(const Date& date) const;
+  bool operator<(const Date& date) const;
+
+  static bool isDateValid(int d, int m, int y);
 
  private:
-  const int BASE_YEAR = 1900;
-  const int BASE_MONTH = 1;
-  const int BASE_DAY = 1;
-  struct std::tm base_ = {0, 0, 12, BASE_DAY, BASE_MONTH - 1, BASE_YEAR - 1900};
+  static const int BASE_YEAR = 1900;
+  static const int BASE_MONTH = 1;
+  static const int BASE_DAY = 1;
+  struct std::tm base_;
   struct std::tm current_;
   // std::time_t base_seconds_;
   // std::time_t current_seconds_;
@@ -44,8 +62,8 @@ class Date {
   // int month_;
   // int year_;
 
-  int getDaysSinceBase(int d, int m, int y);
-  int getDiff(const struct std::tm& first, const struct std::tm& second);
+  int getDaysSinceBase() const;
+  int getDiff(const struct std::tm& end, const struct std::tm& start) const;
 };
 
 }  // namespace s21

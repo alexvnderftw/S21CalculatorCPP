@@ -29,9 +29,12 @@ Date::Date() {
   current_.tm_sec = 0;
   current_.tm_min = 0;
   current_.tm_hour = 12;
-  // day_ = current.tm_mday;
-  // month_ = current.tm_mon + 1;
-  // year_ = current.tm_year + 1900;
+  base_.tm_sec = 0;
+  base_.tm_min = 0;
+  base_.tm_hour = 12;
+  base_.tm_mday = BASE_DAY;
+  base_.tm_mon = BASE_MONTH - 1;
+  base_.tm_year = BASE_YEAR - 1900;
   /// diff
 }
 
@@ -44,9 +47,21 @@ Date::Date(int day, int month, int year) {
   current_.tm_mday = day;
   current_.tm_mon = month - 1;
   current_.tm_year = year - 1900;
+  base_.tm_sec = 0;
+  base_.tm_min = 0;
+  base_.tm_hour = 12;
+  base_.tm_mday = BASE_DAY;
+  base_.tm_mon = BASE_MONTH - 1;
+  base_.tm_year = BASE_YEAR - 1900;
 }
 
-void Date::setDate(int day, int month, int year) {}
+void Date::setDate(int day, int month, int year) {
+  if (isDateValid(day, month, year) == false)
+    throw std::invalid_argument("Invalid date.");
+  current_.tm_mday = day;
+  current_.tm_mon = month - 1;
+  current_.tm_year = year - 1900;
+}
 
 // int Date::getDays(const Date& date) {}
 
@@ -58,13 +73,13 @@ int Date::getMonth() { return current_.tm_mon + 1; }
 
 int Date::getYear() { return current_.tm_year + 1900; }
 
-int Date::getDiff(const Date& first, const Date& second) {
-  return getDiff(first.current_, second.current_);
+int Date::subtract(const Date& sub) const {
+  return getDiff(current_, sub.current_);
 }
 
-int operator-(const Date& first, const Date& second) {
-  Date first_new(first), second_new(second);
-  return first_new.getDiff(first_new, second_new);
+int Date::operator|(const Date& sub) const {
+  // Date first_new(first), second_new(second);
+  return subtract(sub);
 }
 
 Date operator+(int days, const Date& date) {
@@ -72,6 +87,74 @@ Date operator+(int days, const Date& date) {
   date_new.addDays(days);
   return date_new;
 }
+
+Date Date::operator+(int days) {
+  Date date_new(*this);
+  date_new.addDays(days);
+  return date_new;
+}
+
+Date Date::operator-(int days) {
+  Date date_new(*this);
+  date_new.addDays(-days);
+  return date_new;
+}
+
+Date Date::operator+=(int days) {
+  addDays(days);
+  return *this;
+}
+
+Date Date::operator-=(int days) {
+  addDays(-days);
+  return *this;
+}
+
+Date Date::operator++(int) {
+  addDays(1);
+  return *this;
+}
+
+Date Date::operator--(int) {
+  addDays(-1);
+  return *this;
+}
+
+Date Date::operator++() {
+  addDays(1);
+  return *this;
+}
+
+Date Date::operator--() {
+  addDays(-1);
+  return *this;
+}
+
+bool Date::operator==(const Date& date) const {
+  return getDaysSinceBase() == date.getDaysSinceBase();
+}
+
+bool Date::operator!=(const Date& date) const {
+  return getDaysSinceBase() != date.getDaysSinceBase();
+}
+
+bool Date::operator>=(const Date& date) const {
+  return getDaysSinceBase() >= date.getDaysSinceBase();
+}
+
+bool Date::operator<=(const Date& date) const {
+  return getDaysSinceBase() <= date.getDaysSinceBase();
+}
+
+bool Date::operator>(const Date& date) const {
+  return getDaysSinceBase() > date.getDaysSinceBase();
+}
+
+bool Date::operator<(const Date& date) const {
+  return getDaysSinceBase() < date.getDaysSinceBase();
+}
+
+// bool isDateValid(int d, int m, int y);
 
 void Date::addDays(int days) {
   std::tm new_date = current_;
@@ -81,16 +164,39 @@ void Date::addDays(int days) {
   current_ = new_date;
 }
 
-// need this??
-int Date::getDaysSinceBase(int d, int m, int y) {
-  return getDiff(base_, current_);
+void Date::addMonths(int months) {
+  int new_day = getDay(), new_month = 0, new_year = 0;
+  if (getMonth() + months <= 0) {
+    new_month = 12 - std::abs(getMonth() + months) % 12;
+    new_year = getYear() - 1 - std::abs(getMonth() + months) / 12;
+  } else {
+    new_month = (getMonth() + months - 1) % 12 + 1;
+    new_year = getYear() + (getMonth() + months - 1) / 12;
+  }
+
+  while (!isDateValid(new_day, new_month, new_year)) {
+    new_day--;
+  }
+  setDate(new_day, new_month, new_year);
 }
 
-int Date::getDiff(const struct std::tm& first, const struct std::tm& second) {
-  struct std::tm first_new = first, second_new = second;
-  double difference = std::round(
-      std::difftime(std::mktime(&first_new), std::mktime(&second_new)) /
-      (60 * 60 * 24));
+void Date::addYears(int years) {
+  int new_year = getYear() + years;
+  if (!isDateValid(getDay(), getMonth(), new_year))
+    setDate(getDay() - 1, getMonth(), new_year);
+  else
+    setDate(getDay(), getMonth(), new_year);
+}
+
+// need this??
+int Date::getDaysSinceBase() const { return getDiff(current_, base_); }
+
+int Date::getDiff(const struct std::tm& end,
+                  const struct std::tm& start) const {
+  struct std::tm end_new = end, start_new = start;
+  double difference =
+      std::round(std::difftime(std::mktime(&end_new), std::mktime(&start_new)) /
+                 (60 * 60 * 24));
   return static_cast<int>(difference);
 }
 
