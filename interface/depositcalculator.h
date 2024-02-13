@@ -39,6 +39,7 @@ private:
     s21::Deposit::OperPeriod getOperPeriod();
 
     void fillTable();
+    void fillTaxes();
     void fillLines();
     void clearContent();
 

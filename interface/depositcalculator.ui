@@ -14,371 +14,78 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" rowspan="3">
-    <widget class="QWidget" name="widget" native="true">
+   <item row="1" column="1">
+    <widget class="QWidget" name="widgetReplenishes" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>380</width>
-       <height>300</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QComboBox {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-padding: 0 5px;
-background-color: rgba(218, 216, 255, 130);
-}
-
-QComboBox QAbstractItemView {
-color: black;
-border: 0px solid;
-border-radius: 0px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgb(172, 191, 255);
-selection-color: black;
-}
-
-QComboBox:item:selected {
-background-color: rgb(255, 105, 103)
-}
-
-QPushButton {
-font: 15pt &quot;Drexs&quot;;
-color: black;
-border-style: outset;
-border-width: 1.5px;
-border-radius: 7px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QPushButton:pressed {
-background-color: rgb(182, 183, 255);
-border-style: inset;
-}
-
-QLineEdit {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-padding: 0 8px;
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QLineEdit::input:focus {
-/*border: 2px solid #006080;
-border-color: rgba(130, 127, 255, 133);*/
-background-color: rgba(130, 127, 255, 133);
-}
-
-QDoubleSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QLabel {
-color: black;
-font: 13pt &quot;Drexs&quot;;
-}
-</string>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
      </property>
-     <widget class="QLabel" name="labelDeposit">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <property name="leftMargin">
+       <number>0</number>
       </property>
-      <property name="text">
-       <string>Deposit</string>
+      <property name="topMargin">
+       <number>0</number>
       </property>
-     </widget>
-     <widget class="QComboBox" name="comboBoxTermUnit">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>60</y>
-        <width>103</width>
-        <height>31</height>
-       </rect>
+      <property name="rightMargin">
+       <number>0</number>
       </property>
-      <property name="currentIndex">
-       <number>2</number>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0" rowspan="2" colspan="2">
+       <widget class="QLabel" name="labelReplenishes">
+        <property name="text">
+         <string>Replenishments</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <property name="text">
-        <string>months</string>
-       </property>
+      <item row="2" column="0">
+       <widget class="QTableWidget" name="tableWidgetReplenishes">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <column>
+         <property name="text">
+          <string>Periodicity</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Value</string>
+         </property>
+        </column>
+       </widget>
       </item>
-      <item>
-       <property name="text">
-        <string>years</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="labelTerm">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Term</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelStartDate">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>100</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Start date</string>
-      </property>
-     </widget>
-     <widget class="QDateEdit" name="dateEditStartDate">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>100</y>
-        <width>110</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="minimumDateTime">
-       <datetime>
-        <hour>0</hour>
-        <minute>0</minute>
-        <second>0</second>
-        <year>1900</year>
-        <month>1</month>
-        <day>1</day>
-       </datetime>
-      </property>
-      <property name="minimumDate">
-       <date>
-        <year>1900</year>
-        <month>1</month>
-        <day>1</day>
-       </date>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelRate">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>140</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Interest rate</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBoxCapitalization">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>140</y>
-        <width>111</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Capitalization</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelPeriodicity">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>190</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Pay periodicity</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBoxPeriodicity">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>180</y>
-        <width>103</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>2</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>At end</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Daily</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Monthly</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Quarterly</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Twice a year</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Annually</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QPushButton" name="pushButtonCalculate">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>190</y>
-        <width>121</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Calculate</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBoxRate">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>140</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximum">
-       <double>1000.000000000000000</double>
-      </property>
-      <property name="stepType">
-       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-      </property>
-      <property name="value">
-       <double>10.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBoxDeposit">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>20</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="decimals">
-       <number>2</number>
-      </property>
-      <property name="maximum">
-       <double>1000000000.000000000000000</double>
-      </property>
-      <property name="stepType">
-       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-      </property>
-      <property name="value">
-       <double>100000.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QSpinBox" name="spinBoxTerm">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>60</y>
-        <width>81</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>1000</number>
-      </property>
-      <property name="stepType">
-       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelPercent">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>140</y>
-        <width>31</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>%</string>
-      </property>
-     </widget>
+     </layout>
     </widget>
    </item>
    <item row="2" column="1">
@@ -664,7 +371,7 @@ font: 13pt &quot;Drexs&quot;;
      </widget>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QWidget" name="widgetEvents" native="true">
      <property name="minimumSize">
       <size>
@@ -689,6 +396,13 @@ font: 13pt &quot;Drexs&quot;;
        <number>0</number>
       </property>
       <item row="1" column="0">
+       <widget class="QLabel" name="labelEvents">
+        <property name="text">
+         <string>Final sheet</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
        <widget class="QTableWidget" name="tableWidgetEvents">
         <property name="minimumSize">
          <size>
@@ -728,18 +442,11 @@ font: 13pt &quot;Drexs&quot;;
         </column>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelEvents">
-        <property name="text">
-         <string>Final sheet</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QWidget" name="widgetReplenishes" native="true">
+   <item row="3" column="1">
+    <widget class="QWidget" name="widgetTax" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -758,7 +465,7 @@ font: 13pt &quot;Drexs&quot;;
        <height>100</height>
       </size>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4">
+     <layout class="QGridLayout" name="gridLayout_5">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -774,42 +481,435 @@ font: 13pt &quot;Drexs&quot;;
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0" rowspan="2" colspan="2">
-       <widget class="QLabel" name="labelReplenishes">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelTaxTable">
         <property name="text">
-         <string>Replenishments</string>
+         <string>Taxes</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QTableWidget" name="tableWidgetReplenishes">
+      <item row="1" column="0">
+       <widget class="QTableWidget" name="tableWidgetTax">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
         <column>
          <property name="text">
-          <string>Periodicity</string>
+          <string>Year</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Date</string>
+          <string>Income</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Value</string>
+          <string>Tax</string>
          </property>
         </column>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="4">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>380</width>
+       <height>380</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QComboBox {
+color: black;
+border: 2px solid;
+border-style: inset;
+border-radius: 5px;
+border-color: rgba(130, 127, 255, 133);
+padding: 0 5px;
+background-color: rgba(218, 216, 255, 130);
+}
+
+QComboBox QAbstractItemView {
+color: black;
+border: 0px solid;
+border-radius: 0px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgb(172, 191, 255);
+selection-color: black;
+}
+
+QComboBox:item:selected {
+background-color: rgb(255, 105, 103)
+}
+
+QPushButton {
+font: 15pt &quot;Drexs&quot;;
+color: black;
+border-style: outset;
+border-width: 1.5px;
+border-radius: 7px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgba(218, 216, 255, 130);
+selection-background-color: rgba(130, 127, 255, 133);
+selection-color: black;
+}
+
+QPushButton:pressed {
+background-color: rgb(182, 183, 255);
+border-style: inset;
+}
+
+QLineEdit {
+color: black;
+border: 2px solid;
+border-style: inset;
+border-radius: 5px;
+border-color: rgba(130, 127, 255, 133);
+padding: 0 8px;
+background-color: rgba(218, 216, 255, 130);
+selection-background-color: rgba(130, 127, 255, 133);
+selection-color: black;
+}
+
+QLineEdit::input:focus {
+/*border: 2px solid #006080;
+border-color: rgba(130, 127, 255, 133);*/
+background-color: rgba(130, 127, 255, 133);
+}
+
+QDoubleSpinBox {
+color: black;
+padding: 0 3px;
+border: 2px solid;
+border-style: inset;
+border-radius: 5px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgba(218, 216, 255, 130);
+selection-background-color: rgba(130, 127, 255, 133);
+selection-color: black;
+}
+
+QSpinBox {
+color: black;
+padding: 0 3px;
+border: 2px solid;
+border-style: inset;
+border-radius: 5px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgba(218, 216, 255, 130);
+selection-background-color: rgba(130, 127, 255, 133);
+selection-color: black;
+}
+
+QLabel {
+color: black;
+font: 13pt &quot;Drexs&quot;;
+}
+</string>
+     </property>
+     <widget class="QLabel" name="labelDeposit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Deposit</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxTermUnit">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>60</y>
+        <width>103</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>months</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>years</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="labelTerm">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Term</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelStartDate">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start date</string>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEditStartDate">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>100</y>
+        <width>110</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>1900</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>1900</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRate">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Interest rate</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxCapitalization">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>140</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Capitalization</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelPeriodicity">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>190</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pay periodicity</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxPeriodicity">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>180</y>
+        <width>103</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>At end</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Daily</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Monthly</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Quarterly</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Twice a year</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Annually</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="pushButtonCalculate">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>10</y>
+        <width>121</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Calculate</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxRate">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>140</y>
+        <width>81</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="stepType">
+       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+      </property>
+      <property name="value">
+       <double>10.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxDeposit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>20</y>
+        <width>101</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="decimals">
+       <number>2</number>
+      </property>
+      <property name="maximum">
+       <double>1000000000.000000000000000</double>
+      </property>
+      <property name="stepType">
+       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+      </property>
+      <property name="value">
+       <double>100000.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxTerm">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>60</y>
+        <width>81</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+      <property name="stepType">
+       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelPercent">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>140</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>%</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxTax">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>230</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+      <property name="stepType">
+       <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelTax">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>230</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tax rate</string>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

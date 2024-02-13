@@ -26,7 +26,7 @@ void Deposit::removeWithdrawal(size_t index) {
   withdrawal_list_.erase(withdrawal_list_.begin() + index);
 }
 size_t Deposit::getReplenishListSize() { return replenish_list_.size(); }
-size_t Deposit::getWIthdrawalListSize() { return withdrawal_list_.size(); }
+size_t Deposit::getWithdrawalListSize() { return withdrawal_list_.size(); }
 std::vector<Deposit::Operation>::const_iterator
 Deposit::getReplenishListElement(size_t index) {
   return replenish_list_.cbegin() + index;
@@ -48,7 +48,7 @@ std::vector<Deposit::Event>::const_iterator Deposit::getEventListElement(
 // size_t getEventListSize();
 // std::vector<Operation>::const_iterator getEventListElement(size_t index);
 void Deposit::calculate() {
-  event_list_.clear();
+  setDefaultValues();
   calculateTerm();
   insertDeposit();
   insertNewYears();
@@ -68,7 +68,6 @@ void Deposit::calculate() {
 
   // interest_total_
   // balance_
-  balance_ = 0.0;
   double day_value = calculateDayValue(start_date_.getYear(), interest_);
   // gain = day_value * n_days;
   // n_days = pay_event | prev_event;
@@ -81,6 +80,7 @@ void Deposit::calculate() {
                              balance_;
       balance_ += event_list_[i].balance_change_;
       event_list_[i].balance_ = balance_;
+      intervention_total_ += event_list_[i].balance_change_;
     } else if (event_list_[i].event_ == E_PAYDAY) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *
@@ -98,6 +98,12 @@ void Deposit::calculate() {
         balance_ = event_list_[i].balance_;
         event_list_[i].payment_ = 0.0;
       }
+      interest_total_ += event_list_[i].gain_;
+      if (event_list_[i].date_ == end_date_) {
+        year_income_ = interest_total_ - year_income_;
+        tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+                                year_income_ * tax_));
+      }
     } else if (event_list_[i].event_ == E_NEWYEAR) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *
@@ -105,14 +111,18 @@ void Deposit::calculate() {
                              balance_;
       day_value =
           calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
+      year_income_ = interest_total_ - year_income_;
+      tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+                              year_income_ * tax_));
     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *
                              (event_list_[i].date_ | event_list_[i - 1].date_) *
                              balance_;
-      if (balance_ + event_list_[i].balance_change_ > remainder_limit_) {
+      if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
         event_list_[i].balance_ += event_list_[i].balance_change_;
         balance_ = event_list_[i].balance_;
+        intervention_total_ += event_list_[i].balance_change_;
       } else {
         event_list_[i].event_ = E_DECLINE;
       }
@@ -126,6 +136,21 @@ bool Deposit::dateComparator(Event first, Event second) {
 }
 
 /* Misc */
+
+void Deposit::setDefaultValues() {
+  event_list_.clear();
+  tax_list_.clear();
+  balance_ = 0.0;
+  year_income_ = 0.0;
+  // end_balance_ = 0.0;
+  // deposit_total_ = 0.0;
+  interest_total_ = 0.0;
+  // interest_gain_ = 0.0;
+  tax_total_ = 0.0;
+  // withdrawal_total_ = 0.0;
+  // replenish_total_ = 0.0;
+  intervention_total_ = 0.0;
+}
 
 void Deposit::insertNewYears() {
   for (size_t i = 0; i < end_date_.getYear() - start_date_.getYear(); i++) {
@@ -358,6 +383,13 @@ void Deposit::spliceOperations() {
       }
     }
   }
+}
+
+size_t Deposit::getTaxListSize() { return tax_list_.size(); }
+
+std::vector<Deposit::Tax>::const_iterator Deposit::getTaxListElement(
+    size_t index) {
+  return tax_list_.cbegin() + index;
 }
 
 }  // namespace s21

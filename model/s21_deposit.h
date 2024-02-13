@@ -42,15 +42,21 @@ class Deposit {
   enum TermType { T_DAY, T_MONTH, T_YEAR };
 
   struct Operation {
+   private:
     OperPeriod period_;
     Date date_;
     double value_;
 
+   public:
+    Operation() = default;
+    ~Operation() = default;
     Operation(OperPeriod period, Date date, double value)
         : period_(period), date_(date), value_(value) {}
+    friend class Deposit;
   };
 
   struct Event {
+   private:
     EventType event_;
     Date date_;
     double gain_;
@@ -58,6 +64,9 @@ class Deposit {
     double payment_;
     double balance_;
     // double tax;
+   public:
+    Event() = default;
+    ~Event() = default;
     Event(EventType event, Date date, double gain, double balance_change,
           double payment, double balance)
         : event_(event),
@@ -66,6 +75,32 @@ class Deposit {
           balance_change_(balance_change),
           payment_(payment),
           balance_(balance) {}
+    friend class Deposit;
+
+    EventType event() const { return event_; }
+    Date date() const { return date_; }
+    double gain() const { return gain_; }
+    double balance_change() const { return balance_change_; }
+    double payment() const { return payment_; }
+    double balance() const { return balance_; }
+  };
+
+  struct Tax {
+   private:
+    int year_;
+    double income_;
+    double tax_;
+
+   public:
+    Tax() = default;
+    ~Tax() = default;
+    Tax(int year, double income, double tax)
+        : year_(year), income_(income), tax_(tax) {}
+    friend class Deposit;
+
+    int year() const { return year_; }
+    double income() const { return income_; }
+    double tax() const { return tax_; }
   };
 
   void setDeposit(double value);
@@ -82,7 +117,7 @@ class Deposit {
   void removeReplenish(size_t index);
   void removeWithdrawal(size_t index);
   size_t getReplenishListSize();
-  size_t getWIthdrawalListSize();
+  size_t getWithdrawalListSize();
   std::vector<Operation>::const_iterator getReplenishListElement(size_t index);
   std::vector<Operation>::const_iterator getWithdrawalListElement(size_t index);
   // remove
@@ -91,6 +126,8 @@ class Deposit {
   void calculate();
   size_t getEventListSize();
   std::vector<Event>::const_iterator getEventListElement(size_t index);
+  size_t getTaxListSize();
+  std::vector<Tax>::const_iterator getTaxListElement(size_t index);
 
  private:
   double deposit_ = 0.0;
@@ -107,15 +144,19 @@ class Deposit {
   std::vector<Operation> withdrawal_list_{};
 
   double balance_ = 0.0;
-  double end_balance_ = 0.0;
-  double deposit_total_ = 0.0;
+  double year_income_ = 0.0;
+  // double end_balance_ = 0.0;
+  // double deposit_total_ = 0.0;
   double interest_total_ = 0.0;
-  double interest_gain_ = 0.0;
+  // double interest_gain_ = 0.0;
   double tax_total_ = 0.0;
-  double withdrawal_total_ = 0.0;
+  double intervention_total_ = 0.0;
   std::vector<Event> event_list_{};
+  std::vector<Tax> tax_list_{};
 
   /* Misc */
+  void setDefaultValues();
+
   void insertNewYears();
   void insertDeposit();
   void insertLastPayday();

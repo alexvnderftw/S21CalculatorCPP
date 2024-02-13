@@ -22,13 +22,15 @@ class ControllerDeposit {
   void removeReplenish(size_t index);
   void removeWithdrawal(size_t index);
   size_t getReplenishListSize();
-  size_t getWIthdrawalListSize();
+  size_t getWithdrawalListSize();
   size_t getEventListSize();
+  size_t getTaxListSize();
   std::vector<Deposit::Operation>::const_iterator getReplenishListElement(
       size_t index);
   std::vector<Deposit::Operation>::const_iterator getWithdrawalListElement(
       size_t index);
   std::vector<Deposit::Event>::const_iterator getEventListElement(size_t index);
+  std::vector<Deposit::Tax>::const_iterator getTaxListElement(size_t index);
 
   void calculate();
 

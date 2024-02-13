@@ -42,12 +42,13 @@ void ControllerDeposit::removeWithdrawal(size_t index) {
 size_t ControllerDeposit::getReplenishListSize() {
   return deposit_.getReplenishListSize();
 }
-size_t ControllerDeposit::getWIthdrawalListSize() {
-  return deposit_.getWIthdrawalListSize();
+size_t ControllerDeposit::getWithdrawalListSize() {
+  return deposit_.getWithdrawalListSize();
 }
 size_t ControllerDeposit::getEventListSize() {
   return deposit_.getEventListSize();
 }
+size_t ControllerDeposit::getTaxListSize() { return deposit_.getTaxListSize(); }
 std::vector<Deposit::Operation>::const_iterator
 ControllerDeposit::getReplenishListElement(size_t index) {
   return deposit_.getReplenishListElement(index);
@@ -59,6 +60,10 @@ ControllerDeposit::getWithdrawalListElement(size_t index) {
 std::vector<Deposit::Event>::const_iterator
 ControllerDeposit::getEventListElement(size_t index) {
   return deposit_.getEventListElement(index);
+}
+std::vector<Deposit::Tax>::const_iterator ControllerDeposit::getTaxListElement(
+    size_t index) {
+  return deposit_.getTaxListElement(index);
 }
 
 void ControllerDeposit::calculate() { deposit_.calculate(); }
