@@ -188,6 +188,12 @@ void Date::addYears(int years) {
     setDate(getDay(), getMonth(), new_year);
 }
 
+Date Date::shiftMonths(int months) const {
+  Date ret = *this;
+  ret.addMonths(months);
+  return ret;
+}
+
 // need this??
 int Date::getDaysSinceBase() const { return getDiff(current_, base_); }
 

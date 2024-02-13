@@ -20,6 +20,10 @@ public:
 
 private slots:
     void calculate();
+    void addReplenish();
+    void removeReplenish();
+    void addWithdrawal();
+    void removeWithdrawal();
 
 private:
     Ui::DepositCalculator *ui;
@@ -31,6 +35,7 @@ private:
     void setValues();
     s21::Deposit::TermType getUnitType();
     s21::Deposit::PayPeriod getPayPeriod();
+    s21::Deposit::OperPeriod getOperPeriod();
 
     void fillTable();
     void fillLines();
@@ -38,6 +43,7 @@ private:
 
     QString getDateString(s21::Date date);
     QString getEventString(s21::Deposit::EventType event);
+    QString getOperPeriodString(s21::Deposit::OperPeriod period);
 
 };
 

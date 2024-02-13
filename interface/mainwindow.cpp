@@ -42,8 +42,15 @@ void MainWindow::switchPage(QWidget *page) {
   ui->stackedWidget->setCurrentWidget(page);
   if (page == ui->pageCalculator) {
     ui->pageCalculator->setDefaultFocus();
+    this->resize(800, 450);
   } else if (page == ui->pageCredit) {
     ui->pageCredit->setDefaultFocus();
+    this->resize(800, 600);
+  } else if (page == ui->pageDeposit) {
+    ui->pageDeposit->setDefaultFocus();
+    this->resize(1000, 700);
+  } else if (page == ui->pageMenu) {
+    this->resize(500, 400);
   }
 }
 

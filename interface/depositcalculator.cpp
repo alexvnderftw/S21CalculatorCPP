@@ -9,6 +9,12 @@ DepositCalculator::DepositCalculator(QWidget *parent) :
     ui->tableWidgetEvents->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidgetEvents->horizontalHeader()->setSectionResizeMode(
         QHeaderView::Stretch);
+    ui->tableWidgetReplenishes->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetReplenishes->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
+    ui->tableWidgetWithdrawals->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetWithdrawals->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
     setCurrentDate();
     setValues();
     connectSignals();
@@ -24,11 +30,16 @@ void DepositCalculator::setDefaultFocus() {
 }
 
 void DepositCalculator::connectSignals() {
-      connect(ui->pushButtonCalculate, SIGNAL(clicked()), this, SLOT(calculate()));
+    connect(ui->pushButtonCalculate, SIGNAL(clicked()), this, SLOT(calculate()));
+    connect(ui->pushButtonAddReplenish, SIGNAL(clicked()), this, SLOT(addReplenish()));
+    connect(ui->pushButtonRemoveReplenish, SIGNAL(clicked()), this, SLOT(removeReplenish()));
+    connect(ui->pushButtonAddWithdrawal, SIGNAL(clicked()), this, SLOT(addWithdrawal()));
+    connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this, SLOT(removeWithdrawal()));
 }
 
 void DepositCalculator::setCurrentDate() {
     ui->dateEditStartDate->setDate(QDate::currentDate());
+    ui->dateEditOperationDate->setDate(QDate::currentDate());
 }
 
 void DepositCalculator::setValues() {
@@ -83,6 +94,7 @@ void DepositCalculator::fillTable() {
             i, 5,
             new QTableWidgetItem(getEventString(data.getEventListElement(i)->event_)));
     }
+    ui->tableWidgetEvents->resizeRowsToContents();
 //    ui->tableWidgetCredit->setItem(ctrl.getDataSize(), 0,
 //                                   new QTableWidgetItem("Total:"));
 //    ui->tableWidgetCredit->setItem(
@@ -135,5 +147,73 @@ QString DepositCalculator::getEventString(s21::Deposit::EventType event) {
     else if (event == s21::Deposit::E_PAYDAY) return "Payment";
     else if (event == s21::Deposit::E_WITHDRAWAL) return "Withdrawal";
     else if (event == s21::Deposit::E_PAYTAX) return "Taxes";
-    else return "Decline";
+    else if (event == s21::Deposit::E_NEWYEAR) return "New year";
+    else if (event == s21::Deposit::E_DECLINE) return "Withdrawal declined";
+    else return "Error";
+}
+
+QString DepositCalculator::getOperPeriodString(s21::Deposit::OperPeriod period) {
+    if (period == s21::Deposit::O_ONCE) return "One-time";
+    else if (period == s21::Deposit::O_MONTHLY) return "Monthly";
+    else if (period == s21::Deposit::O_BIMONTHLY) return "Every two months";
+    else if (period == s21::Deposit::O_QUARTERLY) return "Quarterly";
+    else if (period == s21::Deposit::O_BIANNUALLY) return "Twice a year";
+    else if (period == s21::Deposit::O_ANNUALLY) return "Every year";
+    else return "Error";
+}
+
+s21::Deposit::OperPeriod DepositCalculator::getOperPeriod() {
+    if (ui->comboBoxOperationPeriodicity->currentIndex() == 0) return s21::Deposit::O_ONCE;
+    else if (ui->comboBoxOperationPeriodicity->currentIndex() == 1) return s21::Deposit::O_MONTHLY;
+    else if (ui->comboBoxOperationPeriodicity->currentIndex() == 2) return s21::Deposit::O_BIMONTHLY;
+    else if (ui->comboBoxOperationPeriodicity->currentIndex() == 3) return s21::Deposit::O_QUARTERLY;
+    else if (ui->comboBoxOperationPeriodicity->currentIndex() == 4) return s21::Deposit::O_BIANNUALLY;
+    else return s21::Deposit::O_ANNUALLY;
+}
+
+/* Slots */
+
+void DepositCalculator::addReplenish() {
+    s21::Date date(ui->dateEditOperationDate->date().day(), ui->dateEditOperationDate->date().month(), ui->dateEditOperationDate->date().year());
+    data.addReplenish(getOperPeriod(), date, ui->doubleSpinBoxValue->value());
+    ui->tableWidgetReplenishes->insertRow(ui->tableWidgetReplenishes->rowCount());
+    ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 0, new QTableWidgetItem(getOperPeriodString(getOperPeriod())));
+    ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
+    ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 2, new QTableWidgetItem(QString::number(ui->doubleSpinBoxValue->value(), 'f', 2)));
+//    QPushButton *removeButton = new QPushButton("Remove", this);
+//    ui->tableWidgetReplenishes->setCellWidget(ui->tableWidgetReplenishes->rowCount() - 1, 3, removeButton);
+//    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeReplenish()));
+}
+
+void DepositCalculator::removeReplenish() {
+    int index = ui->tableWidgetReplenishes->currentRow();
+    ui->tableWidgetReplenishes->removeRow(ui->tableWidgetReplenishes->currentRow());
+    if (index > 0)
+        ui->tableWidgetReplenishes->setCurrentCell(index - 1, 0);
+    else
+        ui->tableWidgetReplenishes->setCurrentCell(0, 0);
+//    QWidget *w = qobject_cast<QWidget *>(sender()->parent());
+//    if(w){
+//        int row = ui->tableWidgetReplenishes->indexAt(w->pos()).row();
+//        ui->tableWidgetReplenishes->removeRow(row);
+//        ui->tableWidgetReplenishes->setCurrentCell(0, 0);
+//    }
+}
+
+void DepositCalculator::addWithdrawal() {
+    s21::Date date(ui->dateEditOperationDate->date().day(), ui->dateEditOperationDate->date().month(), ui->dateEditOperationDate->date().year());
+    data.addWithdrawal(getOperPeriod(), date, ui->doubleSpinBoxValue->value());
+    ui->tableWidgetWithdrawals->insertRow(ui->tableWidgetWithdrawals->rowCount());
+    ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 0, new QTableWidgetItem(getOperPeriodString(getOperPeriod())));
+    ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
+    ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 2, new QTableWidgetItem(QString::number(ui->doubleSpinBoxValue->value(), 'f', 2)));
+}
+
+void DepositCalculator::removeWithdrawal() {
+    int index = ui->tableWidgetWithdrawals->currentRow();
+    ui->tableWidgetWithdrawals->removeRow(ui->tableWidgetWithdrawals->currentRow());
+    if (index > 0)
+        ui->tableWidgetWithdrawals->setCurrentCell(index - 1, 0);
+    else
+        ui->tableWidgetWithdrawals->setCurrentCell(0, 0);
 }

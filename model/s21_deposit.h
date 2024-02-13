@@ -30,7 +30,14 @@ class Deposit {
     O_ANNUALLY
   };
 
-  enum EventType { E_PAYDAY, E_REPLENISH, E_WITHDRAWAL, E_DECLINE, E_PAYTAX };
+  enum EventType {
+    E_PAYDAY,
+    E_REPLENISH,
+    E_WITHDRAWAL,
+    E_DECLINE,
+    E_PAYTAX,
+    E_NEWYEAR
+  };
 
   enum TermType { T_DAY, T_MONTH, T_YEAR };
 
@@ -95,7 +102,7 @@ class Deposit {
   double tax_ = 0.0;
   bool capital_ = false;
   PayPeriod periodicity_ = P_MONTHLY;
-  double reminder_limit_ = 0.0;
+  double remainder_limit_ = 0.0;
   std::vector<Operation> replenish_list_{};
   std::vector<Operation> withdrawal_list_{};
 
@@ -109,6 +116,7 @@ class Deposit {
   std::vector<Event> event_list_{};
 
   /* Misc */
+  void insertNewYears();
   void insertDeposit();
   void insertLastPayday();
   void insertPaydays();
@@ -125,6 +133,8 @@ class Deposit {
 
   void calculateTerm();
   bool dateComparator(Event first, Event second);
+
+  void spliceOperations();
 };
 }  // namespace s21
 

@@ -39,6 +39,7 @@ class Date {
   void addDays(int days);
   void addMonths(int months);
   void addYears(int years);
+  Date shiftMonths(int months) const;
 
   bool operator==(const Date& date) const;
   bool operator!=(const Date& date) const;
