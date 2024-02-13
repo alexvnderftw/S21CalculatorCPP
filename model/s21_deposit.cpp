@@ -87,8 +87,17 @@ void Deposit::calculate() {
                              (event_list_[i].date_ | event_list_[i - 1].date_) *
                              balance_;
       event_list_[i].payment_ = event_list_[i].gain_;
-      for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j)
+      for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j) {
         event_list_[i].payment_ += event_list_[j].gain_;
+        event_list_[i].gain_ += event_list_[j].gain_;
+        event_list_[j].gain_ = 0.0;
+      }
+      if (capital_ == true) {
+        event_list_[i].balance_change_ = event_list_[i].payment_;
+        event_list_[i].balance_ += event_list_[i].balance_change_;
+        balance_ = event_list_[i].balance_;
+        event_list_[i].payment_ = 0.0;
+      }
     } else if (event_list_[i].event_ == E_NEWYEAR) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *

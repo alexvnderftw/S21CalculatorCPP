@@ -35,6 +35,7 @@ void DepositCalculator::connectSignals() {
     connect(ui->pushButtonRemoveReplenish, SIGNAL(clicked()), this, SLOT(removeReplenish()));
     connect(ui->pushButtonAddWithdrawal, SIGNAL(clicked()), this, SLOT(addWithdrawal()));
     connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this, SLOT(removeWithdrawal()));
+    connect(ui->checkBoxCapitalization, SIGNAL(stateChanged(int)), this, SLOT(setCapitalization(int)));
 }
 
 void DepositCalculator::setCurrentDate() {
@@ -216,4 +217,12 @@ void DepositCalculator::removeWithdrawal() {
         ui->tableWidgetWithdrawals->setCurrentCell(index - 1, 0);
     else
         ui->tableWidgetWithdrawals->setCurrentCell(0, 0);
+}
+
+void DepositCalculator::setCapitalization(int value) {
+    if (value == 0) {
+        data.setCapitalization(false);
+    } else {
+        data.setCapitalization(true);
+    }
 }

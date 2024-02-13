@@ -24,6 +24,7 @@ private slots:
     void removeReplenish();
     void addWithdrawal();
     void removeWithdrawal();
+    void setCapitalization(int value);
 
 private:
     Ui::DepositCalculator *ui;
