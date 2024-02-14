@@ -20,6 +20,11 @@ double bankRound(double number) noexcept {
   return number;
 }
 
+/* Bank rounding of number to number with two decimal digits. */
+double bankRoundTwoDecimal(double number) noexcept {
+  return bankRound(number * 100.0) / 100.0;
+}
+
 Date::Date() {
   time_t t = std::time(NULL);
   if (std::localtime(&t) == NULL)

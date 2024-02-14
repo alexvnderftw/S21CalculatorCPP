@@ -86,8 +86,8 @@ class Credit {
   void CalculateDifferential() noexcept;
   void CalculateSummary() noexcept;
   void RoundData() noexcept;
-  static double BankRoundTwoDecimal(double number) noexcept;
 };
+
 }  // namespace s21
 
 #endif  // S21_CREDIT_H

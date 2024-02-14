@@ -8,6 +8,7 @@
 namespace s21 {
 
 double bankRound(double number) noexcept;
+double bankRoundTwoDecimal(double number) noexcept;
 
 /* Class for operating with days in date format. */
 class Date {

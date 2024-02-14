@@ -89,13 +89,13 @@ bool Credit::ValidateStartDate() const noexcept {
 void Credit::CalculateAnnuity() noexcept {
   data_[0].month_ = start_month_;
   data_[0].year_ = start_year_;
-  data_[0].rate_fee_ = BankRoundTwoDecimal(credit_ * rate_ / 12.0);
-  data_[0].payment_ = BankRoundTwoDecimal(
+  data_[0].rate_fee_ = bankRoundTwoDecimal(credit_ * rate_ / 12.0);
+  data_[0].payment_ = bankRoundTwoDecimal(
       credit_ * rate_ / 12.0 /
       (1.0 - std::pow(1.0 + rate_ / 12.0, -static_cast<double>(time_))));
   data_[0].main_fee_ =
-      BankRoundTwoDecimal(data_[0].payment_ - data_[0].rate_fee_);
-  data_[0].leftover_ = BankRoundTwoDecimal(credit_ - data_[0].main_fee_);
+      bankRoundTwoDecimal(data_[0].payment_ - data_[0].rate_fee_);
+  data_[0].leftover_ = bankRoundTwoDecimal(credit_ - data_[0].main_fee_);
 
   for (int i = 1; i < time_; ++i) {
     data_[i].month_ = data_[i - 1].month_ + 1;
@@ -106,11 +106,11 @@ void Credit::CalculateAnnuity() noexcept {
     }
     data_[i].payment_ = data_[0].payment_;
     data_[i].rate_fee_ =
-        BankRoundTwoDecimal(data_[i - 1].leftover_ * rate_ / 12.0);
+        bankRoundTwoDecimal(data_[i - 1].leftover_ * rate_ / 12.0);
     data_[i].main_fee_ =
-        BankRoundTwoDecimal(data_[i].payment_ - data_[i].rate_fee_);
+        bankRoundTwoDecimal(data_[i].payment_ - data_[i].rate_fee_);
     data_[i].leftover_ =
-        BankRoundTwoDecimal(data_[i - 1].leftover_ - data_[i].main_fee_);
+        bankRoundTwoDecimal(data_[i - 1].leftover_ - data_[i].main_fee_);
   }
   CalculateSummary();
 }
@@ -150,19 +150,14 @@ void Credit::CalculateSummary() noexcept {
 
 void Credit::RoundData() noexcept {
   for (int i = 0; i < time_; ++i) {
-    data_[i].main_fee_ = BankRoundTwoDecimal(data_[i].main_fee_);
-    data_[i].payment_ = BankRoundTwoDecimal(data_[i].payment_);
-    data_[i].rate_fee_ = BankRoundTwoDecimal(data_[i].rate_fee_);
-    data_[i].leftover_ = BankRoundTwoDecimal(data_[i].leftover_);
+    data_[i].main_fee_ = bankRoundTwoDecimal(data_[i].main_fee_);
+    data_[i].payment_ = bankRoundTwoDecimal(data_[i].payment_);
+    data_[i].rate_fee_ = bankRoundTwoDecimal(data_[i].rate_fee_);
+    data_[i].leftover_ = bankRoundTwoDecimal(data_[i].leftover_);
   }
-  sum_paid_ = BankRoundTwoDecimal(sum_paid_);
-  sum_main_paid_ = BankRoundTwoDecimal(sum_main_paid_);
-  sum_rate_paid_ = BankRoundTwoDecimal(sum_rate_paid_);
-}
-
-/* Bank rounding of number to number with two decimal digits. */
-double Credit::BankRoundTwoDecimal(double number) noexcept {
-  return bankRound(number * 100.0) / 100.0;
+  sum_paid_ = bankRoundTwoDecimal(sum_paid_);
+  sum_main_paid_ = bankRoundTwoDecimal(sum_main_paid_);
+  sum_rate_paid_ = bankRoundTwoDecimal(sum_rate_paid_);
 }
 
 }  // namespace s21
