@@ -111,7 +111,7 @@ class Deposit {
   void setTax(double value);
   void setCapitalization(bool set);
   void setPeriodicity(PayPeriod value);
-  // void setReminderLimit(double value);
+  void setRemainderLimit(double value);
   void addReplenish(OperPeriod freq, Date date, double value);
   void addWithdrawal(OperPeriod freq, Date date, double value);
   void removeReplenish(size_t index);
@@ -120,7 +120,12 @@ class Deposit {
   size_t getWithdrawalListSize();
   std::vector<Operation>::const_iterator getReplenishListElement(size_t index);
   std::vector<Operation>::const_iterator getWithdrawalListElement(size_t index);
-  // remove
+  double getBalance();
+  double getDeposit();
+  double getInterestTotal();
+  double getTaxTotal();
+  double getReplenishTotal();
+  double getWithdrawalTotal();
 
   /* Calcualate */
   void calculate();
@@ -143,14 +148,16 @@ class Deposit {
   std::vector<Operation> replenish_list_{};
   std::vector<Operation> withdrawal_list_{};
 
-  double balance_ = 0.0;
   double year_income_ = 0.0;
+
+  double balance_ = 0.0;
   // double end_balance_ = 0.0;
   // double deposit_total_ = 0.0;
   double interest_total_ = 0.0;
   // double interest_gain_ = 0.0;
   double tax_total_ = 0.0;
-  double intervention_total_ = 0.0;
+  double replenish_total_ = 0.0;
+  double withdrawal_total_ = 0.0;
   std::vector<Event> event_list_{};
   std::vector<Tax> tax_list_{};
 

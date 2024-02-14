@@ -6,20 +6,9 @@ DepositCalculator::DepositCalculator(QWidget *parent) :
     ui(new Ui::DepositCalculator)
 {
     ui->setupUi(this);
-    ui->tableWidgetEvents->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidgetEvents->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::Stretch);
-    ui->tableWidgetReplenishes->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidgetReplenishes->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::Stretch);
-    ui->tableWidgetWithdrawals->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidgetWithdrawals->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::Stretch);
-    ui->tableWidgetTax->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidgetTax->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::Stretch);
-    setCurrentDate();
-    setValues();
+    setUiParameters();
+    setInitialState();
+    //setValues();
     connectSignals();
 }
 
@@ -32,6 +21,21 @@ void DepositCalculator::setDefaultFocus() {
     ui->pushButtonCalculate->setFocus();
 }
 
+void DepositCalculator::setUiParameters() {
+    ui->tableWidgetEvents->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetEvents->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
+    ui->tableWidgetReplenishes->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetReplenishes->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
+    ui->tableWidgetWithdrawals->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetWithdrawals->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
+    ui->tableWidgetTax->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidgetTax->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::Stretch);
+}
+
 void DepositCalculator::connectSignals() {
     connect(ui->pushButtonCalculate, SIGNAL(clicked()), this, SLOT(calculate()));
     connect(ui->pushButtonAddReplenish, SIGNAL(clicked()), this, SLOT(addReplenish()));
@@ -39,6 +43,13 @@ void DepositCalculator::connectSignals() {
     connect(ui->pushButtonAddWithdrawal, SIGNAL(clicked()), this, SLOT(addWithdrawal()));
     connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this, SLOT(removeWithdrawal()));
     connect(ui->checkBoxCapitalization, SIGNAL(stateChanged(int)), this, SLOT(setCapitalization(int)));
+    connect(ui->comboBoxTermUnit, SIGNAL(currentIndexChanged(QString)), this, SLOT(setTermLimit(QString)));
+}
+
+void DepositCalculator::setTermLimit(QString text) {
+    if (text == "years") ui->spinBoxTerm->setMaximum(MAX_TERM_Y);
+    else if (text == "months") ui->spinBoxTerm->setMaximum(MAX_TERM_M);
+    else ui->spinBoxTerm->setMaximum(MAX_TERM_D);
 }
 
 void DepositCalculator::setCurrentDate() {
@@ -53,6 +64,7 @@ void DepositCalculator::setValues() {
     data.setInterest(ui->doubleSpinBoxRate->value() / 100.0);
     data.setPeriodicity(getPayPeriod());
     data.setTax(ui->doubleSpinBoxTax->value() / 100.0);
+    data.setRemainderLimit(ui->doubleSpinBoxRemainderLimit->value());
 }
 
 s21::Deposit::TermType DepositCalculator::getUnitType() {
@@ -76,6 +88,7 @@ void DepositCalculator::calculate() {
     data.calculate();
     fillTable();
     fillTaxes();
+    fillSummary();
 }
 
 void DepositCalculator::fillTable() {
@@ -100,22 +113,15 @@ void DepositCalculator::fillTable() {
             i, 5,
             new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
     }
+    ui->tableWidgetEvents->setItem(data.getEventListSize(), 0,
+                                   new QTableWidgetItem("Total:"));
+    ui->tableWidgetEvents->setItem(
+        data.getEventListSize(), 1,
+        new QTableWidgetItem(QString::number(data.getInterestTotal(), 'f', 2)));
+    ui->tableWidgetEvents->setItem(
+        data.getEventListSize(), 4,
+        new QTableWidgetItem(QString::number(data.getBalance(), 'f', 2)));
     ui->tableWidgetEvents->resizeRowsToContents();
-//    ui->tableWidgetCredit->setItem(ctrl.getDataSize(), 0,
-//                                   new QTableWidgetItem("Total:"));
-//    ui->tableWidgetCredit->setItem(
-//        ctrl.getDataSize(), 1,
-//        new QTableWidgetItem(QString::number(ctrl.getSumPaid(), 'f', 2) +
-//                             "\nTotal paid"));
-//    ui->tableWidgetCredit->setItem(
-//        ctrl.getDataSize(), 2,
-//        new QTableWidgetItem(QString::number(ctrl.getSumMainPart(), 'f', 2) +
-//                             "\nDebt paid"));
-//    ui->tableWidgetCredit->setItem(
-//        ctrl.getDataSize(), 3,
-//        new QTableWidgetItem(QString::number(ctrl.getSumRatePart(), 'f', 2) +
-//                             "\nInterest paid"));
-//    ui->tableWidgetCredit->resizeRowsToContents();
 }
 
 void DepositCalculator::fillTaxes() {
@@ -134,23 +140,13 @@ void DepositCalculator::fillTaxes() {
     ui->tableWidgetTax->resizeRowsToContents();
 }
 
-void DepositCalculator::fillLines() {
-//    if (ctrl.isAnnuity() == true)
-//        ui->lineEditPayment->setText(QString::number(ctrl.getPayment(0), 'f', 2));
-//    else if (ctrl.isDifferential() == true) {
-//        ui->lineEditPayment->setText(QString::number(ctrl.getPayment(0), 'f', 2));
-//        if (ctrl.getDataSize() > 1)
-//            ui->lineEditPayment->insert(
-//                "-" +
-//                QString::number(ctrl.getPayment(ctrl.getDataSize() - 1), 'f', 2));
-//    }
-//    ui->lineEditInterest->setText(QString::number(ctrl.getSumRatePart(), 'f', 2));
-//    ui->lineEditTotal->setText(
-//        QString::number(ctrl.getSumRatePart() + ctrl.getSumMainPart(), 'f', 2));
-}
-
 void DepositCalculator::clearContent() {
     ui->tableWidgetEvents->clearContents();
+    ui->tableWidgetTax->clearContents();
+    ui->lineEditAccruedInterest->clear();
+    ui->lineEditTotal->clear();
+    ui->lineEditGain->clear();
+    ui->lineEditTotalTax->clear();
 //    ui->lineEditPayment->clear();
 //    ui->lineEditInterest->clear();
 //    ui->lineEditTotal->clear();
@@ -255,4 +251,36 @@ void DepositCalculator::setCapitalization(int value) {
     } else {
         data.setCapitalization(true);
     }
+}
+
+void DepositCalculator::fillSummary() {
+    ui->lineEditAccruedInterest->setText(QString::number(data.getInterestTotal(), 'f', 2));
+    ui->lineEditTotal->setText(QString::number(data.getInterestTotal() + data.getDeposit() + data.getReplenishTotal(), 'f', 2));
+    ui->lineEditGain->setText(QString::number(data.getInterestTotal() / data.getDeposit() * 100.0, 'f', 2) + " %");
+    ui->lineEditTotalTax->setText(QString::number(data.getTaxTotal(), 'f', 2));
+}
+
+void DepositCalculator::setInitialState() {
+    setCurrentDate();
+    ui->checkBoxCapitalization->setChecked(false);
+    ui->comboBoxTermUnit->setCurrentIndex(INITIAL_TERM_UNIT);
+    ui->spinBoxTerm->setValue(INITIAL_TERM);
+    setTermLimit(ui->comboBoxTermUnit->currentText());
+    ui->comboBoxPeriodicity->setCurrentIndex(INITIAL_PERIODICITY);
+    ui->comboBoxOperationPeriodicity->setCurrentIndex(INITIAL_OPERATION_PERIODICITY);
+    ui->doubleSpinBoxDeposit->setMinimum(MIN_DEPOSIT);
+    ui->doubleSpinBoxDeposit->setMaximum(MAX_DEPOSIT);
+    ui->doubleSpinBoxDeposit->setValue(INITIAL_DEPOSIT);
+    ui->doubleSpinBoxRate->setMinimum(MIN_RATE);
+    ui->doubleSpinBoxRate->setMaximum(MAX_RATE);
+    ui->doubleSpinBoxRate->setValue(INITIAL_RATE);
+    ui->doubleSpinBoxTax->setMinimum(MIN_TAX);
+    ui->doubleSpinBoxTax->setMaximum(MAX_TAX);
+    ui->doubleSpinBoxTax->setValue(INITIAL_TAX);
+    ui->doubleSpinBoxRemainderLimit->setMinimum(MIN_REMAINDER_LIMIT);
+    ui->doubleSpinBoxRemainderLimit->setMaximum(MAX_REMAINDER_LIMIT);
+    ui->doubleSpinBoxRemainderLimit->setValue(INITIAL_REMAINDER_LIMIT);
+    ui->doubleSpinBoxValue->setMinimum(MIN_OPERATION_VALUE);
+    ui->doubleSpinBoxValue->setMaximum(MAX_OPERATION_VALUE);
+    ui->doubleSpinBoxValue->setValue(INITIAL_OPERATION_VALUE);
 }

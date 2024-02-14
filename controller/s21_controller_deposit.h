@@ -16,6 +16,7 @@ class ControllerDeposit {
   void setTax(double value);
   void setCapitalization(bool set);
   void setPeriodicity(Deposit::PayPeriod value);
+  void setRemainderLimit(double value);
 
   void addReplenish(Deposit::OperPeriod freq, Date date, double value);
   void addWithdrawal(Deposit::OperPeriod freq, Date date, double value);
@@ -31,6 +32,12 @@ class ControllerDeposit {
       size_t index);
   std::vector<Deposit::Event>::const_iterator getEventListElement(size_t index);
   std::vector<Deposit::Tax>::const_iterator getTaxListElement(size_t index);
+  double getBalance();
+  double getDeposit();
+  double getInterestTotal();
+  double getTaxTotal();
+  double getReplenishTotal();
+  double getWithdrawalTotal();
 
   void calculate();
 

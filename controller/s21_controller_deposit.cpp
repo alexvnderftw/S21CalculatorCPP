@@ -24,6 +24,9 @@ void ControllerDeposit::setCapitalization(bool set) {
 void ControllerDeposit::setPeriodicity(Deposit::PayPeriod value) {
   deposit_.setPeriodicity(value);
 }
+void ControllerDeposit::setRemainderLimit(double value) {
+  deposit_.setRemainderLimit(value);
+}
 
 void ControllerDeposit::addReplenish(Deposit::OperPeriod freq, Date date,
                                      double value) {
@@ -64,6 +67,18 @@ ControllerDeposit::getEventListElement(size_t index) {
 std::vector<Deposit::Tax>::const_iterator ControllerDeposit::getTaxListElement(
     size_t index) {
   return deposit_.getTaxListElement(index);
+}
+double ControllerDeposit::getBalance() { return deposit_.getBalance(); }
+double ControllerDeposit::getDeposit() { return deposit_.getDeposit(); }
+double ControllerDeposit::getInterestTotal() {
+  return deposit_.getInterestTotal();
+}
+double ControllerDeposit::getTaxTotal() { return deposit_.getTaxTotal(); }
+double ControllerDeposit::getReplenishTotal() {
+  return deposit_.getReplenishTotal();
+}
+double ControllerDeposit::getWithdrawalTotal() {
+  return deposit_.getWithdrawalTotal();
 }
 
 void ControllerDeposit::calculate() { deposit_.calculate(); }

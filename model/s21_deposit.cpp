@@ -12,6 +12,7 @@ void Deposit::setInterest(double value) { interest_ = value; }
 void Deposit::setTax(double value) { tax_ = value; }
 void Deposit::setCapitalization(bool set) { capital_ = set; }
 void Deposit::setPeriodicity(PayPeriod value) { periodicity_ = value; }
+void Deposit::setRemainderLimit(double value) { remainder_limit_ = value; }
 
 void Deposit::addReplenish(OperPeriod freq, Date date, double value) {
   replenish_list_.push_back(Operation(freq, date, value));
@@ -41,7 +42,13 @@ std::vector<Deposit::Event>::const_iterator Deposit::getEventListElement(
     size_t index) {
   return event_list_.cbegin() + index;
 }
-// // remove
+
+double Deposit::getBalance() { return balance_; }
+double Deposit::getDeposit() { return deposit_; }
+double Deposit::getInterestTotal() { return interest_total_; }
+double Deposit::getTaxTotal() { return tax_total_; }
+double Deposit::getReplenishTotal() { return replenish_total_; }
+double Deposit::getWithdrawalTotal() { return withdrawal_total_; }
 
 // /* Calcualate */
 // void calculate();
@@ -80,7 +87,7 @@ void Deposit::calculate() {
                              balance_;
       balance_ += event_list_[i].balance_change_;
       event_list_[i].balance_ = balance_;
-      intervention_total_ += event_list_[i].balance_change_;
+      replenish_total_ += event_list_[i].balance_change_;
     } else if (event_list_[i].event_ == E_PAYDAY) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *
@@ -103,6 +110,7 @@ void Deposit::calculate() {
         year_income_ = interest_total_ - year_income_;
         tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
                                 year_income_ * tax_));
+        tax_total_ += year_income_ * tax_;
       }
     } else if (event_list_[i].event_ == E_NEWYEAR) {
       event_list_[i].balance_ = balance_;
@@ -114,6 +122,7 @@ void Deposit::calculate() {
       year_income_ = interest_total_ - year_income_;
       tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
                               year_income_ * tax_));
+      tax_total_ += year_income_ * tax_;
     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
       event_list_[i].balance_ = balance_;
       event_list_[i].gain_ = day_value *
@@ -122,12 +131,11 @@ void Deposit::calculate() {
       if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
         event_list_[i].balance_ += event_list_[i].balance_change_;
         balance_ = event_list_[i].balance_;
-        intervention_total_ += event_list_[i].balance_change_;
+        withdrawal_total_ -= event_list_[i].balance_change_;
       } else {
         event_list_[i].event_ = E_DECLINE;
       }
     }
-    // double income = calculatePeriodIncome();
   }
 }
 
@@ -147,9 +155,8 @@ void Deposit::setDefaultValues() {
   interest_total_ = 0.0;
   // interest_gain_ = 0.0;
   tax_total_ = 0.0;
-  // withdrawal_total_ = 0.0;
-  // replenish_total_ = 0.0;
-  intervention_total_ = 0.0;
+  withdrawal_total_ = 0.0;
+  replenish_total_ = 0.0;
 }
 
 void Deposit::insertNewYears() {
