@@ -9,62 +9,40 @@ class ControllerDeposit {
   ControllerDeposit() = default;
   ~ControllerDeposit() = default;
 
-  void setDeposit(double value);
-  void setTerm(int term, Deposit::TermType unit);
-  void setStartDate(int day, int month, int year);
-  void setInterest(double value);
-  void setTax(double value);
-  void setCapitalization(bool set);
-  void setPeriodicity(Deposit::PayPeriod value);
-  void setRemainderLimit(double value);
-
+  void setDeposit(double value) noexcept;
+  void setTerm(int term, Deposit::TermType unit) noexcept;
+  void setStartDate(int day, int month, int year) noexcept;
+  void setInterest(double value) noexcept;
+  void setTax(double value) noexcept;
+  void setCapitalization(bool set) noexcept;
+  void setPeriodicity(Deposit::PayPeriod value) noexcept;
+  void setRemainderLimit(double value) noexcept;
   void addReplenish(Deposit::OperPeriod freq, Date date, double value);
   void addWithdrawal(Deposit::OperPeriod freq, Date date, double value);
   void removeReplenish(size_t index);
   void removeWithdrawal(size_t index);
-  size_t getReplenishListSize();
-  size_t getWithdrawalListSize();
-  size_t getEventListSize();
-  size_t getTaxListSize();
+
+  double getDeposit() const noexcept;
+  size_t getReplenishListSize() const noexcept;
+  size_t getWithdrawalListSize() const noexcept;
   std::vector<Deposit::Operation>::const_iterator getReplenishListElement(
-      size_t index);
+      size_t index) const noexcept;
   std::vector<Deposit::Operation>::const_iterator getWithdrawalListElement(
-      size_t index);
-  std::vector<Deposit::Event>::const_iterator getEventListElement(size_t index);
-  std::vector<Deposit::Tax>::const_iterator getTaxListElement(size_t index);
-  double getBalance();
-  double getDeposit();
-  double getInterestTotal();
-  double getTaxTotal();
-  double getReplenishTotal();
-  double getWithdrawalTotal();
+      size_t index) const noexcept;
+
+  size_t getEventListSize() const noexcept;
+  size_t getTaxListSize() const noexcept;
+  std::vector<Deposit::Event>::const_iterator getEventListElement(
+      size_t index) const noexcept;
+  std::vector<Deposit::Tax>::const_iterator getTaxListElement(
+      size_t index) const noexcept;
+  double getBalance() const noexcept;
+  double getInterestTotal() const noexcept;
+  double getTaxTotal() const noexcept;
+  double getReplenishTotal() const noexcept;
+  double getWithdrawalTotal() const noexcept;
 
   void calculate();
-
-  // void setDeposit(double value);
-  // void setTerm(int days);
-  // void setTermType(TermType value);
-  // void setStartDate(int day, int month, int year);
-  // void setInterest(double value);
-  // void setTax(double value);
-  // void setCapitalization(bool set);
-  // void setPeriodicity(PayPeriod value);
-  // // void setReminderLimit(double value);
-  // void addReplenish(OperPeriod freq, Date date, double value);
-  // void addWithdrawal(OperPeriod freq, Date date, double value);
-  // void removeReplenish(size_t index);
-  // void removeWithdrawal(size_t index);
-  // size_t getReplenishListSize();
-  // size_t getWIthdrawalListSize();
-  // std::vector<Operation>::const_iterator getReplenishListElement(size_t
-  // index); std::vector<Operation>::const_iterator
-  // getWithdrawalListElement(size_t index);
-  // // remove
-
-  // /* Calcualate */
-  // void calculate();
-  // size_t getEventListSize();
-  // std::vector<Event>::const_iterator getEventListElement(size_t index);
 
  private:
   Deposit deposit_;

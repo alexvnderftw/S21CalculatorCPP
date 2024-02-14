@@ -2,21 +2,15 @@
 
 namespace s21 {
 
-void Credit::SetAnnuity() { payment_type_ = ANNUITY; }
-
-void Credit::SetDifferential() { payment_type_ = DIFFERENTIAL; }
-
-void Credit::SetTime(int months) { time_ = months; }
-
-void Credit::SetRate(double rate) { rate_ = rate; }
-
-void Credit::SetCredit(double credit) { credit_ = credit; }
-
+void Credit::SetAnnuity() noexcept { payment_type_ = ANNUITY; }
+void Credit::SetDifferential() noexcept { payment_type_ = DIFFERENTIAL; }
+void Credit::SetTime(int months) noexcept { time_ = months; }
+void Credit::SetRate(double rate) noexcept { rate_ = rate; }
+void Credit::SetCredit(double credit) noexcept { credit_ = credit; }
 void Credit::SetStartDate(int month, int year) {
   start_month_ = month;
   start_year_ = year;
 }
-
 void Credit::SetStartDate() {
   time_t t = std::time(NULL);
   struct tm time_data = *std::localtime(&t);
@@ -24,30 +18,22 @@ void Credit::SetStartDate() {
   start_year_ = time_data.tm_year + 1900;
 }
 
-Credit::Type Credit::GetType() { return payment_type_; }
-
-int Credit::GetTime() { return time_; }
-
-double Credit::GetRate() { return rate_; }
-
-double Credit::GetCredit() { return credit_; }
-
-int Credit::GetStartMonth() { return start_month_; }
-
-int Credit::GetStartYear() { return start_year_; }
-
-double Credit::GetSummaryPaid() { return sum_paid_; }
-
-double Credit::GetSummaryMainPart() { return sum_main_paid_; }
-
-double Credit::GetSummaryRatePart() { return sum_rate_paid_; }
-
-Credit::CreditMonth Credit::operator[](size_t pos) { return data_[pos]; }
-
-size_t Credit::GetDataSize() { return data_.size(); }
-
-std::vector<Credit::CreditMonth>::iterator Credit::GetData() {
-  return data_.begin();
+Credit::Type Credit::GetType() const noexcept { return payment_type_; }
+int Credit::GetTime() const noexcept { return time_; }
+double Credit::GetRate() const noexcept { return rate_; }
+double Credit::GetCredit() const noexcept { return credit_; }
+int Credit::GetStartMonth() const noexcept { return start_month_; }
+int Credit::GetStartYear() const noexcept { return start_year_; }
+double Credit::GetSummaryPaid() const noexcept { return sum_paid_; }
+double Credit::GetSummaryMainPart() const noexcept { return sum_main_paid_; }
+double Credit::GetSummaryRatePart() const noexcept { return sum_rate_paid_; }
+size_t Credit::GetDataSize() const noexcept { return data_.size(); }
+std::vector<Credit::CreditMonth>::const_iterator Credit::GetData()
+    const noexcept {
+  return data_.cbegin();
+}
+Credit::CreditMonth Credit::operator[](size_t pos) const noexcept {
+  return data_[pos];
 }
 
 /* Main function. Call it after setting all values.
@@ -69,36 +55,38 @@ bool Credit::Calculate() {
 
 /* Misc */
 
-void Credit::Reset() {
+void Credit::Reset() noexcept {
   sum_paid_ = 0.0;
   sum_main_paid_ = 0.0;
   sum_rate_paid_ = 0.0;
   data_.clear();
 }
 
-bool Credit::Validate() {
+bool Credit::Validate() const noexcept {
   return ValidateCredit() && ValidateRate() && ValidateTime() &&
          ValidateStartDate();
 }
 
-bool Credit::ValidateCredit() {
+bool Credit::ValidateCredit() const noexcept {
   return credit_ > 0.0 && credit_ <= MAX_CREDIT_ && !std::isnan(credit_) &&
          !std::isinf(credit_);
 }
 
-bool Credit::ValidateRate() {
+bool Credit::ValidateRate() const noexcept {
   return rate_ > 0.0 && rate_ <= MAX_RATE_ && !std::isnan(rate_) &&
          !std::isinf(rate_);
 }
 
-bool Credit::ValidateTime() { return time_ > 0 && time_ <= MAX_TIME_; }
+bool Credit::ValidateTime() const noexcept {
+  return time_ > 0 && time_ <= MAX_TIME_;
+}
 
-bool Credit::ValidateStartDate() {
+bool Credit::ValidateStartDate() const noexcept {
   return start_month_ > 0 && start_month_ <= 12 && start_year_ >= MIN_YEAR_ &&
          start_year_ <= MAX_YEAR_;
 }
 
-void Credit::CalculateAnnuity() {
+void Credit::CalculateAnnuity() noexcept {
   data_[0].month_ = start_month_;
   data_[0].year_ = start_year_;
   data_[0].rate_fee_ = BankRoundTwoDecimal(credit_ * rate_ / 12.0);
@@ -127,7 +115,7 @@ void Credit::CalculateAnnuity() {
   CalculateSummary();
 }
 
-void Credit::CalculateDifferential() {
+void Credit::CalculateDifferential() noexcept {
   data_[0].month_ = start_month_;
   data_[0].year_ = start_year_;
   data_[0].main_fee_ = credit_ / time_;
@@ -152,7 +140,7 @@ void Credit::CalculateDifferential() {
   RoundData();
 }
 
-void Credit::CalculateSummary() {
+void Credit::CalculateSummary() noexcept {
   for (int i = 0; i < time_; ++i) {
     sum_paid_ += data_[i].payment_;
     sum_main_paid_ += data_[i].main_fee_;
@@ -160,7 +148,7 @@ void Credit::CalculateSummary() {
   }
 }
 
-void Credit::RoundData() {
+void Credit::RoundData() noexcept {
   for (int i = 0; i < time_; ++i) {
     data_[i].main_fee_ = BankRoundTwoDecimal(data_[i].main_fee_);
     data_[i].payment_ = BankRoundTwoDecimal(data_[i].payment_);
@@ -173,7 +161,7 @@ void Credit::RoundData() {
 }
 
 /* Bank rounding of number to number with two decimal digits. */
-double Credit::BankRoundTwoDecimal(double number) {
+double Credit::BankRoundTwoDecimal(double number) noexcept {
   return bankRound(number * 100.0) / 100.0;
 }
 

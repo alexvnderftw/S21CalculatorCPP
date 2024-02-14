@@ -9,26 +9,26 @@ class ControllerCredit {
   ControllerCredit() = default;
   ~ControllerCredit() = default;
 
-  void setAnnuity();
-  void setDifferential();
+  void setAnnuity() noexcept;
+  void setDifferential() noexcept;
   void setData(double credit, double rate, int time);
 
-  bool isAnnuity();
-  bool isDifferential();
+  bool isAnnuity() const noexcept;
+  bool isDifferential() const noexcept;
 
   bool calculate();
   bool calculate(double credit, double rate, int time);
 
-  double getSumPaid();
-  double getSumMainPart();
-  double getSumRatePart();
-  int getMonth(size_t pos);
-  int getYear(size_t pos);
-  double getPayment(size_t pos);
-  double getMainPart(size_t pos);
-  double getRatePart(size_t pos);
-  double getLeftover(size_t pos);
-  size_t getDataSize();
+  double getSumPaid() const noexcept;
+  double getSumMainPart() const noexcept;
+  double getSumRatePart() const noexcept;
+  int getMonth(size_t pos) const noexcept;
+  int getYear(size_t pos) const noexcept;
+  double getPayment(size_t pos) const noexcept;
+  double getMainPart(size_t pos) const noexcept;
+  double getRatePart(size_t pos) const noexcept;
+  double getLeftover(size_t pos) const noexcept;
+  size_t getDataSize() const noexcept;
 
  private:
   Credit credit_;

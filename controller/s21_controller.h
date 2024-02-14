@@ -11,10 +11,10 @@ class Controller {
 
   double calculate(const std::string expr, const std::string x);
   double calculate(double x);
-  void setRadian();
-  void setDegree();
-  bool isSuccessful();
-  bool isEmpty();
+  void setRadian() noexcept;
+  void setDegree() noexcept;
+  bool isSuccessful() const noexcept;
+  bool isEmpty() const noexcept;
 
  private:
   Calculation calculator_;

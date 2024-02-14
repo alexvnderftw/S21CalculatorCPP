@@ -31,16 +31,18 @@ class Calculation {
 
   enum TrigType { RAD, DEG };
 
-  void SetX(double x);
-  void SetX(const std::string x_str);
-  void SetExpression(const std::string input);
-  void SetRadian();
-  void SetDegree();
+  /* Set methods */
+  void SetX(double x) noexcept;
+  void SetX(const std::string x_str) noexcept;
+  void SetExpression(const std::string input) noexcept;
+  void SetRadian() noexcept;
+  void SetDegree() noexcept;
 
-  TrigType GetTrigValue();
-  Status GetStatus();
-  const std::string GetExpression();
-  double GetX();
+  /* Get methods */
+  TrigType GetTrigValue() const noexcept;
+  Status GetStatus() const noexcept;
+  const std::string GetExpression() const noexcept;
+  double GetX() const noexcept;
   double GetResult();
   double GetResult(double x);
   double GetResult(const std::string input);
@@ -130,17 +132,17 @@ class Calculation {
   BinaryCallback GetBinaryCallback(TokenType value);
   FuncType GetFunctionType(TokenType value);
 
-  bool IsFunction(TokenType value);
-  bool IsBinaryOperator(TokenType value);
-  bool IsUnaryOperator(TokenType value);
+  static bool IsFunction(TokenType value) noexcept;
+  static bool IsBinaryOperator(TokenType value) noexcept;
+  static bool IsUnaryOperator(TokenType value) noexcept;
 
   /* Custom math functions */
-  static double sum(double a, double b) { return a + b; };
-  static double sub(double a, double b) { return a - b; };
-  static double mult(double a, double b) { return a * b; };
-  static double fdiv(double a, double b) { return a / b; };
-  static double plus(double a) { return +a; };
-  static double minus(double a) { return -a; };
+  static double sum(double a, double b) noexcept { return a + b; };
+  static double sub(double a, double b) noexcept { return a - b; };
+  static double mult(double a, double b) noexcept { return a * b; };
+  static double fdiv(double a, double b) noexcept { return a / b; };
+  static double plus(double a) noexcept { return +a; };
+  static double minus(double a) noexcept { return -a; };
 
   /* Key - {Parse pattern, Callback function, Function type} */
   const std::map<TokenType, std::tuple<std::string, UnaryCallback, FuncType>>

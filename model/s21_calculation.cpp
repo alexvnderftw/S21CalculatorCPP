@@ -2,9 +2,8 @@
 
 namespace s21 {
 
-void Calculation::SetX(double x) { x_ = x; }
-
-void Calculation::SetX(const std::string x_str) {
+void Calculation::SetX(double x) noexcept { x_ = x; }
+void Calculation::SetX(const std::string x_str) noexcept {
   double x = NAN;
   int shift = 0;
   std::string str = x_str;
@@ -16,46 +15,37 @@ void Calculation::SetX(const std::string x_str) {
   else
     SetX(x);
 }
-
-void Calculation::SetExpression(const std::string input) {
+void Calculation::SetExpression(const std::string input) noexcept {
   expr_ = input;
   status_ = NEW_EXPRESSION;
 }
+void Calculation::SetRadian() noexcept { trig_value_ = RAD; }
+void Calculation::SetDegree() noexcept { trig_value_ = DEG; }
 
-void Calculation::SetRadian() { trig_value_ = RAD; }
-
-void Calculation::SetDegree() { trig_value_ = DEG; }
-
-double Calculation::GetX() { return x_; }
-
-const std::string Calculation::GetExpression() { return expr_; }
-
-Calculation::TrigType Calculation::GetTrigValue() { return trig_value_; }
-
-Calculation::Status Calculation::GetStatus() { return status_; }
-
+double Calculation::GetX() const noexcept { return x_; }
+const std::string Calculation::GetExpression() const noexcept { return expr_; }
+Calculation::TrigType Calculation::GetTrigValue() const noexcept {
+  return trig_value_;
+}
+Calculation::Status Calculation::GetStatus() const noexcept { return status_; }
 double Calculation::GetResult() {
   if (status_ == NEW_EXPRESSION) Reset();
   if (status_ == READY) Parse();
   if (status_ == PARSED || status_ == COMPLETED) Calculate();
   return result_;
 }
-
 double Calculation::GetResult(double x) {
   SetX(x);
   return GetResult();
 }
-
 double Calculation::GetResult(const std::string input) {
   SetExpression(input);
   return GetResult();
 }
-
 double Calculation::GetResult(const std::string input, double x) {
   SetX(x);
   return GetResult(input);
 }
-
 double Calculation::GetResult(const std::string input, const std::string x) {
   SetX(x);
   return GetResult(input);
@@ -329,15 +319,15 @@ Calculation::FuncType Calculation::GetFunctionType(TokenType value) {
   return std::get<2>(functions.at(value));
 }
 
-bool Calculation::IsBinaryOperator(TokenType value) {
+bool Calculation::IsBinaryOperator(TokenType value) noexcept {
   return value >= SUM && value <= MOD;
 }
 
-bool Calculation::IsUnaryOperator(TokenType value) {
+bool Calculation::IsUnaryOperator(TokenType value) noexcept {
   return value >= PLUS && value <= MINUS_ALT;
 }
 
-bool Calculation::IsFunction(TokenType value) {
+bool Calculation::IsFunction(TokenType value) noexcept {
   return value >= SQRT && value <= ATAN;
 }
 

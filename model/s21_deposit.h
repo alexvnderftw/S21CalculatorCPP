@@ -107,7 +107,7 @@ class Deposit {
   void setDeposit(double value) noexcept;
   void setTerm(int days) noexcept;
   void setTermType(TermType value) noexcept;
-  void setStartDate(int day, int month, int year);
+  void setStartDate(int day, int month, int year) noexcept;
   void setInterest(double value) noexcept;
   void setTax(double value) noexcept;
   void setCapitalization(bool set) noexcept;
@@ -183,26 +183,25 @@ class Deposit {
   std::vector<Tax> tax_list_{};
 
   /* Misc methods */
-  void calculateValues();
   void setDefaultValues() noexcept;
-  void insertNewYears();
+  void calculateTerm();
+  void calculateValues();
+  void spliceOperations();
   void insertDeposit();
-  void insertLastPayday();
-  void insertPaydays();
-  void insertTaxes();
+  void insertNewYears();
   void insertReplenishList();
   void insertWithdrawalList();
+  void insertPaydays();
+  void insertLastPayday();
   void insertReplenish(size_t i);
   void insertWithdrawal(size_t i);
-  static Date nextMonthDate(Date date);
-  static double calculateDayValue(int year, double rate) noexcept;
-  static bool isLeapYear(int year) noexcept;
-  void calculateTerm();
-  static bool dateComparator(Event first, Event second) noexcept;
-  void spliceOperations();
   bool validateSettings() const noexcept;
   bool checkPositiveDouble(double value) const noexcept;
   bool checkDates() const noexcept;
+  static Date nextMonthDate(Date date);
+  static double calculateDayValue(int year, double rate) noexcept;
+  static bool isLeapYear(int year) noexcept;
+  static bool dateComparator(Event first, Event second) noexcept;
 };
 }  // namespace s21
 
