@@ -76,9 +76,10 @@ s21::Deposit::TermType DepositCalculator::getUnitType() {
 s21::Deposit::PayPeriod DepositCalculator::getPayPeriod() {
     if (ui->comboBoxPeriodicity->currentIndex() == 0) return s21::Deposit::P_AT_END;
     else if (ui->comboBoxPeriodicity->currentIndex() == 1) return s21::Deposit::P_DAILY;
-    else if (ui->comboBoxPeriodicity->currentIndex() == 2) return s21::Deposit::P_MONTHLY;
-    else if (ui->comboBoxPeriodicity->currentIndex() == 3) return s21::Deposit::P_QUARTERLY;
-    else if (ui->comboBoxPeriodicity->currentIndex() == 4) return s21::Deposit::P_BIANNUALLY;
+    else if (ui->comboBoxPeriodicity->currentIndex() == 2) return s21::Deposit::P_WEEKLY;
+    else if (ui->comboBoxPeriodicity->currentIndex() == 3) return s21::Deposit::P_MONTHLY;
+    else if (ui->comboBoxPeriodicity->currentIndex() == 4) return s21::Deposit::P_QUARTERLY;
+    else if (ui->comboBoxPeriodicity->currentIndex() == 5) return s21::Deposit::P_BIANNUALLY;
     else return s21::Deposit::P_ANNUALLY;
 }
 
@@ -258,8 +259,13 @@ void DepositCalculator::removeWithdrawal() {
 void DepositCalculator::setCapitalization(int value) {
     if (value == 0) {
         data.setCapitalization(false);
+        qobject_cast<QListView *>(ui->comboBoxPeriodicity->view())->setRowHidden(0, false);
     } else {
         data.setCapitalization(true);
+        qobject_cast<QListView *>(ui->comboBoxPeriodicity->view())->setRowHidden(0, true);
+        if (ui->comboBoxPeriodicity->currentIndex() == 0) {
+            ui->comboBoxPeriodicity->setCurrentIndex(1);
+        }
     }
 }
 

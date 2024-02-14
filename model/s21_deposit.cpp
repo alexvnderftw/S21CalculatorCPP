@@ -81,10 +81,10 @@ void Deposit::calculate() {
   setDefaultValues();
   calculateTerm();
   insertDeposit();
-  insertNewYears();
   insertReplenishList();
   insertWithdrawalList();
   insertPaydays();
+  insertNewYears();
   insertLastPayday();
 
   std::sort(
@@ -122,70 +122,214 @@ void Deposit::calculateTerm() {
   }
 }
 
+// void Deposit::calculateValues() {
+//   double day_value =
+//       calculateDayValue(start_date_.getYear(),
+//       bankRoundTwoDecimal(interest_));
+//   // gain = day_value * n_days;
+//   // n_days = pay_event | prev_event;
+//   balance_ += event_list_[0].balance_change_;
+//   event_list_[0].balance_ = balance_;
+//   for (size_t i = 1; i < event_list_.size(); ++i) {
+//     if (event_list_[i].event_ == E_REPLENISH) {
+//       event_list_[i].gain_ = bankRoundFourDecimal(
+//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+//           balance_);
+//       balance_ += event_list_[i].balance_change_;
+//       event_list_[i].balance_ = balance_;
+//       replenish_total_ += event_list_[i].balance_change_;
+//     } else if (event_list_[i].event_ == E_PAYDAY) {
+//       event_list_[i].balance_ = balance_;
+//       event_list_[i].gain_ = bankRoundFourDecimal(
+//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+//           balance_);
+//       event_list_[i].payment_ = event_list_[i].gain_;
+//       for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j)
+//       {
+//         event_list_[i].payment_ += event_list_[j].gain_;
+//         event_list_[i].gain_ += event_list_[j].gain_;
+//         event_list_[j].gain_ = 0.0;
+//       }
+//       if (capital_ == true) {
+//         event_list_[i].balance_change_ = event_list_[i].payment_;
+//         event_list_[i].balance_ += event_list_[i].balance_change_;
+//         balance_ = event_list_[i].balance_;
+//         event_list_[i].payment_ = 0.0;
+//       }
+//       interest_total_ += event_list_[i].gain_;
+//       year_income_ += event_list_[i].gain_;
+//       if (event_list_[i].date_ == end_date_) {
+//         tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+//                                 year_income_ * tax_));
+//         tax_total_ += year_income_ * tax_;
+//       }
+//     } else if (event_list_[i].event_ == E_NEWYEAR) {
+//       event_list_[i].balance_ = balance_;
+//       event_list_[i].gain_ = bankRoundFourDecimal(
+//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+//           balance_);
+//       day_value =
+//           calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
+//       tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+//                               year_income_ * tax_));
+//       tax_total_ += year_income_ * tax_;
+//       year_income_ = 0.0;
+//     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
+//       event_list_[i].balance_ = balance_;
+//       event_list_[i].gain_ = bankRoundFourDecimal(
+//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+//           balance_);
+//       if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
+//         event_list_[i].balance_ += event_list_[i].balance_change_;
+//         balance_ = event_list_[i].balance_;
+//         withdrawal_total_ -= event_list_[i].balance_change_;
+//       } else {
+//         event_list_[i].event_ = E_DECLINE;
+//       }
+//     }
+//   }
+// }
+
 void Deposit::calculateValues() {
   double day_value = calculateDayValue(start_date_.getYear(), interest_);
   // gain = day_value * n_days;
   // n_days = pay_event | prev_event;
-  balance_ += event_list_[0].balance_change_;
-  event_list_[0].balance_ = balance_;
+  balance_ += bankRoundTwoDecimal(event_list_[0].balance_change_);
+  event_list_[0].balance_ = bankRoundTwoDecimal(balance_);
   for (size_t i = 1; i < event_list_.size(); ++i) {
     if (event_list_[i].event_ == E_REPLENISH) {
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      balance_ += event_list_[i].balance_change_;
-      event_list_[i].balance_ = balance_;
-      replenish_total_ += event_list_[i].balance_change_;
+      event_list_[i].gain_ = bankRoundTwoDecimal(
+          day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+          balance_);
+      balance_ += bankRoundTwoDecimal(event_list_[i].balance_change_);
+      event_list_[i].balance_ = bankRoundTwoDecimal(balance_);
+      replenish_total_ += bankRoundTwoDecimal(event_list_[i].balance_change_);
     } else if (event_list_[i].event_ == E_PAYDAY) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      event_list_[i].payment_ = event_list_[i].gain_;
+      event_list_[i].balance_ = bankRoundTwoDecimal(balance_);
+      event_list_[i].gain_ = bankRoundTwoDecimal(
+          day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+          balance_);
+      event_list_[i].payment_ = bankRoundTwoDecimal(event_list_[i].gain_);
       for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j) {
-        event_list_[i].payment_ += event_list_[j].gain_;
-        event_list_[i].gain_ += event_list_[j].gain_;
+        event_list_[i].payment_ += bankRoundTwoDecimal(event_list_[j].gain_);
+        event_list_[i].gain_ += bankRoundTwoDecimal(event_list_[j].gain_);
         event_list_[j].gain_ = 0.0;
       }
       if (capital_ == true) {
-        event_list_[i].balance_change_ = event_list_[i].payment_;
-        event_list_[i].balance_ += event_list_[i].balance_change_;
-        balance_ = event_list_[i].balance_;
+        event_list_[i].balance_change_ =
+            bankRoundTwoDecimal(event_list_[i].payment_);
+        event_list_[i].balance_ +=
+            bankRoundTwoDecimal(event_list_[i].balance_change_);
+        balance_ = bankRoundTwoDecimal(event_list_[i].balance_);
         event_list_[i].payment_ = 0.0;
       }
-      interest_total_ += event_list_[i].gain_;
+      interest_total_ += bankRoundTwoDecimal(event_list_[i].gain_);
+      year_income_ += bankRoundTwoDecimal(event_list_[i].gain_);
       if (event_list_[i].date_ == end_date_) {
-        year_income_ = interest_total_ - year_income_;
         tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-                                year_income_ * tax_));
-        tax_total_ += year_income_ * tax_;
+                                bankRoundTwoDecimal(year_income_ * tax_)));
+        tax_total_ += bankRoundTwoDecimal(year_income_ * tax_);
       }
     } else if (event_list_[i].event_ == E_NEWYEAR) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
+      event_list_[i].balance_ = bankRoundTwoDecimal(balance_);
+      event_list_[i].gain_ = bankRoundTwoDecimal(
+          day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+          balance_);
       day_value =
           calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
-      year_income_ = interest_total_ - year_income_;
       tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-                              year_income_ * tax_));
-      tax_total_ += year_income_ * tax_;
+                              bankRoundTwoDecimal(year_income_ * tax_)));
+      tax_total_ += bankRoundTwoDecimal(year_income_ * tax_);
+      year_income_ = 0.0;
     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
+      event_list_[i].balance_ = bankRoundTwoDecimal(balance_);
+      event_list_[i].gain_ = bankRoundTwoDecimal(
+          day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
+          balance_);
       if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
-        event_list_[i].balance_ += event_list_[i].balance_change_;
-        balance_ = event_list_[i].balance_;
-        withdrawal_total_ -= event_list_[i].balance_change_;
+        event_list_[i].balance_ +=
+            bankRoundTwoDecimal(event_list_[i].balance_change_);
+        balance_ = bankRoundTwoDecimal(event_list_[i].balance_);
+        withdrawal_total_ -=
+            bankRoundTwoDecimal(event_list_[i].balance_change_);
       } else {
         event_list_[i].event_ = E_DECLINE;
       }
     }
   }
 }
+
+// void Deposit::calculateValues() {
+//   double day_value = calculateDayValue(start_date_.getYear(), interest_);
+//   // gain = day_value * n_days;
+//   // n_days = pay_event | prev_event;
+//   balance_ += bankRoundTwoDecimal(event_list_[0].balance_change_);
+//   event_list_[0].balance_ = balance_;
+//   for (size_t i = 1; i < event_list_.size(); ++i) {
+//     if (event_list_[i].event_ == E_REPLENISH) {
+//       event_list_[i].gain_ = day_value *
+//                              (event_list_[i].date_ | event_list_[i -
+//                              1].date_) * balance_;
+//       balance_ += bankRoundTwoDecimal(event_list_[i].balance_change_);
+//       event_list_[i].balance_ = balance_;
+//       replenish_total_ +=
+//       bankRoundTwoDecimal(event_list_[i].balance_change_);
+//     } else if (event_list_[i].event_ == E_PAYDAY) {
+//       event_list_[i].balance_ = bankRoundTwoDecimal(balance_);
+//       event_list_[i].gain_ = day_value *
+//                              (event_list_[i].date_ | event_list_[i -
+//                              1].date_) * balance_;
+//       event_list_[i].payment_ = event_list_[i].gain_;
+//       for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j)
+//       {
+//         event_list_[i].payment_ += bankRoundTwoDecimal(event_list_[j].gain_);
+//         event_list_[i].gain_ += bankRoundTwoDecimal(event_list_[j].gain_);
+//         event_list_[j].gain_ = 0.0;
+//       }
+//       if (capital_ == true) {
+//         event_list_[i].balance_change_ = event_list_[i].payment_;
+//         event_list_[i].balance_ +=
+//             bankRoundTwoDecimal(event_list_[i].balance_change_);
+//         balance_ = event_list_[i].balance_;
+//         event_list_[i].payment_ = 0.0;
+//       }
+//       interest_total_ += bankRoundTwoDecimal(event_list_[i].gain_);
+//       if (event_list_[i].date_ == end_date_) {
+//         year_income_ = bankRoundTwoDecimal(interest_total_) -
+//                        bankRoundTwoDecimal(year_income_);
+//         tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+//                                 year_income_ * tax_));
+//         tax_total_ += bankRoundTwoDecimal(year_income_ * tax_);
+//       }
+//     } else if (event_list_[i].event_ == E_NEWYEAR) {
+//       event_list_[i].balance_ = balance_;
+//       event_list_[i].gain_ = day_value *
+//                              (event_list_[i].date_ | event_list_[i -
+//                              1].date_) * balance_;
+//       day_value =
+//           calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
+//       year_income_ = bankRoundTwoDecimal(interest_total_) -
+//                      bankRoundTwoDecimal(year_income_);
+//       tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
+//                               year_income_ * tax_));
+//       tax_total_ += bankRoundTwoDecimal(year_income_ * tax_);
+//     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
+//       event_list_[i].balance_ = balance_;
+//       event_list_[i].gain_ = day_value *
+//                              (event_list_[i].date_ | event_list_[i -
+//                              1].date_) * balance_;
+//       if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
+//         event_list_[i].balance_ +=
+//             bankRoundTwoDecimal(event_list_[i].balance_change_);
+//         balance_ = event_list_[i].balance_;
+//         withdrawal_total_ -=
+//             bankRoundTwoDecimal(event_list_[i].balance_change_);
+//       } else {
+//         event_list_[i].event_ = E_DECLINE;
+//       }
+//     }
+//   }
+// }
 
 /* Splice replenishments and withdrawals of the same day in event_list_. */
 void Deposit::spliceOperations() {
@@ -203,6 +347,12 @@ void Deposit::spliceOperations() {
         event_list_.erase(event_list_.begin() + i + 1);
         --i;
       }
+    } else if (event_list_[i].date_ == event_list_[i + 1].date_ &&
+               event_list_[i].event_ == E_NEWYEAR &&
+               event_list_[i + 1].event_ == E_PAYDAY) {
+      Event buffer = event_list_[i];
+      event_list_[i] = event_list_[i + 1];
+      event_list_[i + 1] = buffer;
     }
   }
 }

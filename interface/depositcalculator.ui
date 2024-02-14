@@ -762,7 +762,7 @@ font: 13pt &quot;Drexs&quot;;
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <item>
        <property name="text">
@@ -772,6 +772,11 @@ font: 13pt &quot;Drexs&quot;;
       <item>
        <property name="text">
         <string>Daily</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Weekly</string>
        </property>
       </item>
       <item>
