@@ -3,7 +3,7 @@
 namespace s21 {
 
 /* Regular bank round of double number to integer value. */
-double bankRound(double number) {
+double bankRound(double number) noexcept {
   if (number >= 0 && number - std::floor(number) == 0.5) {
     if (std::fmod(std::fmod(std::floor(number), 10.0), 2.0) == 0.0)
       number = std::floor(number);
@@ -35,7 +35,6 @@ Date::Date() {
   base_.tm_mday = BASE_DAY;
   base_.tm_mon = BASE_MONTH - 1;
   base_.tm_year = BASE_YEAR - 1900;
-  /// diff
 }
 
 Date::Date(int day, int month, int year) {
@@ -63,24 +62,17 @@ void Date::setDate(int day, int month, int year) {
   current_.tm_year = year - 1900;
 }
 
-// int Date::getDays(const Date& date) {}
+int Date::getDay() const noexcept { return current_.tm_mday; }
 
-// Date Date::getDate(int days) {}
+int Date::getMonth() const noexcept { return current_.tm_mon + 1; }
 
-int Date::getDay() { return current_.tm_mday; }
-
-int Date::getMonth() { return current_.tm_mon + 1; }
-
-int Date::getYear() { return current_.tm_year + 1900; }
+int Date::getYear() const noexcept { return current_.tm_year + 1900; }
 
 int Date::subtract(const Date& sub) const {
   return getDiff(current_, sub.current_);
 }
 
-int Date::operator|(const Date& sub) const {
-  // Date first_new(first), second_new(second);
-  return subtract(sub);
-}
+int Date::operator|(const Date& sub) const { return subtract(sub); }
 
 Date operator+(int days, const Date& date) {
   Date date_new(date);
@@ -88,13 +80,13 @@ Date operator+(int days, const Date& date) {
   return date_new;
 }
 
-Date Date::operator+(int days) {
+Date Date::operator+(int days) const {
   Date date_new(*this);
   date_new.addDays(days);
   return date_new;
 }
 
-Date Date::operator-(int days) {
+Date Date::operator-(int days) const {
   Date date_new(*this);
   date_new.addDays(-days);
   return date_new;
@@ -154,8 +146,6 @@ bool Date::operator<(const Date& date) const {
   return getDaysSinceBase() < date.getDaysSinceBase();
 }
 
-// bool isDateValid(int d, int m, int y);
-
 void Date::addDays(int days) {
   std::tm new_date = current_;
   time_t tmp = std::mktime(&new_date);
@@ -194,7 +184,6 @@ Date Date::shiftMonths(int months) const {
   return ret;
 }
 
-// need this??
 int Date::getDaysSinceBase() const { return getDiff(current_, base_); }
 
 int Date::getDiff(const struct std::tm& end,
@@ -206,7 +195,7 @@ int Date::getDiff(const struct std::tm& end,
   return static_cast<int>(difference);
 }
 
-bool Date::isDateValid(int d, int m, int y) {
+bool Date::isDateValid(int d, int m, int y) noexcept {
   if (y < BASE_YEAR) return false;
   if (m < 1 || m > 12) return false;
   if (d < 1 || d > 31) return false;

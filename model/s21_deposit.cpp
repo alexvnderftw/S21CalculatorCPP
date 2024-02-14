@@ -2,17 +2,19 @@
 
 namespace s21 {
 
-void Deposit::setDeposit(double value) { deposit_ = value; }
-void Deposit::setTerm(int days) { term_ = days; }
-void Deposit::setTermType(TermType value) { term_type_ = value; }
+void Deposit::setDeposit(double value) noexcept { deposit_ = value; }
+void Deposit::setTerm(int days) noexcept { term_ = days; }
+void Deposit::setTermType(TermType value) noexcept { term_type_ = value; }
 void Deposit::setStartDate(int day, int month, int year) {
   start_date_.setDate(day, month, year);
 }
-void Deposit::setInterest(double value) { interest_ = value; }
-void Deposit::setTax(double value) { tax_ = value; }
-void Deposit::setCapitalization(bool set) { capital_ = set; }
-void Deposit::setPeriodicity(PayPeriod value) { periodicity_ = value; }
-void Deposit::setRemainderLimit(double value) { remainder_limit_ = value; }
+void Deposit::setInterest(double value) noexcept { interest_ = value; }
+void Deposit::setTax(double value) noexcept { tax_ = value; }
+void Deposit::setCapitalization(bool set) noexcept { capital_ = set; }
+void Deposit::setPeriodicity(PayPeriod value) noexcept { periodicity_ = value; }
+void Deposit::setRemainderLimit(double value) noexcept {
+  remainder_limit_ = value;
+}
 
 void Deposit::addReplenish(OperPeriod freq, Date date, double value) {
   replenish_list_.push_back(Operation(freq, date, value));
@@ -26,35 +28,43 @@ void Deposit::removeReplenish(size_t index) {
 void Deposit::removeWithdrawal(size_t index) {
   withdrawal_list_.erase(withdrawal_list_.begin() + index);
 }
-size_t Deposit::getReplenishListSize() { return replenish_list_.size(); }
-size_t Deposit::getWithdrawalListSize() { return withdrawal_list_.size(); }
+size_t Deposit::getReplenishListSize() const noexcept {
+  return replenish_list_.size();
+}
+size_t Deposit::getWithdrawalListSize() const noexcept {
+  return withdrawal_list_.size();
+}
 std::vector<Deposit::Operation>::const_iterator
-Deposit::getReplenishListElement(size_t index) {
+Deposit::getReplenishListElement(size_t index) const noexcept {
   return replenish_list_.cbegin() + index;
 }
 std::vector<Deposit::Operation>::const_iterator
-Deposit::getWithdrawalListElement(size_t index) {
+Deposit::getWithdrawalListElement(size_t index) const noexcept {
   return withdrawal_list_.cbegin() + index;
 }
 
-size_t Deposit::getEventListSize() { return event_list_.size(); }
+size_t Deposit::getEventListSize() const noexcept { return event_list_.size(); }
 std::vector<Deposit::Event>::const_iterator Deposit::getEventListElement(
-    size_t index) {
+    size_t index) const noexcept {
   return event_list_.cbegin() + index;
 }
 
-double Deposit::getBalance() { return balance_; }
-double Deposit::getDeposit() { return deposit_; }
-double Deposit::getInterestTotal() { return interest_total_; }
-double Deposit::getTaxTotal() { return tax_total_; }
-double Deposit::getReplenishTotal() { return replenish_total_; }
-double Deposit::getWithdrawalTotal() { return withdrawal_total_; }
+double Deposit::getBalance() const noexcept { return balance_; }
+double Deposit::getDeposit() const noexcept { return deposit_; }
+double Deposit::getInterestTotal() const noexcept { return interest_total_; }
+double Deposit::getTaxTotal() const noexcept { return tax_total_; }
+double Deposit::getReplenishTotal() const noexcept { return replenish_total_; }
+double Deposit::getWithdrawalTotal() const noexcept {
+  return withdrawal_total_;
+}
 
-// /* Calcualate */
-// void calculate();
-// size_t getEventListSize();
-// std::vector<Operation>::const_iterator getEventListElement(size_t index);
+/* Throw exception if user parameters are invalid.
+  Weak part: function strictly rely on events order after sorting - some
+  std::sort realization doesn't ensure that equal elements won't move, in that
+  case output data can have wrong order and hence be calculated incorrectly.  */
 void Deposit::calculate() {
+  if (validateSettings() == false)
+    throw std::invalid_argument("Validation problem. Check bounds.");
   setDefaultValues();
   calculateTerm();
   insertDeposit();
@@ -62,19 +72,20 @@ void Deposit::calculate() {
   insertReplenishList();
   insertWithdrawalList();
   insertPaydays();
-  // insertTaxes();
   insertLastPayday();
 
   std::sort(
       event_list_.begin(), event_list_.end(),
       [](Event first, Event second) { return first.date_ < second.date_; });
 
-  // Splice replenishments and withdrawals of the same day. Comment it if full
-  // representation is wanted.
+  /* Splice replenishments and withdrawals of the same day. Comment, if full
+   * representation is needed. */
   spliceOperations();
 
-  // interest_total_
-  // balance_
+  calculateValues();
+}
+
+void Deposit::calculateValues() {
   double day_value = calculateDayValue(start_date_.getYear(), interest_);
   // gain = day_value * n_days;
   // n_days = pay_event | prev_event;
@@ -139,21 +150,18 @@ void Deposit::calculate() {
   }
 }
 
-bool Deposit::dateComparator(Event first, Event second) {
+bool Deposit::dateComparator(Event first, Event second) noexcept {
   return first.date_ > second.date_;
 }
 
 /* Misc */
 
-void Deposit::setDefaultValues() {
+void Deposit::setDefaultValues() noexcept {
   event_list_.clear();
   tax_list_.clear();
   balance_ = 0.0;
   year_income_ = 0.0;
-  // end_balance_ = 0.0;
-  // deposit_total_ = 0.0;
   interest_total_ = 0.0;
-  // interest_gain_ = 0.0;
   tax_total_ = 0.0;
   withdrawal_total_ = 0.0;
   replenish_total_ = 0.0;
@@ -347,7 +355,7 @@ Date Deposit::nextMonthDate(Date date) {
   }
 }
 
-double Deposit::calculateDayValue(int year, double rate) {
+double Deposit::calculateDayValue(int year, double rate) noexcept {
   if (isLeapYear(year) == false) {
     return rate / 365.0;
   } else {
@@ -355,7 +363,7 @@ double Deposit::calculateDayValue(int year, double rate) {
   }
 }
 
-bool Deposit::isLeapYear(int year) {
+bool Deposit::isLeapYear(int year) noexcept {
   if (year % 400 == 0) return true;
   if (year % 100 == 0) return false;
   if (year % 4 == 0) return true;
@@ -373,6 +381,7 @@ void Deposit::calculateTerm() {
   }
 }
 
+/* Splice replenishments and withdrawals of the same day in event_list_. */
 void Deposit::spliceOperations() {
   for (size_t i = 1; i < event_list_.size() - 1; ++i) {
     if (event_list_[i].date_ == event_list_[i + 1].date_ &&
@@ -392,11 +401,31 @@ void Deposit::spliceOperations() {
   }
 }
 
-size_t Deposit::getTaxListSize() { return tax_list_.size(); }
+size_t Deposit::getTaxListSize() const noexcept { return tax_list_.size(); }
 
 std::vector<Deposit::Tax>::const_iterator Deposit::getTaxListElement(
-    size_t index) {
+    size_t index) const noexcept {
   return tax_list_.cbegin() + index;
+}
+
+bool Deposit::validateSettings() const noexcept {
+  return checkPositiveDouble(deposit_) && checkPositiveDouble(interest_) &&
+         checkPositiveDouble(tax_) && checkPositiveDouble(remainder_limit_) &&
+         deposit_ <= MAX_DEPOSIT_VALUE && interest_ < MAX_RATE &&
+         tax_ <= MAX_TAX && checkDates();
+}
+
+bool Deposit::checkPositiveDouble(double value) const noexcept {
+  return value >= 0.0 && !std::isnan(value) && !std::isinf(value) &&
+         value < MAX_DOUBLE_VALUE;
+}
+
+bool Deposit::checkDates() const noexcept {
+  return term_ >= 0 &&
+         ((term_type_ == T_YEAR && term_ < MAX_TERM_Y) ||
+          (term_type_ == T_MONTH && term_ < MAX_TERM_M) ||
+          (term_type_ == T_DAY && term_ < MAX_TERM_D)) &&
+         start_date_.getYear() <= MAX_START_YEAR;
 }
 
 }  // namespace s21

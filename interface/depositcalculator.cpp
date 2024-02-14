@@ -283,4 +283,8 @@ void DepositCalculator::setInitialState() {
     ui->doubleSpinBoxValue->setMinimum(MIN_OPERATION_VALUE);
     ui->doubleSpinBoxValue->setMaximum(MAX_OPERATION_VALUE);
     ui->doubleSpinBoxValue->setValue(INITIAL_OPERATION_VALUE);
+    ui->dateEditStartDate->setMaximumDate(QDate(MAX_START_YEAR, 1, 1));
+    ui->dateEditOperationDate->setMaximumDate(QDate(MAX_START_YEAR, 1, 1));
+    ui->dateEditStartDate->setMinimumDate(QDate(MIN_START_YEAR, 1, 1));
+    ui->dateEditOperationDate->setMinimumDate(QDate(MIN_START_YEAR, 1, 1));
 }
