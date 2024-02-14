@@ -46,6 +46,9 @@ void ControllerDeposit::removeWithdrawal(size_t index) {
 
 /* Get methods */
 
+bool ControllerDeposit::isCapitalization() const noexcept {
+  return deposit_.isCapitalization();
+}
 double ControllerDeposit::getDeposit() const noexcept {
   return deposit_.getDeposit();
 }

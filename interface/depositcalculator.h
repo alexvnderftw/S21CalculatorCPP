@@ -58,6 +58,9 @@ private:
     QString getDateString(s21::Date date);
     QString getEventString(s21::Deposit::EventType event);
     QString getOperPeriodString(s21::Deposit::OperPeriod period);
+    static QString outputNumber(double number, bool force_plus = false, char format = 'f', int decimal_digits = '2');
+    static QString removeTrailingZeros(QString number, bool scientific = false);
+    static bool isAllZeros(QString number);
 
 };
 

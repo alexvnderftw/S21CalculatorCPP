@@ -30,14 +30,7 @@ class Deposit {
     O_ANNUALLY
   };
 
-  enum EventType {
-    E_PAYDAY,
-    E_REPLENISH,
-    E_WITHDRAWAL,
-    E_DECLINE,
-    E_PAYTAX,
-    E_NEWYEAR
-  };
+  enum EventType { E_PAYDAY, E_REPLENISH, E_WITHDRAWAL, E_DECLINE, E_NEWYEAR };
 
   enum TermType { T_DAY, T_MONTH, T_YEAR };
 
@@ -119,6 +112,7 @@ class Deposit {
   void removeWithdrawal(size_t index);
 
   /* Methods to look at some user variables. No bound checking. */
+  bool isCapitalization() const noexcept;
   double getDeposit() const noexcept;
   size_t getReplenishListSize() const noexcept;
   size_t getWithdrawalListSize() const noexcept;

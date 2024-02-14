@@ -22,6 +22,7 @@ class ControllerDeposit {
   void removeReplenish(size_t index);
   void removeWithdrawal(size_t index);
 
+  bool isCapitalization() const noexcept;
   double getDeposit() const noexcept;
   size_t getReplenishListSize() const noexcept;
   size_t getWithdrawalListSize() const noexcept;

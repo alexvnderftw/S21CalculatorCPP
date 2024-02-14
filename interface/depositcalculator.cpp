@@ -92,35 +92,44 @@ void DepositCalculator::calculate() {
 }
 
 void DepositCalculator::fillTable() {
-    ui->tableWidgetEvents->setRowCount(data.getEventListSize() + 1);
+    //ui->tableWidgetEvents->setRowCount(data.getEventListSize() + 1);
+    ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
     for (size_t i = 0; i < data.getEventListSize(); ++i) {
-        ui->tableWidgetEvents->setItem(
-            i, 0,
-            new QTableWidgetItem(getDateString(data.getEventListElement(i)->date())));
-        ui->tableWidgetEvents->setItem(
-            i, 1,
-            new QTableWidgetItem(QString::number(data.getEventListElement(i)->gain(), 'f', 2)));
-        ui->tableWidgetEvents->setItem(
-            i, 2,
-            new QTableWidgetItem(QString::number(data.getEventListElement(i)->balance_change(), 'f', 2)));
-        ui->tableWidgetEvents->setItem(
-            i, 3,
-            new QTableWidgetItem(QString::number(data.getEventListElement(i)->payment(), 'f', 2)));
-        ui->tableWidgetEvents->setItem(
-            i, 4,
-            new QTableWidgetItem(QString::number(data.getEventListElement(i)->balance(), 'f', 2)));
-        ui->tableWidgetEvents->setItem(
-            i, 5,
-            new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
+        if (data.getEventListElement(i)->event() != s21::Deposit::E_NEWYEAR) {
+            ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 0,
+                new QTableWidgetItem(getDateString(data.getEventListElement(i)->date())));
+            if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY) ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 1,
+                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->gain(), false, 'f', 2)));
+            if (data.getEventListElement(i)->event() != s21::Deposit::E_PAYDAY ||
+                (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == true)) ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 2,
+                    new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance_change(), true, 'f', 2)));
+            if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == false) ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 3,
+                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->payment(), false, 'f', 2)));
+            ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 4,
+                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance(), false, 'f', 2)));
+            ui->tableWidgetEvents->setItem(
+                ui->tableWidgetEvents->rowCount() - 1, 5,
+                new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
+            ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
+        }
+//        } else {
+//            ui->tableWidgetEvents->removeRow(ui->tableWidgetEvents->rowCount());
+//        }
     }
-    ui->tableWidgetEvents->setItem(data.getEventListSize(), 0,
+    //ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
+    ui->tableWidgetEvents->setItem(ui->tableWidgetEvents->rowCount() - 1, 0,
                                    new QTableWidgetItem("Total:"));
     ui->tableWidgetEvents->setItem(
-        data.getEventListSize(), 1,
-        new QTableWidgetItem(QString::number(data.getInterestTotal(), 'f', 2)));
+        ui->tableWidgetEvents->rowCount() - 1, 1,
+        new QTableWidgetItem(outputNumber(data.getInterestTotal(), false, 'f', 2)));
     ui->tableWidgetEvents->setItem(
-        data.getEventListSize(), 4,
-        new QTableWidgetItem(QString::number(data.getBalance(), 'f', 2)));
+        ui->tableWidgetEvents->rowCount() - 1, 4,
+        new QTableWidgetItem(outputNumber(data.getBalance(), false, 'f', 2)));
     ui->tableWidgetEvents->resizeRowsToContents();
 }
 
@@ -132,10 +141,10 @@ void DepositCalculator::fillTaxes() {
             new QTableWidgetItem(QString::number(data.getTaxListElement(i)->year())));
         ui->tableWidgetTax->setItem(
             i, 1,
-            new QTableWidgetItem(QString::number(data.getTaxListElement(i)->income(), 'f', 2)));
+            new QTableWidgetItem(outputNumber(data.getTaxListElement(i)->income(), false, 'f', 2)));
         ui->tableWidgetTax->setItem(
             i, 2,
-            new QTableWidgetItem(QString::number(data.getTaxListElement(i)->tax(), 'f', 2)));
+            new QTableWidgetItem(outputNumber(data.getTaxListElement(i)->tax(), false, 'f', 2)));
     }
     ui->tableWidgetTax->resizeRowsToContents();
 }
@@ -143,6 +152,8 @@ void DepositCalculator::fillTaxes() {
 void DepositCalculator::clearContent() {
     ui->tableWidgetEvents->clearContents();
     ui->tableWidgetTax->clearContents();
+    ui->tableWidgetEvents->setRowCount(0);
+    ui->tableWidgetTax->setRowCount(0);
     ui->lineEditAccruedInterest->clear();
     ui->lineEditTotal->clear();
     ui->lineEditGain->clear();
@@ -164,7 +175,6 @@ QString DepositCalculator::getEventString(s21::Deposit::EventType event) {
     if (event == s21::Deposit::E_REPLENISH) return "Replenishment";
     else if (event == s21::Deposit::E_PAYDAY) return "Payment";
     else if (event == s21::Deposit::E_WITHDRAWAL) return "Withdrawal";
-    else if (event == s21::Deposit::E_PAYTAX) return "Taxes";
     else if (event == s21::Deposit::E_NEWYEAR) return "New year";
     else if (event == s21::Deposit::E_DECLINE) return "Withdrawal declined";
     else return "Error";
@@ -197,7 +207,7 @@ void DepositCalculator::addReplenish() {
     ui->tableWidgetReplenishes->insertRow(ui->tableWidgetReplenishes->rowCount());
     ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 0, new QTableWidgetItem(getOperPeriodString(getOperPeriod())));
     ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
-    ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 2, new QTableWidgetItem(QString::number(ui->doubleSpinBoxValue->value(), 'f', 2)));
+    ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetReplenishes->selectRow(ui->tableWidgetReplenishes->rowCount() - 1);
     //    QPushButton *removeButton = new QPushButton("Remove", this);
 //    ui->tableWidgetReplenishes->setCellWidget(ui->tableWidgetReplenishes->rowCount() - 1, 3, removeButton);
@@ -230,7 +240,7 @@ void DepositCalculator::addWithdrawal() {
     ui->tableWidgetWithdrawals->insertRow(ui->tableWidgetWithdrawals->rowCount());
     ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 0, new QTableWidgetItem(getOperPeriodString(getOperPeriod())));
     ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
-    ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 2, new QTableWidgetItem(QString::number(ui->doubleSpinBoxValue->value(), 'f', 2)));
+    ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetWithdrawals->selectRow(ui->tableWidgetWithdrawals->rowCount() - 1);
 }
 
@@ -254,10 +264,10 @@ void DepositCalculator::setCapitalization(int value) {
 }
 
 void DepositCalculator::fillSummary() {
-    ui->lineEditAccruedInterest->setText(QString::number(data.getInterestTotal(), 'f', 2));
-    ui->lineEditTotal->setText(QString::number(data.getInterestTotal() + data.getDeposit() + data.getReplenishTotal(), 'f', 2));
-    ui->lineEditGain->setText(QString::number(data.getInterestTotal() / data.getDeposit() * 100.0, 'f', 2) + " %");
-    ui->lineEditTotalTax->setText(QString::number(data.getTaxTotal(), 'f', 2));
+    ui->lineEditAccruedInterest->setText(outputNumber(data.getInterestTotal(), false, 'f', 2));
+    ui->lineEditTotal->setText(outputNumber(data.getInterestTotal() + data.getDeposit() + data.getReplenishTotal(), false, 'f', 2));
+    ui->lineEditGain->setText(outputNumber(data.getInterestTotal() / data.getDeposit() * 100.0, false, 'f', 2) + " %");
+    ui->lineEditTotalTax->setText(outputNumber(data.getTaxTotal(), false, 'f', 2));
 }
 
 void DepositCalculator::setInitialState() {
@@ -287,4 +297,57 @@ void DepositCalculator::setInitialState() {
     ui->dateEditOperationDate->setMaximumDate(QDate(MAX_START_YEAR, 1, 1));
     ui->dateEditStartDate->setMinimumDate(QDate(MIN_START_YEAR, 1, 1));
     ui->dateEditOperationDate->setMinimumDate(QDate(MIN_START_YEAR, 1, 1));
+}
+
+QString DepositCalculator::outputNumber(double number, bool force_plus, char format, int decimal_digits) {
+    //QString ret = QString::number(number, format, decimal_digits);
+    QString ret = removeTrailingZeros(QString::number(number, format, decimal_digits));
+    if (isAllZeros(ret) == true) {
+        if (force_plus == true)
+            return QString();
+        else
+            return QString("0");
+    }
+    if (force_plus == true && number > 0.0) {
+        ret.insert(0, '+');
+    }
+    return ret;
+}
+
+QString DepositCalculator::removeTrailingZeros(QString number, bool scientific) {
+    QString ret;
+    bool flag = false;
+    if (scientific == true) {
+        for (QString::const_reverse_iterator i = number.crbegin(); i != number.crend(); ++i) {
+            if (flag == true && *i == QChar('0'))
+                 continue;
+            else if (*i == QChar('e') || *i == QChar('E'))
+                 flag = true;
+            else if (flag == true && *i != QChar('0'))
+                 flag = false;
+            ret.insert(0, *i);
+        }
+    } else {
+        if (number.contains(QChar(',')) == true || number.contains(QChar('.')) == true) {
+            for (QString::const_reverse_iterator i = number.crbegin(); i != number.crend(); ++i) {
+                if (flag == false && *i == QChar('0'))
+                     continue;
+                else if (flag == false && (*i == QChar(',') || *i == QChar('.'))) {
+                     flag = true;
+                     continue;
+                } else if (flag == false && *i != QChar('0')) {
+                     flag = true;
+                }
+                ret.insert(0, *i);
+            }
+        }
+    }
+    return ret;
+}
+
+bool DepositCalculator::isAllZeros(QString number) {
+    for (QString::const_reverse_iterator i = number.crbegin(); i != number.crend(); ++i) {
+        if (*i != QChar(',') && *i != QChar('0')) return false;
+    }
+    return true;
 }

@@ -33,6 +33,7 @@ void Deposit::removeWithdrawal(size_t index) {
 
 /* Methods to look at some user variables. No bound checking. */
 
+bool Deposit::isCapitalization() const noexcept { return capital_; }
 double Deposit::getDeposit() const noexcept { return deposit_; }
 size_t Deposit::getReplenishListSize() const noexcept {
   return replenish_list_.size();
@@ -290,7 +291,7 @@ void Deposit::insertReplenish(size_t i) {
     }
   } else if (replenish_list_[i].period_ == O_BIMONTHLY) {
     current = replenish_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 2) {
+    for (size_t j = 2; current <= end_date_; j += 2) {
       if (current > start_date_)
         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
                                     replenish_list_[i].value_, 0.0, 0.0));
@@ -298,7 +299,7 @@ void Deposit::insertReplenish(size_t i) {
     }
   } else if (replenish_list_[i].period_ == O_QUARTERLY) {
     current = replenish_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 3) {
+    for (size_t j = 3; current <= end_date_; j += 3) {
       if (current > start_date_)
         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
                                     replenish_list_[i].value_, 0.0, 0.0));
@@ -306,7 +307,7 @@ void Deposit::insertReplenish(size_t i) {
     }
   } else if (replenish_list_[i].period_ == O_BIANNUALLY) {
     current = replenish_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 6) {
+    for (size_t j = 6; current <= end_date_; j += 6) {
       if (current > start_date_)
         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
                                     replenish_list_[i].value_, 0.0, 0.0));
@@ -314,7 +315,7 @@ void Deposit::insertReplenish(size_t i) {
     }
   } else if (replenish_list_[i].period_ == O_ANNUALLY) {
     current = replenish_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 12) {
+    for (size_t j = 12; current <= end_date_; j += 12) {
       if (current > start_date_)
         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
                                     replenish_list_[i].value_, 0.0, 0.0));
@@ -340,7 +341,7 @@ void Deposit::insertWithdrawal(size_t i) {
     }
   } else if (withdrawal_list_[i].period_ == O_BIMONTHLY) {
     current = withdrawal_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 2) {
+    for (size_t j = 2; current <= end_date_; j += 2) {
       if (current > start_date_)
         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
                                     -withdrawal_list_[i].value_, 0.0, 0.0));
@@ -348,7 +349,7 @@ void Deposit::insertWithdrawal(size_t i) {
     }
   } else if (withdrawal_list_[i].period_ == O_QUARTERLY) {
     current = withdrawal_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 3) {
+    for (size_t j = 3; current <= end_date_; j += 3) {
       if (current > start_date_)
         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
                                     -withdrawal_list_[i].value_, 0.0, 0.0));
@@ -356,7 +357,7 @@ void Deposit::insertWithdrawal(size_t i) {
     }
   } else if (withdrawal_list_[i].period_ == O_BIANNUALLY) {
     current = withdrawal_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 6) {
+    for (size_t j = 6; current <= end_date_; j += 6) {
       if (current > start_date_)
         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
                                     -withdrawal_list_[i].value_, 0.0, 0.0));
@@ -364,7 +365,7 @@ void Deposit::insertWithdrawal(size_t i) {
     }
   } else if (withdrawal_list_[i].period_ == O_ANNUALLY) {
     current = withdrawal_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; j += 12) {
+    for (size_t j = 12; current <= end_date_; j += 12) {
       if (current > start_date_)
         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
                                     -withdrawal_list_[i].value_, 0.0, 0.0));
