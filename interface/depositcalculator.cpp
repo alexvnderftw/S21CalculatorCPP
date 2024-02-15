@@ -86,10 +86,11 @@ s21::Deposit::PayPeriod DepositCalculator::getPayPeriod() {
 void DepositCalculator::calculate() {
     clearContent();
     setValues();
-    data.calculate();
+    if (data.calculate() == true) {
     fillTable();
     fillTaxes();
     fillSummary();
+    }
 }
 
 void DepositCalculator::fillTable() {

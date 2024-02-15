@@ -11,7 +11,7 @@ class ControllerDeposit {
 
   void setDeposit(double value) noexcept;
   void setTerm(int term, Deposit::TermType unit) noexcept;
-  void setStartDate(int day, int month, int year) noexcept;
+  bool setStartDate(int day, int month, int year) noexcept;
   void setInterest(double value) noexcept;
   void setTax(double value) noexcept;
   void setCapitalization(bool set) noexcept;
@@ -43,7 +43,7 @@ class ControllerDeposit {
   double getReplenishTotal() const noexcept;
   double getWithdrawalTotal() const noexcept;
 
-  void calculate();
+  bool calculate();
 
  private:
   Deposit deposit_;

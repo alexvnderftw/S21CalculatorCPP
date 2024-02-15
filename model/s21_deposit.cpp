@@ -2,14 +2,19 @@
 
 namespace s21 {
 
-/* Methods to set user variables. No bound checking, except setStartDate. */
+/* Methods to set user variables. No bound checking. */
 
 void Deposit::setDeposit(double value) noexcept { deposit_ = value; }
 void Deposit::setTerm(int days) noexcept { term_ = days; }
 void Deposit::setTermType(TermType value) noexcept { term_type_ = value; }
-void Deposit::setStartDate(int day, int month, int year) noexcept {
-  if (Date::isDateValid(day, month, year) == true)
-    start_date_.setDate(day, month, year);
+bool Deposit::setStartDate(int day, int month, int year) noexcept {
+  if (Date::isDateValid(day, month, year) == false) return false;
+  start_date_.setDate(day, month, year);
+  return true;
+}
+bool Deposit::setStartDate(Date date) noexcept {
+  start_date_ = date;
+  return true;
 }
 void Deposit::setInterest(double value) noexcept { interest_ = value; }
 void Deposit::setTax(double value) noexcept { tax_ = value; }
@@ -30,6 +35,14 @@ void Deposit::removeReplenish(size_t index) {
 void Deposit::removeWithdrawal(size_t index) {
   withdrawal_list_.erase(withdrawal_list_.begin() + index);
 }
+void Deposit::popBackReplenish() {
+  if (getReplenishListSize() > 0) replenish_list_.pop_back();
+}
+void Deposit::popBackWithdrawal() {
+  if (getWithdrawalListSize() > 0) withdrawal_list_.pop_back();
+}
+void Deposit::clearReplenish() { replenish_list_.clear(); }
+void Deposit::clearWithdrawal() { withdrawal_list_.clear(); }
 
 /* Methods to look at some user variables. No bound checking. */
 
@@ -71,15 +84,15 @@ double Deposit::getWithdrawalTotal() const noexcept {
 }
 
 /* Main method to run. Provides bound checking. */
-/* Throw exception if user parameters are invalid.
+/* Return false if user parameters are invalid.
   Weak part: function strictly rely on events order after sorting - some
   std::sort realization doesn't ensure that equal elements won't move, in that
   case output data can have wrong order and hence be calculated incorrectly.  */
-void Deposit::calculate() {
-  if (validateSettings() == false)
-    throw std::invalid_argument("Validation problem. Check bounds.");
+bool Deposit::calculate() {
+  if (validateSettings() == false) return false;
+  // throw std::invalid_argument("Validation problem. Check bounds.");
   setDefaultValues();
-  calculateTerm();
+  calculateEndDate();
   insertDeposit();
   insertReplenishList();
   insertWithdrawalList();
@@ -91,11 +104,12 @@ void Deposit::calculate() {
       event_list_.begin(), event_list_.end(),
       [](Event first, Event second) { return first.date_ < second.date_; });
 
-  /* Splice replenishments and withdrawals of the same day. Comment, if full
+  /* Splice replenishments and withdrawals of the same day. Set 'false', if full
    * representation is needed. */
-  spliceOperations();
+  fixEventList(true);
 
   calculateValues();
+  return true;
 }
 
 /* Misc methods */
@@ -111,14 +125,16 @@ void Deposit::setDefaultValues() noexcept {
   replenish_total_ = 0.0;
 }
 
-void Deposit::calculateTerm() {
+void Deposit::calculateEndDate() {
   end_date_ = start_date_;
   if (term_type_ == T_MONTH) {
     end_date_.addMonths(term_);
-    term_ = end_date_ | start_date_;
+    // term_ = end_date_ | start_date_;
   } else if (term_type_ == T_YEAR) {
     end_date_.addYears(term_);
-    term_ = end_date_ | start_date_;
+    // term_ = end_date_ | start_date_;
+  } else {
+    end_date_ += term_;
   }
 }
 
@@ -332,29 +348,40 @@ void Deposit::calculateValues() {
 // }
 
 /* Splice replenishments and withdrawals of the same day in event_list_. */
-void Deposit::spliceOperations() {
+/* Swap payday and new_year events of same day so new_year goes after payday. */
+void Deposit::fixEventList(bool splice_on) {
   for (size_t i = 1; i < event_list_.size() - 1; ++i) {
-    if (event_list_[i].date_ == event_list_[i + 1].date_ &&
-        (event_list_[i].event_ == E_REPLENISH ||
-         event_list_[i].event_ == E_WITHDRAWAL)) {
-      if (event_list_[i + 1].event_ == E_REPLENISH ||
-          event_list_[i + 1].event_ == E_WITHDRAWAL) {
-        event_list_[i].balance_change_ += event_list_[i + 1].balance_change_;
-        if (event_list_[i].balance_change_ < 0)
-          event_list_[i].event_ = E_WITHDRAWAL;
-        else
-          event_list_[i].event_ = E_REPLENISH;
-        event_list_.erase(event_list_.begin() + i + 1);
+    if (splice_on == true) {
+      if (event_list_[i].date_ == event_list_[i + 1].date_ &&
+          (event_list_[i].event_ == E_REPLENISH ||
+           event_list_[i].event_ == E_WITHDRAWAL) &&
+          (event_list_[i + 1].event_ == E_REPLENISH ||
+           event_list_[i + 1].event_ == E_WITHDRAWAL)) {
+        spliceOperations(i, i + 1);
         --i;
       }
-    } else if (event_list_[i].date_ == event_list_[i + 1].date_ &&
-               event_list_[i].event_ == E_NEWYEAR &&
-               event_list_[i + 1].event_ == E_PAYDAY) {
-      Event buffer = event_list_[i];
-      event_list_[i] = event_list_[i + 1];
-      event_list_[i + 1] = buffer;
+    }
+    if (event_list_[i].date_ == event_list_[i + 1].date_ &&
+        event_list_[i].event_ == E_NEWYEAR &&
+        event_list_[i + 1].event_ == E_PAYDAY) {
+      swapEvents(i, i + 1);
     }
   }
+}
+
+void Deposit::spliceOperations(size_t first, size_t second) {
+  event_list_[first].balance_change_ += event_list_[second].balance_change_;
+  if (event_list_[first].balance_change_ < 0)
+    event_list_[first].event_ = E_WITHDRAWAL;
+  else
+    event_list_[first].event_ = E_REPLENISH;
+  event_list_.erase(event_list_.begin() + second);
+}
+
+void Deposit::swapEvents(size_t first, size_t second) noexcept {
+  Event buffer = event_list_[first];
+  event_list_[first] = event_list_[second];
+  event_list_[second] = buffer;
 }
 
 void Deposit::insertDeposit() {
@@ -363,7 +390,7 @@ void Deposit::insertDeposit() {
 }
 
 void Deposit::insertNewYears() {
-  for (size_t i = 0; i < end_date_.getYear() - start_date_.getYear(); i++) {
+  for (int i = 0; i < end_date_.getYear() - start_date_.getYear(); i++) {
     event_list_.push_back(Event(E_NEWYEAR,
                                 Date(31, 12, start_date_.getYear() + i), 0.0,
                                 0.0, 0.0, 0.0));
@@ -420,8 +447,7 @@ void Deposit::insertPaydays() {
 }
 
 void Deposit::insertLastPayday() {
-  event_list_.push_back(
-      Event(E_PAYDAY, start_date_ + term_, 0.0, 0.0, 0.0, 0.0));
+  event_list_.push_back(Event(E_PAYDAY, end_date_, 0.0, 0.0, 0.0, 0.0));
 }
 
 void Deposit::insertReplenish(size_t i) {
@@ -525,10 +551,31 @@ void Deposit::insertWithdrawal(size_t i) {
 }
 
 bool Deposit::validateSettings() const noexcept {
-  return checkPositiveDouble(deposit_) && checkPositiveDouble(interest_) &&
+  return checkReplenishes() && checkWithdrawals() &&
+         checkPositiveDouble(deposit_) && checkPositiveDouble(interest_) &&
          checkPositiveDouble(tax_) && checkPositiveDouble(remainder_limit_) &&
-         deposit_ <= MAX_DEPOSIT_VALUE && interest_ < MAX_RATE &&
+         deposit_ <= MAX_DEPOSIT_VALUE && interest_ <= MAX_RATE &&
          tax_ <= MAX_TAX && checkDates();
+}
+
+bool Deposit::checkReplenishes() const noexcept {
+  for (size_t i = 0; i < replenish_list_.size(); ++i) {
+    if (replenish_list_[i].date_.getYear() > MAX_START_YEAR ||
+        replenish_list_[i].value_ > MAX_DEPOSIT_VALUE ||
+        !checkPositiveDouble(replenish_list_[i].value_))
+      return false;
+  }
+  return true;
+}
+
+bool Deposit::checkWithdrawals() const noexcept {
+  for (size_t i = 0; i < withdrawal_list_.size(); ++i) {
+    if (withdrawal_list_[i].date_.getYear() > MAX_START_YEAR ||
+        withdrawal_list_[i].value_ > MAX_DEPOSIT_VALUE ||
+        !checkPositiveDouble(withdrawal_list_[i].value_))
+      return false;
+  }
+  return true;
 }
 
 bool Deposit::checkPositiveDouble(double value) const noexcept {
@@ -537,10 +584,10 @@ bool Deposit::checkPositiveDouble(double value) const noexcept {
 }
 
 bool Deposit::checkDates() const noexcept {
-  return term_ >= 0 &&
-         ((term_type_ == T_YEAR && term_ < MAX_TERM_Y) ||
-          (term_type_ == T_MONTH && term_ < MAX_TERM_M) ||
-          (term_type_ == T_DAY && term_ < MAX_TERM_D)) &&
+  return term_ > 0 &&
+         ((term_type_ == T_YEAR && term_ <= MAX_TERM_Y) ||
+          (term_type_ == T_MONTH && term_ <= MAX_TERM_M) ||
+          (term_type_ == T_DAY && term_ <= MAX_TERM_D)) &&
          start_date_.getYear() <= MAX_START_YEAR;
 }
 

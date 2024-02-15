@@ -46,6 +46,10 @@ class Deposit {
     Operation(OperPeriod period, Date date, double value)
         : period_(period), date_(date), value_(value) {}
     friend class Deposit;
+
+    OperPeriod period() const noexcept { return period_; }
+    Date date() const noexcept { return date_; }
+    double value() const noexcept { return value_; }
   };
 
   struct Event {
@@ -96,11 +100,12 @@ class Deposit {
     double tax() const noexcept { return tax_; }
   };
 
-  /* Methods to set user variables. No bound checking, except setStartDate. */
+  /* Methods to set user variables. No bound checking. */
   void setDeposit(double value) noexcept;
   void setTerm(int days) noexcept;
   void setTermType(TermType value) noexcept;
-  void setStartDate(int day, int month, int year) noexcept;
+  bool setStartDate(int day, int month, int year) noexcept;
+  bool setStartDate(Date date) noexcept;
   void setInterest(double value) noexcept;
   void setTax(double value) noexcept;
   void setCapitalization(bool set) noexcept;
@@ -110,6 +115,10 @@ class Deposit {
   void addWithdrawal(OperPeriod freq, Date date, double value);
   void removeReplenish(size_t index);
   void removeWithdrawal(size_t index);
+  void popBackReplenish();
+  void popBackWithdrawal();
+  void clearReplenish();
+  void clearWithdrawal();
 
   /* Methods to look at some user variables. No bound checking. */
   bool isCapitalization() const noexcept;
@@ -122,7 +131,7 @@ class Deposit {
       size_t index) const noexcept;
 
   /* Main method to run. Provides bound checking. */
-  void calculate();
+  bool calculate();
 
   /* Methods to retrieve result content. */
   size_t getEventListSize() const noexcept;
@@ -137,17 +146,19 @@ class Deposit {
   double getReplenishTotal() const noexcept;
   double getWithdrawalTotal() const noexcept;
 
- private:
   /* Limit values. CAREFUL: The weak parts are values near MAX_DEPOSIT_VALUE
    * and MAX_RATE with capitalization option turned on, it can
    * potentially lead to numbers reach beyond max double limit. */
-  const double MAX_DEPOSIT_VALUE =
-                   std::numeric_limits<double>::max() / 1000000.0,
-               MAX_TAX = 1.0, MAX_RATE = 1000.0,
-               MAX_DOUBLE_VALUE = std::numeric_limits<double>::max();
-  const int MAX_TERM_D = 365000, MAX_TERM_M = 12000, MAX_TERM_Y = 999,
-            MAX_START_YEAR = 5000;
+  static constexpr const double MAX_DEPOSIT_VALUE =
+                                    std::numeric_limits<double>::max() /
+                                    1000000.0,
+                                MAX_TAX = 1.0, MAX_RATE = 1000.0,
+                                MAX_DOUBLE_VALUE =
+                                    std::numeric_limits<double>::max();
+  static constexpr const int MAX_TERM_D = 365000, MAX_TERM_M = 12000,
+                             MAX_TERM_Y = 999, MAX_START_YEAR = 5000;
 
+ private:
   /* User settings */
   /* START: Variables with bound checking. */
   double deposit_ = 0.0;
@@ -157,11 +168,11 @@ class Deposit {
   int term_ = 0;
   TermType term_type_ = T_DAY;
   Date start_date_;
+  std::vector<Operation> replenish_list_{};
+  std::vector<Operation> withdrawal_list_{};
   /* END: Variables with bound checking. */
   bool capital_ = false;
   PayPeriod periodicity_ = P_AT_END;
-  std::vector<Operation> replenish_list_{};
-  std::vector<Operation> withdrawal_list_{};
 
   /* Operational variables */
   Date end_date_;
@@ -178,9 +189,11 @@ class Deposit {
 
   /* Misc methods */
   void setDefaultValues() noexcept;
-  void calculateTerm();
+  void calculateEndDate();
   void calculateValues();
-  void spliceOperations();
+  void fixEventList(bool splice_on);
+  void spliceOperations(size_t first, size_t second);
+  void swapEvents(size_t first, size_t second) noexcept;
   void insertDeposit();
   void insertNewYears();
   void insertReplenishList();
@@ -190,6 +203,8 @@ class Deposit {
   void insertReplenish(size_t i);
   void insertWithdrawal(size_t i);
   bool validateSettings() const noexcept;
+  bool checkReplenishes() const noexcept;
+  bool checkWithdrawals() const noexcept;
   bool checkPositiveDouble(double value) const noexcept;
   bool checkDates() const noexcept;
   static Date nextMonthDate(Date date);

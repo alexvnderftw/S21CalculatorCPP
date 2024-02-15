@@ -62,10 +62,11 @@ class Credit {
   /* Main function */
   bool Calculate();
 
- private:
-  const int MAX_TIME_ = 1000, MAX_YEAR_ = 2700, MIN_YEAR_ = 1900;
-  const double MAX_RATE_ = 10.0, MAX_CREDIT_ = 100000000000.0;
+  static constexpr const int MAX_TIME_ = 1000, MAX_YEAR_ = 2700,
+                             MIN_YEAR_ = 1900;
+  static constexpr const double MAX_RATE_ = 10.0, MAX_CREDIT_ = 100000000000.0;
 
+ private:
   int start_month_ = 0, start_year_ = 0;
   double credit_ = 0.0;
   int time_ = 0;

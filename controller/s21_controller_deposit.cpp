@@ -11,8 +11,8 @@ void ControllerDeposit::setTerm(int term, Deposit::TermType unit) noexcept {
   deposit_.setTerm(term);
   deposit_.setTermType(unit);
 }
-void ControllerDeposit::setStartDate(int day, int month, int year) noexcept {
-  deposit_.setStartDate(day, month, year);
+bool ControllerDeposit::setStartDate(int day, int month, int year) noexcept {
+  return deposit_.setStartDate(day, month, year);
 }
 void ControllerDeposit::setInterest(double value) noexcept {
   deposit_.setInterest(value);
@@ -100,6 +100,6 @@ double ControllerDeposit::getWithdrawalTotal() const noexcept {
 }
 
 /* Main method */
-void ControllerDeposit::calculate() { deposit_.calculate(); }
+bool ControllerDeposit::calculate() { return deposit_.calculate(); }
 
 }  // namespace s21
