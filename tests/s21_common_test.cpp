@@ -8,6 +8,35 @@ TEST(CommonSuite, BankRound) {
   EXPECT_NEAR(s21::bankRound(129.5), 130.0, EPS);
   EXPECT_NEAR(s21::bankRound(-123.5), -124.0, EPS);
   EXPECT_NEAR(s21::bankRound(-124.5), -124.0, EPS);
+  EXPECT_NEAR(s21::bankRound(124.6), 125.0, EPS);
+  EXPECT_NEAR(s21::bankRound(-124.6), -125.0, EPS);
+}
+
+TEST(CommonSuite, bankRoundTwoDecimal) {
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(1.265), 1.26, EPS);
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(1.295), 1.3, EPS);
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(-1.235), -1.24, EPS);
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(-1.245), -1.24, EPS);
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(1.246), 1.25, EPS);
+  EXPECT_NEAR(s21::bankRoundTwoDecimal(-1.246), -1.25, EPS);
+}
+
+TEST(CommonSuite, BankRoundLong) {
+  EXPECT_NEAR(s21::bankRoundLong(126.5L), 126.0L, EPS);
+  EXPECT_NEAR(s21::bankRoundLong(129.5L), 130.0L, EPS);
+  EXPECT_NEAR(s21::bankRoundLong(-123.5L), -124.0L, EPS);
+  EXPECT_NEAR(s21::bankRoundLong(-124.5L), -124.0L, EPS);
+  EXPECT_NEAR(s21::bankRoundLong(124.6L), 125.0L, EPS);
+  EXPECT_NEAR(s21::bankRoundLong(-124.6L), -125.0L, EPS);
+}
+
+TEST(CommonSuite, bankRoundLongTwoDecimal) {
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(1.265L), 1.26L, EPS);
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(1.295L), 1.3L, EPS);
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(-1.235L), -1.24L, EPS);
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(-1.245L), -1.24L, EPS);
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(1.246L), 1.25L, EPS);
+  EXPECT_NEAR(s21::bankRoundLongTwoDecimal(-1.246L), -1.25L, EPS);
 }
 
 TEST(CommonSuite, DateConstruct) {
@@ -314,15 +343,38 @@ TEST(CommonSuite, AddYears) {
   date1.addYears(3);
   EXPECT_TRUE(date2 == date1);
 }
-// DONE: void setDate(int day, int month, int year);
-//   int getDay();
-//   int getMonth();
-//   int getYear();
-//  int getDiff(const Date& first, const Date& second);
 
-//   friend int operator-(const Date& first, const Date& second);
-//   friend Date operator+(int days, const Date& date);
-//   Date operator+(int days);
-//   void addDays(int days);
-
-//   bool isDateValid(int d, int m, int y);
+TEST(CommonSuite, ShiftMonths) {
+  s21::Date date1(31, 12, 2012);
+  s21::Date date2(31, 12, 2012);
+  date1 = date1.shiftMonths(0);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(31, 12, 2012);
+  date2.setDate(31, 12, 2013);
+  date1 = date1.shiftMonths(12);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(31, 12, 2012);
+  date2.setDate(31, 8, 2012);
+  date1 = date1.shiftMonths(-4);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(31, 12, 2012);
+  date2.setDate(30, 11, 2011);
+  date1 = date1.shiftMonths(-13);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(31, 12, 2012);
+  date2.setDate(30, 6, 2010);
+  date1 = date1.shiftMonths(-30);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(28, 2, 2014);
+  date2.setDate(28, 4, 2014);
+  date1 = date1.shiftMonths(2);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(29, 1, 2014);
+  date2.setDate(28, 2, 2014);
+  date1 = date1.shiftMonths(1);
+  EXPECT_TRUE(date2 == date1);
+  date1.setDate(31, 1, 2014);
+  date2.setDate(29, 2, 2016);
+  date1 = date1.shiftMonths(25);
+  EXPECT_TRUE(date2 == date1);
+}

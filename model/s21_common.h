@@ -5,58 +5,18 @@
 #include <ctime>
 #include <stdexcept>
 
-extern "C" {
-#include "cdecimal/s21_decimal.h"
-}
-
 namespace s21 {
 
 double bankRound(double number) noexcept;
 double bankRoundTwoDecimal(double number) noexcept;
-
-/* Note: out-of-bound values and undefined math results throw exceptions. */
-class Decimal64 {
- public:
-  Decimal64();
-  Decimal64(int value);
-  Decimal64(double value);
-  ~Decimal64() = default;
-
-  double value() const;
-  int ivalue() const;
-  void setValue(double value);
-  void setValue(int value);
-
-  Decimal64 operator=(int value);
-  Decimal64 operator=(double value);
-
-  Decimal64 operator-();
-
-  Decimal64 operator+(const Decimal64& value) const;
-  Decimal64 operator-(const Decimal64& value) const;
-  Decimal64 operator*(const Decimal64& value) const;
-  Decimal64 operator/(const Decimal64& value) const;
-  Decimal64 operator+=(const Decimal64& value);
-  Decimal64 operator-=(const Decimal64& value);
-  Decimal64 operator*=(const Decimal64& value);
-  Decimal64 operator/=(const Decimal64& value);
-
-  bool operator==(const Decimal64& value) const;
-  bool operator!=(const Decimal64& value) const;
-  bool operator>=(const Decimal64& value) const;
-  bool operator<=(const Decimal64& value) const;
-  bool operator>(const Decimal64& value) const;
-  bool operator<(const Decimal64& value) const;
-
- private:
-  s21_decimal data;
-};
+long double bankRoundLong(long double number) noexcept;
+long double bankRoundLongTwoDecimal(long double number) noexcept;
 
 /* Class for operating with days in date format. */
 class Date {
  public:
-  Date();
-  Date(int day, int month, int year);
+  explicit Date();
+  explicit Date(int day, int month, int year);
   ~Date() = default;
 
   /* Throw exception if date doesn't exist or 'year' argument is lower than

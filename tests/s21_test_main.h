@@ -9,6 +9,7 @@
 #include "../model/s21_deposit.h"
 
 #define EPS 1e-07
-#define D_EPS 0.05
+#define DECIMAL_EPS 0.05
+#define DECIMAL_LOOSE_EPS 2.0
 
 #endif  // S21_CALCULATOR_TEST_H

@@ -21,10 +21,6 @@ endif
 
 all: s21_calculator_model.a
 
-s21_decimal.a:
-	mkdir libs
-	cd model/cdecimal && make s21_decimal.a && mv s21_decimal.a ./../../libs
-
 s21_calculator_model.a: $(MODEL_OBJ)
 	rm -rf $(CLIB)
 	ar -rs $(CLIB) $(MODEL_OBJ)
@@ -39,8 +35,9 @@ gcov_report: test
 	genhtml -o report s21_calculator_model.info
 	open ./report/index.html
 
+# s21_decimal.a
 # s21_calculator_model_cov.a
-test: s21_decimal.a
+test: s21_calculator_model_cov.a
 	cmake -S . -B test_build
 	cmake --build test_build
 	mv ./test_build/$(TEST_FILE) ./

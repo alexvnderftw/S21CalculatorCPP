@@ -3,10 +3,10 @@ project(S21CalculatorCPP)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17 -g -O0 --coverage -fno-inline")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -Wpedantic -std=c++17 -g --coverage")
 
-#file(GLOB TEST_SRC CONFIGURE_DEPENDS "tests/*.h" "tests/*.cpp")
+file(GLOB TEST_SRC CONFIGURE_DEPENDS "tests/*.h" "tests/*.cpp")
 
 include(FetchContent)
 FetchContent_Declare(
@@ -18,10 +18,6 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-file(GLOB TEST_SRC CONFIGURE_DEPENDS "model/*.h" "model/*.cpp"
-                                     "tests/*.h" "tests/*.cpp")
-
-
 enable_testing()
 
 add_executable(
@@ -30,8 +26,7 @@ add_executable(
 )
 target_link_libraries(
   model_test
-  ${CMAKE_SOURCE_DIR}/libs/s21_decimal.a
-#${CMAKE_SOURCE_DIR}/s21_calculator_model.a
+  ${CMAKE_SOURCE_DIR}/s21_calculator_model.a
   GTest::gtest
 )
 
