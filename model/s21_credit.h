@@ -6,6 +6,7 @@
 #include "s21_common.h"
 
 namespace s21 {
+
 class Credit {
  public:
   Credit() = default;

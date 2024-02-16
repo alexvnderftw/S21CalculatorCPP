@@ -21,6 +21,10 @@ endif
 
 all: s21_calculator_model.a
 
+s21_decimal.a:
+	mkdir libs
+	cd model/cdecimal && make s21_decimal.a && mv s21_decimal.a ./../../libs
+
 s21_calculator_model.a: $(MODEL_OBJ)
 	rm -rf $(CLIB)
 	ar -rs $(CLIB) $(MODEL_OBJ)
@@ -35,7 +39,8 @@ gcov_report: test
 	genhtml -o report s21_calculator_model.info
 	open ./report/index.html
 
-test: s21_calculator_model_cov.a
+# s21_calculator_model_cov.a
+test: s21_decimal.a
 	cmake -S . -B test_build
 	cmake --build test_build
 	mv ./test_build/$(TEST_FILE) ./
@@ -62,5 +67,7 @@ clean:
 	rm -rf ./*.gcda ./*.gcno ./*.info ./model/*.gcda ./model/*.gcno ./model/*.info
 	rm -rf ./report/
 	rm -rf ./test_build/
+	rm -rf ./libs
+	cd model/cdecimal && make clean
 
 rebuild: clean all

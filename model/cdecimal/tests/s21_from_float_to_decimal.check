@@ -1,0 +1,168 @@
+#test test_from_float_to_decimal0
+int_res = s21_from_float_to_decimal((float)0.000000000e+000, &val1);
+val_ans.bits[3] = 0x00000000;  //0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal1
+int_res = s21_from_float_to_decimal((float)0.000000000e+000, &val1);
+val_ans.bits[3] = 0x00000000;  //0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal2
+int_res = s21_from_float_to_decimal((float)1.000000000e+000, &val1);
+val_ans.bits[3] = 0x00000000;  //1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal3
+int_res = s21_from_float_to_decimal((float)-1.000000000e+000, &val1);
+val_ans.bits[3] = 0x80000000;  //-1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal4
+int_res = s21_from_float_to_decimal((float)9.990000000e+002, &val1);
+val_ans.bits[3] = 0x00000000;  //999
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x000003E7;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal5
+int_res = s21_from_float_to_decimal((float)-9.990000000e+002, &val1);
+val_ans.bits[3] = 0x80000000;  //-999
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x000003E7;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal6
+int_res = s21_from_float_to_decimal((float)1.000000000e+008, &val1);
+val_ans.bits[3] = 0x00000000;  //100000000
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x05F5E100;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal7
+int_res = s21_from_float_to_decimal((float)-1.000000000e+008, &val1);
+val_ans.bits[3] = 0x80000000;  //-100000000
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x05F5E100;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal8
+int_res = s21_from_float_to_decimal((float)1.000000000e+005, &val1);
+val_ans.bits[3] = 0x00000000;  //100000
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x000186A0;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal9
+int_res = s21_from_float_to_decimal((float)-1.000000000e+001, &val1);
+val_ans.bits[3] = 0x80000000;  //-10
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x0000000A;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal10
+int_res = s21_from_float_to_decimal((float)7.922816251e+028, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal11
+int_res = s21_from_float_to_decimal((float)-7.922816251e+028, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal12
+int_res = s21_from_float_to_decimal((float)7.922816251e+028, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal13
+int_res = s21_from_float_to_decimal((float)-7.922816251e+028, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal14
+int_res = s21_from_float_to_decimal((float)7.922815779e+028, &val1);
+val_ans.bits[3] = 0x00000000;  //79228160000000000000000000000
+val_ans.bits[2] = 0xFFFFFF77;
+val_ans.bits[1] = 0xB392B21A;
+val_ans.bits[0] = 0x20000000;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal15
+int_res = s21_from_float_to_decimal((float)7.922815779e+028, &val1);
+val_ans.bits[3] = 0x00000000;  //79228160000000000000000000000
+val_ans.bits[2] = 0xFFFFFF77;
+val_ans.bits[1] = 0xB392B21A;
+val_ans.bits[0] = 0x20000000;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal16
+int_res = s21_from_float_to_decimal((float)1.000000003e-028, &val1);
+val_ans.bits[3] = 0x001C0000;  //0.0000000000000000000000000001
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal17
+int_res = s21_from_float_to_decimal((float)-1.000000003e-028, &val1);
+val_ans.bits[3] = 0x801C0000;  //-0.0000000000000000000000000001
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal18
+int_res = s21_from_float_to_decimal((float)9.999999430e-029, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal19
+int_res = s21_from_float_to_decimal((float)-9.999999430e-029, &val1);
+ck_assert_int_eq(int_res, 1);
+
+#test test_from_float_to_decimal20
+int_res = s21_from_float_to_decimal((float)1.000000063e-028, &val1);
+val_ans.bits[3] = 0x001C0000;  //0.0000000000000000000000000001
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_from_float_to_decimal21
+int_res = s21_from_float_to_decimal((float)-1.000000063e-028, &val1);
+val_ans.bits[3] = 0x801C0000;  //-0.0000000000000000000000000001
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val1, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+

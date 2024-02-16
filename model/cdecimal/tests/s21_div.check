@@ -1,0 +1,991 @@
+#test test_div0
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div1
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div2
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 12345
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00003039;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div3
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div4
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -12345
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00003039;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div5
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div6
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div7
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div8
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div10
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div12
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div13
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div14
+val1.bits[3] = 0x00010000;  // 0,5
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000005;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div19
+val1.bits[3] = 0x00010000;  // 0,5
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000005;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div20
+val1.bits[3] = 0x00010000;  // 0,5
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000005;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div21
+val1.bits[3] = 0x00090000;  // 0,000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div26
+val1.bits[3] = 0x00090000;  // 0,000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div27
+val1.bits[3] = 0x00090000;  // 0,000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div28
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div29
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div30
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div31
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div32
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div33
+val1.bits[3] = 0x80000000;  // -1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div34
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div35
+val1.bits[3] = 0x80000000;  // -1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div36
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div37
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div38
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div39
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div40
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div41
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div42
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div43
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div44
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div45
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div46
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div47
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div48
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div49
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div50
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div51
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 3);
+
+#test test_div52
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div53
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div54
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div55
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 0
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div56
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 1);
+
+#test test_div57
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 2);
+
+#test test_div58
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 2);
+
+#test test_div59
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+ck_assert_int_eq(int_res, 1);
+
+#test test_div68
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 2
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000002;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div69
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -2
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000002;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div70
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -2
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000002;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div71
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 2
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000002;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div72
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div73
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div74
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div75
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 1
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00000001;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+
+#test test_div80
+val1.bits[3] = 0x00000000;  // 30064771176
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000007;
+val1.bits[0] = 0x00000068;
+val2.bits[3] = 0x00000000;  // 3
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000003;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 10021590392
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000002;
+val_ans.bits[0] = 0x55555578;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div81
+val1.bits[3] = 0x00000000;  // 32768
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00008000;
+val2.bits[3] = 0x80000000;  // -2
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -16384
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00004000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div82
+val1.bits[3] = 0x00000000;  // 32768
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00008000;
+val2.bits[3] = 0x00000000;  // 2
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00000000;  // 16384
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000000;
+val_ans.bits[0] = 0x00004000;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div83
+val1.bits[3] = 0x00000000;  // 30064771176
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000007;
+val1.bits[0] = 0x00000068;
+val2.bits[3] = 0x80000000;  // -2
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x80000000;  // -15032385588
+val_ans.bits[2] = 0x00000000;
+val_ans.bits[1] = 0x00000003;
+val_ans.bits[0] = 0x80000034;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);
+
+#test test_div84
+val1.bits[3] = 0x00000000;  // 442320
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x0006BFD0;
+val2.bits[3] = 0x00000000;  // 28
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x0000001C;
+int_res = s21_div(val1, val2, &val3);
+val_ans.bits[3] = 0x00180000;  // 15797,142857142857142857142857
+val_ans.bits[2] = 0x330B171E;
+val_ans.bits[1] = 0x3D290E5D;
+val_ans.bits[0] = 0x35249249;
+ck_assert_mem_eq(&val3, &val_ans, SIZE_OF_DECIMAL);
+ck_assert_int_eq(int_res, 0);

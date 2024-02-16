@@ -1,0 +1,781 @@
+#test test_comparison
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -1
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -1
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // 0
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000000;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // 0
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000000;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 9
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000009;
+val2.bits[3] = 0x00000000;  // 10
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x0000000A;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 9
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000009;
+val2.bits[3] = 0x00000000;  // 10
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x0000000A;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 9
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000009;
+val2.bits[3] = 0x00000000;  // 10
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x0000000A;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 9
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000009;
+val2.bits[3] = 0x00000000;  // 10
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x0000000A;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000001;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000002;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x001B0000;  // 0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x001B0000;  // 0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x801B0000;  // -0,000000000000000000000000002
+val1.bits[2] = 0x00000000;
+val1.bits[1] = 0x00000000;
+val1.bits[0] = 0x00000002;
+val2.bits[3] = 0x801B0000;  // -0,000000000000000000000000001
+val2.bits[2] = 0x00000000;
+val2.bits[1] = 0x00000000;
+val2.bits[0] = 0x00000001;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFF;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFE;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFE;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFE;
+val2.bits[3] = 0x00000000;  // 79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(1, s21_is_less(val1, val2));
+ck_assert_int_eq(1, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_greater(val1, val2));
+ck_assert_int_eq(0, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x00000000;  // 79228162514264337593543950334
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFE;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+
+val1.bits[3] = 0x80000000;  // -79228162514264337593543950334
+val1.bits[2] = 0xFFFFFFFF;
+val1.bits[1] = 0xFFFFFFFF;
+val1.bits[0] = 0xFFFFFFFE;
+val2.bits[3] = 0x80000000;  // -79228162514264337593543950335
+val2.bits[2] = 0xFFFFFFFF;
+val2.bits[1] = 0xFFFFFFFF;
+val2.bits[0] = 0xFFFFFFFF;
+ck_assert_int_eq(0, s21_is_less(val1, val2));
+ck_assert_int_eq(0, s21_is_less_or_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_greater(val1, val2));
+ck_assert_int_eq(1, s21_is_greater_or_equal(val1, val2));
+ck_assert_int_eq(0, s21_is_equal(val1, val2));
+ck_assert_int_eq(1, s21_is_not_equal(val1, val2));
+

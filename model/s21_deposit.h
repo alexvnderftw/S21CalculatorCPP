@@ -38,34 +38,34 @@ class Deposit {
    private:
     OperPeriod period_;
     Date date_;
-    double value_;
+    Decimal64 value_;
 
    public:
     Operation() = default;
     ~Operation() = default;
-    Operation(OperPeriod period, Date date, double value)
+    Operation(OperPeriod period, Date date, Decimal64 value)
         : period_(period), date_(date), value_(value) {}
     friend class Deposit;
 
     OperPeriod period() const noexcept { return period_; }
     Date date() const noexcept { return date_; }
-    double value() const noexcept { return value_; }
+    double value() const { return value_.value(); }
   };
 
   struct Event {
    private:
     EventType event_;
     Date date_;
-    double gain_;
-    double balance_change_;
-    double payment_;
-    double balance_;
+    Decimal64 gain_;
+    Decimal64 balance_change_;
+    Decimal64 payment_;
+    Decimal64 balance_;
 
    public:
     Event() = default;
     ~Event() = default;
-    Event(EventType event, Date date, double gain, double balance_change,
-          double payment, double balance)
+    Event(EventType event, Date date, Decimal64 gain, Decimal64 balance_change,
+          Decimal64 payment, Decimal64 balance)
         : event_(event),
           date_(date),
           gain_(gain),
@@ -76,41 +76,41 @@ class Deposit {
 
     EventType event() const noexcept { return event_; }
     Date date() const noexcept { return date_; }
-    double gain() const noexcept { return gain_; }
-    double balance_change() const noexcept { return balance_change_; }
-    double payment() const noexcept { return payment_; }
-    double balance() const noexcept { return balance_; }
+    double gain() const { return gain_.value(); }
+    double balance_change() const { return balance_change_.value(); }
+    double payment() const { return payment_.value(); }
+    double balance() const { return balance_.value(); }
   };
 
   struct Tax {
    private:
     int year_;
-    double income_;
-    double tax_;
+    Decimal64 income_;
+    Decimal64 tax_;
 
    public:
     Tax() = default;
     ~Tax() = default;
-    Tax(int year, double income, double tax)
+    Tax(int year, Decimal64 income, Decimal64 tax)
         : year_(year), income_(income), tax_(tax) {}
     friend class Deposit;
 
     int year() const noexcept { return year_; }
-    double income() const noexcept { return income_; }
-    double tax() const noexcept { return tax_; }
+    double income() const { return income_.value(); }
+    double tax() const { return tax_.value(); }
   };
 
   /* Methods to set user variables. No bound checking. */
-  void setDeposit(double value) noexcept;
-  void setTerm(int days) noexcept;
+  void setDeposit(double value);
+  void setTerm(int days);
   void setTermType(TermType value) noexcept;
   bool setStartDate(int day, int month, int year) noexcept;
   bool setStartDate(Date date) noexcept;
-  void setInterest(double value) noexcept;
-  void setTax(double value) noexcept;
+  void setInterest(double value);
+  void setTax(double value);
   void setCapitalization(bool set) noexcept;
   void setPeriodicity(PayPeriod value) noexcept;
-  void setRemainderLimit(double value) noexcept;
+  void setRemainderLimit(double value);
   void addReplenish(OperPeriod freq, Date date, double value);
   void addWithdrawal(OperPeriod freq, Date date, double value);
   void removeReplenish(size_t index);
@@ -122,7 +122,7 @@ class Deposit {
 
   /* Methods to look at some user variables. No bound checking. */
   bool isCapitalization() const noexcept;
-  double getDeposit() const noexcept;
+  double getDeposit() const;
   size_t getReplenishListSize() const noexcept;
   size_t getWithdrawalListSize() const noexcept;
   std::vector<Operation>::const_iterator getReplenishListElement(
@@ -140,11 +140,11 @@ class Deposit {
   size_t getTaxListSize() const noexcept;
   std::vector<Tax>::const_iterator getTaxListElement(
       size_t index) const noexcept;
-  double getBalance() const noexcept;
-  double getInterestTotal() const noexcept;
-  double getTaxTotal() const noexcept;
-  double getReplenishTotal() const noexcept;
-  double getWithdrawalTotal() const noexcept;
+  double getBalance() const;
+  double getInterestTotal() const;
+  double getTaxTotal() const;
+  double getReplenishTotal() const;
+  double getWithdrawalTotal() const;
 
   /* Limit values. CAREFUL: The weak parts are values near MAX_DEPOSIT_VALUE
    * and MAX_RATE with capitalization option turned on, it can
@@ -161,11 +161,11 @@ class Deposit {
  private:
   /* User settings */
   /* START: Variables with bound checking. */
-  double deposit_ = 0.0;
-  double interest_ = 0.0;
-  double tax_ = 0.0;
-  double remainder_limit_ = 0.0;
-  int term_ = 0;
+  Decimal64 deposit_ = 0.0;
+  Decimal64 interest_ = 0.0;
+  Decimal64 tax_ = 0.0;
+  Decimal64 remainder_limit_ = 0.0;
+  Decimal64 term_ = 0;
   TermType term_type_ = T_DAY;
   Date start_date_;
   std::vector<Operation> replenish_list_{};
@@ -176,19 +176,19 @@ class Deposit {
 
   /* Operational variables */
   Date end_date_;
-  double year_income_ = 0.0;
+  Decimal64 year_income_ = 0.0;
 
   /* Result values */
-  double balance_ = 0.0;
-  double interest_total_ = 0.0;
-  double tax_total_ = 0.0;
-  double replenish_total_ = 0.0;
-  double withdrawal_total_ = 0.0;
+  Decimal64 balance_ = 0.0;
+  Decimal64 interest_total_ = 0.0;
+  Decimal64 tax_total_ = 0.0;
+  Decimal64 replenish_total_ = 0.0;
+  Decimal64 withdrawal_total_ = 0.0;
   std::vector<Event> event_list_{};
   std::vector<Tax> tax_list_{};
 
   /* Misc methods */
-  void setDefaultValues() noexcept;
+  void setDefaultValues();
   void calculateEndDate();
   void calculateValues();
   void fixEventList(bool splice_on);
@@ -202,13 +202,13 @@ class Deposit {
   void insertLastPayday();
   void insertReplenish(size_t i);
   void insertWithdrawal(size_t i);
-  bool validateSettings() const noexcept;
-  bool checkReplenishes() const noexcept;
-  bool checkWithdrawals() const noexcept;
+  bool validateSettings() const;
+  bool checkReplenishes() const;
+  bool checkWithdrawals() const;
   bool checkPositiveDouble(double value) const noexcept;
-  bool checkDates() const noexcept;
+  bool checkDates() const;
   static Date nextMonthDate(Date date);
-  static double calculateDayValue(int year, double rate) noexcept;
+  static Decimal64 calculateDayValue(int year, Decimal64 rate);
   static bool isLeapYear(int year) noexcept;
   static bool dateComparator(Event first, Event second) noexcept;
 };

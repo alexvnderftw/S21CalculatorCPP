@@ -5,10 +5,52 @@
 #include <ctime>
 #include <stdexcept>
 
+extern "C" {
+#include "cdecimal/s21_decimal.h"
+}
+
 namespace s21 {
 
 double bankRound(double number) noexcept;
 double bankRoundTwoDecimal(double number) noexcept;
+
+/* Note: out-of-bound values and undefined math results throw exceptions. */
+class Decimal64 {
+ public:
+  Decimal64();
+  Decimal64(int value);
+  Decimal64(double value);
+  ~Decimal64() = default;
+
+  double value() const;
+  int ivalue() const;
+  void setValue(double value);
+  void setValue(int value);
+
+  Decimal64 operator=(int value);
+  Decimal64 operator=(double value);
+
+  Decimal64 operator-();
+
+  Decimal64 operator+(const Decimal64& value) const;
+  Decimal64 operator-(const Decimal64& value) const;
+  Decimal64 operator*(const Decimal64& value) const;
+  Decimal64 operator/(const Decimal64& value) const;
+  Decimal64 operator+=(const Decimal64& value);
+  Decimal64 operator-=(const Decimal64& value);
+  Decimal64 operator*=(const Decimal64& value);
+  Decimal64 operator/=(const Decimal64& value);
+
+  bool operator==(const Decimal64& value) const;
+  bool operator!=(const Decimal64& value) const;
+  bool operator>=(const Decimal64& value) const;
+  bool operator<=(const Decimal64& value) const;
+  bool operator>(const Decimal64& value) const;
+  bool operator<(const Decimal64& value) const;
+
+ private:
+  s21_decimal data;
+};
 
 /* Class for operating with days in date format. */
 class Date {

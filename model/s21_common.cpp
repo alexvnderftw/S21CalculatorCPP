@@ -25,6 +25,105 @@ double bankRoundTwoDecimal(double number) noexcept {
   return bankRound(number * 100.0) / 100.0;
 }
 
+Decimal64::Decimal64() { setValue(0.0); }
+Decimal64::Decimal64(int value) { setValue(value); }
+Decimal64::Decimal64(double value) { setValue(value); }
+double Decimal64::value() const {
+  double ret = NAN;
+  if (s21_from_decimal_to_double(data, &ret) != 0)
+    throw std::invalid_argument("Invalid result or argument.");
+  return ret;
+}
+int Decimal64::ivalue() const {
+  int ret = 0;
+  if (s21_from_decimal_to_int(data, &ret) != 0)
+    throw std::invalid_argument("Invalid result or argument.");
+  return ret;
+}
+void Decimal64::setValue(double value) {
+  if (s21_from_double_to_decimal(value, &data) != 0)
+    throw std::invalid_argument("Invalid result or argument.");
+}
+void Decimal64::setValue(int value) {
+  if (s21_from_int_to_decimal(value, &data) != 0)
+    throw std::invalid_argument("Invalid result or argument.");
+}
+Decimal64 Decimal64::operator=(int value) {
+  setValue(value);
+  return *this;
+}
+Decimal64 Decimal64::operator=(double value) {
+  setValue(value);
+  return *this;
+}
+Decimal64 Decimal64::operator-() {
+  s21_negate(data, &data);
+  return *this;
+}
+Decimal64 Decimal64::operator+(const Decimal64& value) const {
+  Decimal64 result;
+  if (s21_add(data, value.data, &(result.data)) != 0)
+    throw std::range_error("Invalid result.");
+  return result;
+}
+Decimal64 Decimal64::operator-(const Decimal64& value) const {
+  Decimal64 result;
+  if (s21_sub(data, value.data, &(result.data)) != 0)
+    throw std::range_error("Invalid result.");
+  return result;
+}
+Decimal64 Decimal64::operator*(const Decimal64& value) const {
+  Decimal64 result;
+  if (s21_mul(data, value.data, &(result.data)) != 0)
+    throw std::range_error("Invalid result.");
+  return result;
+}
+Decimal64 Decimal64::operator/(const Decimal64& value) const {
+  Decimal64 result;
+  if (s21_div(data, value.data, &(result.data)) != 0)
+    throw std::range_error("Invalid result.");
+  return result;
+}
+Decimal64 Decimal64::operator+=(const Decimal64& value) {
+  if (s21_add(data, value.data, &data) != 0)
+    throw std::range_error("Invalid result.");
+  return *this;
+}
+Decimal64 Decimal64::operator-=(const Decimal64& value) {
+  if (s21_sub(data, value.data, &data) != 0)
+    throw std::range_error("Invalid result.");
+  return *this;
+}
+Decimal64 Decimal64::operator*=(const Decimal64& value) {
+  if (s21_mul(data, value.data, &data) != 0)
+    throw std::range_error("Invalid result.");
+  return *this;
+}
+Decimal64 Decimal64::operator/=(const Decimal64& value) {
+  if (s21_div(data, value.data, &data) != 0)
+    throw std::range_error("Invalid result.");
+  return *this;
+}
+
+bool Decimal64::operator==(const Decimal64& value) const {
+  return s21_is_equal(data, value.data);
+}
+bool Decimal64::operator!=(const Decimal64& value) const {
+  return !s21_is_equal(data, value.data);
+}
+bool Decimal64::operator>=(const Decimal64& value) const {
+  return s21_is_greater_or_equal(data, value.data);
+}
+bool Decimal64::operator<=(const Decimal64& value) const {
+  return s21_is_less_or_equal(data, value.data);
+}
+bool Decimal64::operator>(const Decimal64& value) const {
+  return s21_is_greater(data, value.data);
+}
+bool Decimal64::operator<(const Decimal64& value) const {
+  return s21_is_less(data, value.data);
+}
+
 Date::Date() {
   time_t t = std::time(NULL);
   if (std::localtime(&t) == NULL)
