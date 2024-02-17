@@ -34,20 +34,20 @@ void Deposit::addReplenish(OperPeriod freq, Date date, double value) {
 void Deposit::addWithdrawal(OperPeriod freq, Date date, double value) {
   withdrawal_list_.push_back(Operation(freq, date, value));
 }
-void Deposit::removeReplenish(size_t index) {
+void Deposit::removeReplenish(size_t index) noexcept {
   replenish_list_.erase(replenish_list_.begin() + index);
 }
-void Deposit::removeWithdrawal(size_t index) {
+void Deposit::removeWithdrawal(size_t index) noexcept {
   withdrawal_list_.erase(withdrawal_list_.begin() + index);
 }
-void Deposit::popBackReplenish() {
+void Deposit::popBackReplenish() noexcept {
   if (getReplenishListSize() > 0) replenish_list_.pop_back();
 }
-void Deposit::popBackWithdrawal() {
+void Deposit::popBackWithdrawal() noexcept {
   if (getWithdrawalListSize() > 0) withdrawal_list_.pop_back();
 }
-void Deposit::clearReplenish() { replenish_list_.clear(); }
-void Deposit::clearWithdrawal() { withdrawal_list_.clear(); }
+void Deposit::clearReplenish() noexcept { replenish_list_.clear(); }
+void Deposit::clearWithdrawal() noexcept { withdrawal_list_.clear(); }
 
 /* Methods to look at some user variables. No bound checking. */
 
@@ -96,7 +96,6 @@ double Deposit::getWithdrawalTotal() const noexcept {
   case output data can have wrong order and hence be calculated incorrectly.  */
 bool Deposit::calculate() {
   if (validateSettings() == false) return false;
-  // throw std::invalid_argument("Validation problem. Check bounds.");
   setDefaultValues();
   calculateEndDate();
   insertDeposit();
@@ -105,10 +104,6 @@ bool Deposit::calculate() {
   insertPaydays();
   insertNewYears();
   insertLastPayday();
-
-  // std::sort(
-  //     event_list_.begin(), event_list_.end(),
-  //     [](Event first, Event second) { return first.date_ < second.date_; });
 
   std::sort(event_list_.begin(), event_list_.end(), dateComparator);
 
@@ -136,162 +131,110 @@ void Deposit::setDefaultValues() noexcept {
 void Deposit::calculateEndDate() {
   end_date_ = start_date_;
   if (term_type_ == T_MONTH) {
-    // end_date_ = nextMonthDate(end_date_, term_);
     end_date_.addMonths(term_);
-    // end_date_.shiftMonths(term_);
   } else if (term_type_ == T_YEAR) {
     end_date_ = nextMonthDate(end_date_, term_ * 12);
-    // end_date_.addYears(term_);
-    // end_date_.addMonths(term_ * 12);
-    // end_date_.shiftMonths(term_ * 12);
   } else {
     end_date_ += term_;
   }
 }
 
-// void Deposit::calculateValues() {
-//   long double day_value = calculateDayValue(start_date_.getYear(),
-//   interest_);
-//   // gain = day_value * n_days;
-//   // n_days = pay_event | prev_event;
-//   balance_ += bankRoundLongTwoDecimal(event_list_[0].balance_change_);
-//   event_list_[0].balance_ = bankRoundLongTwoDecimal(balance_);
-//   for (size_t i = 1; i < event_list_.size(); ++i) {
-//     if (event_list_[i].event_ == E_REPLENISH) {
-//       event_list_[i].gain_ = bankRoundLongTwoDecimal(
-//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
-//           balance_);
-//       balance_ += bankRoundLongTwoDecimal(event_list_[i].balance_change_);
-//       event_list_[i].balance_ = bankRoundLongTwoDecimal(balance_);
-//       replenish_total_ +=
-//           bankRoundLongTwoDecimal(event_list_[i].balance_change_);
-//     } else if (event_list_[i].event_ == E_PAYDAY) {
-//       event_list_[i].balance_ = bankRoundLongTwoDecimal(balance_);
-//       event_list_[i].gain_ = bankRoundLongTwoDecimal(
-//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
-//           balance_);
-//       event_list_[i].payment_ =
-//       bankRoundLongTwoDecimal(event_list_[i].gain_); for (size_t j = i - 1;
-//       event_list_[j].event_ != E_PAYDAY && j > 0; --j) {
-//         event_list_[i].payment_ +=
-//             bankRoundLongTwoDecimal(event_list_[j].gain_);
-//         event_list_[i].gain_ +=
-//         bankRoundLongTwoDecimal(event_list_[j].gain_); event_list_[j].gain_ =
-//         0.0;
-//       }
-//       if (capital_ == true) {
-//         event_list_[i].balance_change_ =
-//             bankRoundLongTwoDecimal(event_list_[i].payment_);
-//         event_list_[i].balance_ +=
-//             bankRoundLongTwoDecimal(event_list_[i].balance_change_);
-//         balance_ = bankRoundLongTwoDecimal(event_list_[i].balance_);
-//         event_list_[i].payment_ = 0.0;
-//       }
-//       interest_total_ += bankRoundLongTwoDecimal(event_list_[i].gain_);
-//       year_income_ += bankRoundLongTwoDecimal(event_list_[i].gain_);
-//       if (event_list_[i].date_ == end_date_) {
-//         tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-//                                 bankRoundLongTwoDecimal(year_income_ *
-//                                 tax_)));
-//         tax_total_ += bankRoundLongTwoDecimal(year_income_ * tax_);
-//       }
-//     } else if (event_list_[i].event_ == E_NEWYEAR) {
-//       event_list_[i].balance_ = bankRoundLongTwoDecimal(balance_);
-//       event_list_[i].gain_ = bankRoundLongTwoDecimal(
-//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
-//           balance_);
-//       day_value =
-//           calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
-//       tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-//                               bankRoundLongTwoDecimal(year_income_ * tax_)));
-//       tax_total_ += bankRoundLongTwoDecimal(year_income_ * tax_);
-//       year_income_ = 0.0;
-//     } else if (event_list_[i].event_ == E_WITHDRAWAL) {
-//       event_list_[i].balance_ = bankRoundLongTwoDecimal(balance_);
-//       event_list_[i].gain_ = bankRoundLongTwoDecimal(
-//           day_value * (event_list_[i].date_ | event_list_[i - 1].date_) *
-//           balance_);
-//       if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
-//         event_list_[i].balance_ +=
-//             bankRoundLongTwoDecimal(event_list_[i].balance_change_);
-//         balance_ = bankRoundLongTwoDecimal(event_list_[i].balance_);
-//         withdrawal_total_ -=
-//             bankRoundLongTwoDecimal(event_list_[i].balance_change_);
-//       } else {
-//         event_list_[i].event_ = E_DECLINE;
-//       }
-//     }
-//   }
-// }
-
 void Deposit::calculateValues() {
-  long double day_value = calculateDayValue(start_date_.getYear(), interest_);
-  // gain = day_value * n_days;
-  // n_days = pay_event | prev_event;
-  balance_ += event_list_[0].balance_change_;
-  event_list_[0].balance_ = balance_;
-  for (size_t i = 1; i < event_list_.size(); ++i) {
-    if (event_list_[i].event_ == E_REPLENISH) {
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      balance_ += event_list_[i].balance_change_;
-      event_list_[i].balance_ = balance_;
-      replenish_total_ += event_list_[i].balance_change_;
-    } else if (event_list_[i].event_ == E_PAYDAY) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      event_list_[i].payment_ = event_list_[i].gain_;
-      for (size_t j = i - 1; event_list_[j].event_ != E_PAYDAY && j > 0; --j) {
-        event_list_[i].payment_ += event_list_[j].gain_;
-        event_list_[i].gain_ += event_list_[j].gain_;
-        event_list_[j].gain_ = 0.0;
-      }
-      if (capital_ == true) {
-        event_list_[i].balance_change_ = event_list_[i].payment_;
-        event_list_[i].balance_ += event_list_[i].balance_change_;
-        balance_ = event_list_[i].balance_;
-        event_list_[i].payment_ = 0.0;
-      }
-      interest_total_ += event_list_[i].gain_;
-      year_income_ += event_list_[i].gain_;
-      if (event_list_[i].date_ == end_date_) {
-        tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-                                year_income_ * tax_));
-        tax_total_ += year_income_ * tax_;
-      }
-    } else if (event_list_[i].event_ == E_NEWYEAR) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      day_value =
-          calculateDayValue(event_list_[i].date_.getYear() + 1, interest_);
-      tax_list_.push_back(Tax(event_list_[i].date_.getYear(), year_income_,
-                              year_income_ * tax_));
-      tax_total_ += year_income_ * tax_;
-      year_income_ = 0.0;
-    } else if (event_list_[i].event_ == E_WITHDRAWAL) {
-      event_list_[i].balance_ = balance_;
-      event_list_[i].gain_ = day_value *
-                             (event_list_[i].date_ | event_list_[i - 1].date_) *
-                             balance_;
-      if (balance_ + event_list_[i].balance_change_ >= remainder_limit_) {
-        event_list_[i].balance_ += event_list_[i].balance_change_;
-        balance_ = event_list_[i].balance_;
-        withdrawal_total_ -= event_list_[i].balance_change_;
-      } else {
-        event_list_[i].event_ = E_DECLINE;
-      }
+  countDayValue(start_date_.getYear());
+  for (std::vector<Event>::iterator i = event_list_.begin();
+       i != event_list_.end(); ++i) {
+    switch (i->event_) {
+      case E_REPLENISH:
+        countReplenish(i);
+        break;
+      case E_WITHDRAWAL:
+        countWithdrawal(i);
+        break;
+      case E_NEWYEAR:
+        countNewyear(i);
+        break;
+      case E_PAYDAY:
+        countPayday(i);
+        break;
+
+      default:
+        break;
     }
   }
 }
 
+void Deposit::countReplenish(std::vector<Event>::iterator i) noexcept {
+  countGain(i);
+  countBalance(i);
+  if (i != event_list_.begin()) replenish_total_ += i->balance_change_;
+}
+
+void Deposit::countWithdrawal(std::vector<Event>::iterator i) noexcept {
+  countGain(i);
+  if (balance_ + i->balance_change_ >= remainder_limit_) {
+    countBalance(i);
+    withdrawal_total_ -= i->balance_change_;
+  } else {
+    i->balance_ = balance_;
+    i->event_ = E_DECLINE;
+  }
+}
+
+void Deposit::countNewyear(std::vector<Event>::iterator i) {
+  countGain(i);
+  countBalance(i);
+  countDayValue(i->date_.getYear() + 1);
+  if (i->date_ != start_date_) countTax(i);
+}
+
+void Deposit::countPayday(std::vector<Event>::iterator i) {
+  countGain(i);
+  sumPreviousGains(i);
+  if (capital_ == true)
+    i->balance_change_ = i->gain_;
+  else
+    i->payment_ = i->gain_;
+  countBalance(i);
+  interest_total_ += i->gain_;
+  year_income_ += i->gain_;
+  if (i->date_ == end_date_) {
+    countTax(i);
+  }
+}
+
+void Deposit::countBalance(std::vector<Event>::iterator i) noexcept {
+  balance_ += i->balance_change_;
+  i->balance_ = balance_;
+}
+
+/* CAREFUL. It looks back to previous element. */
+void Deposit::countGain(std::vector<Event>::iterator i) noexcept {
+  if (i > event_list_.begin())
+    i->gain_ = day_value_ * (i->date_ | (i - 1)->date_) * balance_;
+}
+
+void Deposit::sumPreviousGains(std::vector<Event>::iterator i) noexcept {
+  for (std::vector<Event>::iterator j = i - 1;
+       j->event_ != E_PAYDAY && j != event_list_.begin(); --j) {
+    i->gain_ += j->gain_;
+    j->gain_ = 0.0L;
+  }
+}
+
+void Deposit::countTax(std::vector<Event>::iterator i) {
+  long double gain = year_income_ * tax_;
+  tax_total_ += gain;
+  tax_list_.push_back(Tax(i->date_.getYear(), year_income_, gain));
+  year_income_ = 0.0L;
+}
+
+void Deposit::countDayValue(int year) noexcept {
+  day_value_ = calculateDayValue(year, interest_);
+}
+
 /* Splice replenishments and withdrawals of the same day in event_list_. */
 /* Swap payday and new_year events of same day so new_year goes after payday. */
-void Deposit::fixEventList(bool splice_on) {
+void Deposit::fixEventList(bool splice_on) noexcept {
   for (size_t i = 1; i < event_list_.size() - 1; ++i) {
     if (splice_on == true) {
       if (event_list_[i].date_ == event_list_[i + 1].date_ &&
@@ -303,317 +246,157 @@ void Deposit::fixEventList(bool splice_on) {
         --i;
       }
     }
-    // if (event_list_[i].event_ == E_NEWYEAR &&
-    //     event_list_[i].date_ == end_date_) {
-    //   event_list_.erase(event_list_.begin() + i);
-    // }
-    // if (event_list_[i].date_ == event_list_[i + 1].date_ &&
-    //     event_list_[i].event_ == E_NEWYEAR &&
-    //     event_list_[i + 1].event_ == E_PAYDAY) {
-    //   swapEvents(i, i + 1);
-    // }
+    /* Purpose of the commented code below is to correct std::sort job in case
+     * of inconsistencies. Turn it on if std::sort messes things up in regard to
+     * Events with same date.  */
+    /* if (event_list_[i].date_ == event_list_[i + 1].date_ &&
+        event_list_[i].event_ == E_NEWYEAR &&
+        event_list_[i + 1].event_ == E_PAYDAY)
+      swapEvents(i, i + 1);
+    if (event_list_[i].date_ == event_list_[i + 1].date_ &&
+        event_list_[i].event_ == E_PAYDAY &&
+        (event_list_[i + 1].event_ == E_PAYDAY ||
+         event_list_[i + 1].event_ == E_WITHDRAWAL))
+      swapEvents(i, i + 1); */
   }
 }
 
-void Deposit::spliceOperations(size_t first, size_t second) {
+void Deposit::spliceOperations(size_t first, size_t second) noexcept {
   event_list_[first].balance_change_ += event_list_[second].balance_change_;
-  if (event_list_[first].balance_change_ < 0)
+  if (event_list_[first].balance_change_ < 0.0L)
     event_list_[first].event_ = E_WITHDRAWAL;
   else
     event_list_[first].event_ = E_REPLENISH;
   event_list_.erase(event_list_.begin() + second);
 }
 
-/* void Deposit::swapEvents(size_t first, size_t second) noexcept {
-  Event buffer = event_list_[first];
-  event_list_[first] = event_list_[second];
-  event_list_[second] = buffer;
-} */
-
-void Deposit::insertDeposit() {
-  event_list_.push_back(
-      Event(E_REPLENISH, start_date_, 0.0, deposit_, 0.0, 0.0));
-}
+void Deposit::insertDeposit() { pushEvent(E_REPLENISH, start_date_, deposit_); }
 
 void Deposit::insertNewYears() {
   for (int i = 0; i < end_date_.getYear() - start_date_.getYear(); i++) {
-    event_list_.push_back(Event(E_NEWYEAR,
-                                Date(31, 12, start_date_.getYear() + i), 0.0,
-                                0.0, 0.0, 0.0));
+    pushEvent(E_NEWYEAR, Date(31, 12, start_date_.getYear() + i));
   }
 }
 
 void Deposit::insertReplenishList() {
   for (size_t i = 0; i < replenish_list_.size(); ++i) {
-    insertReplenish(i);
+    insertOperation(replenish_list_.cbegin() + i, E_REPLENISH);
   }
 }
 
 void Deposit::insertWithdrawalList() {
   for (size_t i = 0; i < withdrawal_list_.size(); ++i) {
-    insertWithdrawal(i);
+    insertOperation(withdrawal_list_.cbegin() + i, E_WITHDRAWAL);
   }
 }
 
 void Deposit::insertPaydays() {
-  if (periodicity_ == P_DAILY) {
-    Date current = start_date_ + 1;
-    for (; current < end_date_; current++) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
-  } else if (periodicity_ == P_WEEKLY) {
-    Date current = start_date_ + 7;
-    for (; current < end_date_; current += 7) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
-  } else if (periodicity_ == P_MONTHLY) {
-    Date current = nextMonthDate(start_date_, 1);
-    for (; current < end_date_; current = nextMonthDate(current, 1)) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
-  } else if (periodicity_ == P_QUARTERLY) {
-    Date current = nextMonthDate(start_date_, 3);
-    for (; current < end_date_; current = nextMonthDate(current, 3)) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
-  } else if (periodicity_ == P_BIANNUALLY) {
-    Date current = nextMonthDate(start_date_, 6);
-    for (; current < end_date_; current = nextMonthDate(current, 6)) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
-  } else if (periodicity_ == P_ANNUALLY) {
-    Date current = nextMonthDate(start_date_, 12);
-    for (; current < end_date_; current = nextMonthDate(current, 12)) {
-      event_list_.push_back(Event(E_PAYDAY, current, 0.0, 0.0, 0.0, 0.0));
-    }
+  switch (periodicity_) {
+    case P_DAILY:
+      pushPaydaysSkipDays(1);
+      break;
+    case P_WEEKLY:
+      pushPaydaysSkipDays(7);
+      break;
+    case P_MONTHLY:
+      pushPaydaysSkipMonths(1);
+      break;
+    case P_QUARTERLY:
+      pushPaydaysSkipMonths(3);
+      break;
+    case P_BIANNUALLY:
+      pushPaydaysSkipMonths(6);
+      break;
+    case P_ANNUALLY:
+      pushPaydaysSkipMonths(12);
+      break;
+
+    default:
+      break;
   }
 }
 
-void Deposit::insertLastPayday() {
-  event_list_.push_back(Event(E_PAYDAY, end_date_, 0.0, 0.0, 0.0, 0.0));
-}
+void Deposit::insertLastPayday() { pushEvent(E_PAYDAY, end_date_); }
 
-// void Deposit::insertReplenish(size_t i) {
-//   Date start = replenish_list_[i].date_;
-//   Date current = start;
-//   if (replenish_list_[i].period_ == O_ONCE) {
-//     if (current > start_date_ && current < end_date_)
-//       event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                   replenish_list_[i].value_, 0.0, 0.0));
-//   } else if (replenish_list_[i].period_ == O_MONTHLY) {
-//     current = replenish_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                     replenish_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 1);
-//     }
-//   } else if (replenish_list_[i].period_ == O_BIMONTHLY) {
-//     current = replenish_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                     replenish_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 2);
-//     }
-//   } else if (replenish_list_[i].period_ == O_QUARTERLY) {
-//     current = replenish_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                     replenish_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 3);
-//     }
-//   } else if (replenish_list_[i].period_ == O_BIANNUALLY) {
-//     current = replenish_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                     replenish_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 6);
-//     }
-//   } else if (replenish_list_[i].period_ == O_ANNUALLY) {
-//     current = replenish_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-//                                     replenish_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 12);
-//     }
-//   }
-// }
+/* Dates of operations and payments seems to be produced in unstable manner
+ * date-wise on calcus.ru when day is 29-31. The method is chosen depends on
+ * calcul.ru behaviour with different periodicity of operation (2 methods to
+ * skip months). */
+void Deposit::insertOperation(std::vector<Operation>::const_iterator element,
+                              EventType event) {
+  Date date = element->date_;
+  switch (element->period_) {
+    case O_ONCE:
+      if (date > start_date_ && date <= end_date_)
+        pushEvent(event, date, element->value_);
+      break;
+    case O_MONTHLY:
+      pushOperationsShiftMonths(event, date, element->value_, 1);
+      break;
+    case O_BIMONTHLY:
+      pushOperationsShiftMonths(event, date, element->value_, 2);
+      break;
+    case O_QUARTERLY:
+      pushOperationsShiftMonths(event, date, element->value_, 3);
+      break;
+    case O_BIANNUALLY:
+      pushOperationsShiftMonths(event, date, element->value_, 6);
+      break;
+    case O_ANNUALLY:
+      pushOperationsShiftMonthsWithOvercap(event, date, element->value_, 12);
+      break;
 
-// void Deposit::insertWithdrawal(size_t i) {
-//   Date start = withdrawal_list_[i].date_;
-//   Date current = start;
-//   if (withdrawal_list_[i].period_ == O_ONCE) {
-//     if (current > start_date_ && current < end_date_)
-//       event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                   -withdrawal_list_[i].value_, 0.0, 0.0));
-//   } else if (withdrawal_list_[i].period_ == O_MONTHLY) {
-//     current = withdrawal_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                     -withdrawal_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 1);
-//     }
-//   } else if (withdrawal_list_[i].period_ == O_BIMONTHLY) {
-//     current = withdrawal_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                     -withdrawal_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 2);
-//     }
-//   } else if (withdrawal_list_[i].period_ == O_QUARTERLY) {
-//     current = withdrawal_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                     -withdrawal_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 3);
-//     }
-//   } else if (withdrawal_list_[i].period_ == O_BIANNUALLY) {
-//     current = withdrawal_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                     -withdrawal_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 6);
-//     }
-//   } else if (withdrawal_list_[i].period_ == O_ANNUALLY) {
-//     current = withdrawal_list_[i].date_;
-//     for (; current <= end_date_;) {
-//       if (current > start_date_)
-//         event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-//                                     -withdrawal_list_[i].value_, 0.0, 0.0));
-//       // current = start.shiftMonths(j);
-//       current = nextMonthDate(current, 12);
-//     }
-//   }
-// }
-
-/* Bimonthly and quarterly periodicity of operations seems to work unstable
- * date-wise on calcus.ru when day is 29-31. Therefore one method is chosen, the
- * one with changing only month. */
-void Deposit::insertReplenish(size_t i) {
-  Date start = replenish_list_[i].date_;
-  Date current = start;
-  if (replenish_list_[i].period_ == O_ONCE) {
-    if (current > start_date_ && current < end_date_)
-      event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                  replenish_list_[i].value_, 0.0, 0.0));
-  } else if (replenish_list_[i].period_ == O_MONTHLY) {
-    current = replenish_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; ++j) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                    replenish_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (replenish_list_[i].period_ == O_BIMONTHLY) {
-    current = replenish_list_[i].date_;
-    for (size_t j = 2; current <= end_date_; j += 2) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                    replenish_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (replenish_list_[i].period_ == O_QUARTERLY) {
-    current = replenish_list_[i].date_;
-    for (size_t j = 3; current <= end_date_; j += 3) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                    replenish_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (replenish_list_[i].period_ == O_BIANNUALLY) {
-    current = replenish_list_[i].date_;
-    for (size_t j = 6; current <= end_date_; j += 6) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                    replenish_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(current, j);
-    }
-  } else if (replenish_list_[i].period_ == O_ANNUALLY) {
-    current = replenish_list_[i].date_;
-    for (size_t j = 12; current <= end_date_;) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_REPLENISH, current, 0.0,
-                                    replenish_list_[i].value_, 0.0, 0.0));
-      // current = start.shiftMonths(j);
-      current = nextMonthDate(current, j);
-    }
+    default:
+      break;
   }
 }
 
-void Deposit::insertWithdrawal(size_t i) {
-  Date start = withdrawal_list_[i].date_;
-  Date current = start;
-  if (withdrawal_list_[i].period_ == O_ONCE) {
-    if (current > start_date_ && current < end_date_)
-      event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                  -withdrawal_list_[i].value_, 0.0, 0.0));
-  } else if (withdrawal_list_[i].period_ == O_MONTHLY) {
-    current = withdrawal_list_[i].date_;
-    for (size_t j = 1; current <= end_date_; ++j) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                    -withdrawal_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (withdrawal_list_[i].period_ == O_BIMONTHLY) {
-    current = withdrawal_list_[i].date_;
-    for (size_t j = 2; current <= end_date_; j += 2) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                    -withdrawal_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (withdrawal_list_[i].period_ == O_QUARTERLY) {
-    current = withdrawal_list_[i].date_;
-    for (size_t j = 3; current <= end_date_; j += 3) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                    -withdrawal_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(start, j);
-    }
-  } else if (withdrawal_list_[i].period_ == O_BIANNUALLY) {
-    current = withdrawal_list_[i].date_;
-    for (size_t j = 6; current <= end_date_; j += 6) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                    -withdrawal_list_[i].value_, 0.0, 0.0));
-      current = start.shiftMonths(j);
-      // current = nextMonthDate(current, j);
-    }
-  } else if (withdrawal_list_[i].period_ == O_ANNUALLY) {
-    current = withdrawal_list_[i].date_;
-    for (size_t j = 12; current <= end_date_;) {
-      if (current > start_date_)
-        event_list_.push_back(Event(E_WITHDRAWAL, current, 0.0,
-                                    -withdrawal_list_[i].value_, 0.0, 0.0));
-      // current = start.shiftMonths(j);
-      current = nextMonthDate(current, j);
-    }
+/* Build dates relatively to start date, cut days if needed.
+Example: 31.01.2024 + 1 month = 29.02.2024, 31.03.2024, 30.04.2024, etc. */
+void Deposit::pushOperationsShiftMonths(EventType event, Date date,
+                                        long double value, size_t step) {
+  Date start = date;
+  for (size_t j = step; date <= end_date_; j += step) {
+    if (date > start_date_) pushEvent(event, date, value);
+    date = start.shiftMonths(j);
   }
+}
+
+/* Build dates relatively to current date with possibility of overcapping by
+1-3 days. Current date value is always reassigned. Example: 29.02.2024 + 12
+months = 01.03.2025, ... , 01.03.2028, etc. */
+void Deposit::pushOperationsShiftMonthsWithOvercap(EventType event, Date date,
+                                                   long double value,
+                                                   size_t step) {
+  while (date <= end_date_) {
+    if (date > start_date_) pushEvent(event, date, value);
+    date = nextMonthDate(date, step);
+  }
+}
+
+void Deposit::pushPaydaysSkipMonths(int step) {
+  Date current = nextMonthDate(start_date_, step);
+  for (; current < end_date_; current = nextMonthDate(current, step)) {
+    pushEvent(E_PAYDAY, current);
+  }
+}
+
+void Deposit::pushPaydaysSkipDays(int step) {
+  Date current = start_date_ + step;
+  for (; current < end_date_; current += step) {
+    pushEvent(E_PAYDAY, current);
+  }
+}
+
+void Deposit::pushEvent(EventType event, Date date, long double change) {
+  if (event == E_WITHDRAWAL) change = -change;
+  event_list_.push_back(Event(event, date, 0.0L, change, 0.0L, 0.0L));
+}
+
+void Deposit::swapEvents(size_t first, size_t second) noexcept {
+  Event buffer = event_list_[first];
+  event_list_[first] = event_list_[second];
+  event_list_[second] = buffer;
 }
 
 bool Deposit::validateSettings() const noexcept {

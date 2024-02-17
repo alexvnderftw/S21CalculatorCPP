@@ -65,6 +65,5 @@ clean:
 	rm -rf ./report/
 	rm -rf ./test_build/
 	rm -rf ./libs
-	cd model/cdecimal && make clean
 
 rebuild: clean all

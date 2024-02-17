@@ -43,7 +43,7 @@ class Deposit {
    public:
     Operation() = default;
     ~Operation() = default;
-    Operation(OperPeriod period, Date& date, long double value)
+    Operation(OperPeriod period, Date date, long double value) noexcept
         : period_(period), date_(date), value_(value) {}
     friend class Deposit;
 
@@ -65,7 +65,8 @@ class Deposit {
     Event() = default;
     ~Event() = default;
     Event(EventType event, Date date, long double gain,
-          long double balance_change, long double payment, long double balance)
+          long double balance_change, long double payment,
+          long double balance) noexcept
         : event_(event),
           date_(date),
           gain_(gain),
@@ -91,7 +92,7 @@ class Deposit {
    public:
     Tax() = default;
     ~Tax() = default;
-    Tax(int year, long double income, long double tax)
+    Tax(int year, long double income, long double tax) noexcept
         : year_(year), income_(income), tax_(tax) {}
     friend class Deposit;
 
@@ -114,12 +115,12 @@ class Deposit {
   void setRemainderLimit(double value) noexcept;
   void addReplenish(OperPeriod freq, Date date, double value);
   void addWithdrawal(OperPeriod freq, Date date, double value);
-  void removeReplenish(size_t index);
-  void removeWithdrawal(size_t index);
-  void popBackReplenish();
-  void popBackWithdrawal();
-  void clearReplenish();
-  void clearWithdrawal();
+  void removeReplenish(size_t index) noexcept;
+  void removeWithdrawal(size_t index) noexcept;
+  void popBackReplenish() noexcept;
+  void popBackWithdrawal() noexcept;
+  void clearReplenish() noexcept;
+  void clearWithdrawal() noexcept;
 
   /* Methods to look at some user variables. No bound checking. */
   bool isCapitalization() const noexcept;
@@ -179,6 +180,7 @@ class Deposit {
   /* Operational variables */
   Date end_date_;
   long double year_income_ = 0.0;
+  long double day_value_ = 0.0;
 
   /* Result values */
   long double balance_ = 0.0;
@@ -193,17 +195,33 @@ class Deposit {
   void setDefaultValues() noexcept;
   void calculateEndDate();
   void calculateValues();
-  void fixEventList(bool splice_on);
-  void spliceOperations(size_t first, size_t second);
-  // void swapEvents(size_t first, size_t second) noexcept;
+  void countReplenish(std::vector<Event>::iterator i) noexcept;
+  void countWithdrawal(std::vector<Event>::iterator i) noexcept;
+  void countNewyear(std::vector<Event>::iterator i);
+  void countPayday(std::vector<Event>::iterator i);
+  void countBalance(std::vector<Event>::iterator i) noexcept;
+  void countGain(std::vector<Event>::iterator i) noexcept;
+  void sumPreviousGains(std::vector<Event>::iterator i) noexcept;
+  void countTax(std::vector<Event>::iterator i);
+  void countDayValue(int year) noexcept;
+  void fixEventList(bool splice_on) noexcept;
+  void spliceOperations(size_t first, size_t second) noexcept;
   void insertDeposit();
   void insertNewYears();
   void insertReplenishList();
   void insertWithdrawalList();
   void insertPaydays();
   void insertLastPayday();
-  void insertReplenish(size_t i);
-  void insertWithdrawal(size_t i);
+  void insertOperation(std::vector<Operation>::const_iterator element,
+                       EventType event);
+  void pushOperationsShiftMonths(EventType event, Date date, long double value,
+                                 size_t step);
+  void pushOperationsShiftMonthsWithOvercap(EventType event, Date date,
+                                            long double value, size_t step);
+  void pushPaydaysSkipMonths(int step);
+  void pushPaydaysSkipDays(int step);
+  void pushEvent(EventType event, Date date, long double change = 0.0);
+  void swapEvents(size_t first, size_t second) noexcept;
   bool validateSettings() const noexcept;
   bool checkReplenishes() const noexcept;
   bool checkWithdrawals() const noexcept;
