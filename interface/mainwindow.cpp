@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     box->setAttribute(Qt::WA_MacShowFocusRect, 0);
   }
 #endif
+  setDefaultSizes();
   connectSignals();
 }
 
@@ -29,29 +30,50 @@ void MainWindow::connectSignals() {
   connect(ui->pushButtonToCredit, SIGNAL(clicked()), signalMapper, SLOT(map()));
   connect(ui->pushButtonToDeposit, SIGNAL(clicked()), signalMapper,
           SLOT(map()));
-  signalMapper->setMapping(ui->pushButtonMenu, ui->pageMenu);
-  signalMapper->setMapping(ui->pushButtonToCalculator, ui->pageCalculator);
-  signalMapper->setMapping(ui->pushButtonToCredit, ui->pageCredit);
-  signalMapper->setMapping(ui->pushButtonToDeposit, ui->pageDeposit);
-  connect(signalMapper, SIGNAL(mapped(QWidget *)), this,
-          SLOT(switchPage(QWidget *)));
+  signalMapper->setMapping(ui->pushButtonMenu, ui->pushButtonMenu->text());
+  signalMapper->setMapping(ui->pushButtonToCalculator, ui->pushButtonToCalculator->text());
+  signalMapper->setMapping(ui->pushButtonToCredit, ui->pushButtonToCredit->text());
+  signalMapper->setMapping(ui->pushButtonToDeposit, ui->pushButtonToDeposit->text());
+  connect(signalMapper, SIGNAL(mappedString(QString)), this,
+          SLOT(switchPage(QString)));
   connect(ui->pushButtonExit, SIGNAL(clicked()), this, SLOT(quit()));
 }
 
-void MainWindow::switchPage(QWidget *page) {
-  ui->stackedWidget->setCurrentWidget(page);
-  if (page == ui->pageCalculator) {
+void MainWindow::switchPage(QString text) {
+  if (text == "Calculator") {
+    setDefaultSizes();
+    ui->pageCalculator->setDefaultSizes();
+    ui->stackedWidget->setCurrentWidget(ui->pageCalculator);
     ui->pageCalculator->setDefaultFocus();
-    this->resize(800, 450);
-  } else if (page == ui->pageCredit) {
+    this->setMinimumSize(800, 520);
+    this->resize(800, 520);
+  } else if (text == "Credit") {
+    setDefaultSizes();
+    ui->pageCredit->setDefaultSizes();
+    ui->stackedWidget->setCurrentWidget(ui->pageCredit);
     ui->pageCredit->setDefaultFocus();
-    this->resize(800, 600);
-  } else if (page == ui->pageDeposit) {
+    this->setMinimumSize(800, 450);
+    this->resize(800, 550);
+  } else if (text == "Deposit") {
+    setDefaultSizes();
+    ui->pageDeposit->setDefaultSizes();
+    ui->stackedWidget->setCurrentWidget(ui->pageDeposit);
     ui->pageDeposit->setDefaultFocus();
-    this->resize(1000, 700);
-  } else if (page == ui->pageMenu) {
-    this->resize(500, 400);
+    this->setMinimumSize(800, 500);
+    this->resize(800, 650);
+  } else if (text == "Menu") {
+    setDefaultSizes();
+    ui->stackedWidget->setCurrentWidget(ui->pageMenu);
+    ui->pushButtonToCalculator->setFocus();
+    this->setMinimumSize(400, 430);
+    this->resize(400, 430);
   }
+}
+
+void MainWindow::setDefaultSizes() {
+  ui->pageCalculator->nullDefaultSizes();
+  ui->pageCredit->nullDefaultSizes();
+  ui->pageDeposit->nullDefaultSizes();
 }
 
 void MainWindow::quit() { QApplication::quit(); }

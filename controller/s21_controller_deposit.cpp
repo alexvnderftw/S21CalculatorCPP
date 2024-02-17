@@ -52,6 +52,9 @@ bool ControllerDeposit::isCapitalization() const noexcept {
 double ControllerDeposit::getDeposit() const noexcept {
   return deposit_.getDeposit();
 }
+double ControllerDeposit::getRemainderLimit() const noexcept {
+  return deposit_.getRemainderLimit();
+}
 size_t ControllerDeposit::getReplenishListSize() const noexcept {
   return deposit_.getReplenishListSize();
 }

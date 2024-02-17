@@ -19,6 +19,8 @@ class Calculator : public QWidget {
   ~Calculator();
 
   void setDefaultFocus();
+  void setDefaultSizes();
+  void nullDefaultSizes();
 
  private slots:
   void calculateResult();

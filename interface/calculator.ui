@@ -1255,8 +1255,8 @@ QRadioButton::indicator:unchecked {
        <widget class="QCustomPlot" name="widgetPlot" native="true">
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>400</height>
+          <width>426</width>
+          <height>426</height>
          </size>
         </property>
         <property name="styleSheet">

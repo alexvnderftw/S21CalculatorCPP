@@ -120,12 +120,12 @@ bool Deposit::calculate() {
 void Deposit::setDefaultValues() noexcept {
   event_list_.clear();
   tax_list_.clear();
-  balance_ = 0.0;
-  year_income_ = 0.0;
-  interest_total_ = 0.0;
-  tax_total_ = 0.0;
-  withdrawal_total_ = 0.0;
-  replenish_total_ = 0.0;
+  balance_ = 0.0L;
+  year_income_ = 0.0L;
+  interest_total_ = 0.0L;
+  tax_total_ = 0.0L;
+  withdrawal_total_ = 0.0L;
+  replenish_total_ = 0.0L;
 }
 
 void Deposit::calculateEndDate() {

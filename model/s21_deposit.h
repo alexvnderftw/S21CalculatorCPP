@@ -164,10 +164,10 @@ class Deposit {
  private:
   /* User settings */
   /* START: Variables with bound checking. */
-  long double deposit_ = 0.0;
-  long double interest_ = 0.0;
-  long double tax_ = 0.0;
-  long double remainder_limit_ = 0.0;
+  long double deposit_ = 0.0L;
+  long double interest_ = 0.0L;
+  long double tax_ = 0.0L;
+  long double remainder_limit_ = 0.0L;
   int term_ = 0;
   TermType term_type_ = T_DAY;
   Date start_date_;
@@ -179,15 +179,15 @@ class Deposit {
 
   /* Operational variables */
   Date end_date_;
-  long double year_income_ = 0.0;
-  long double day_value_ = 0.0;
+  long double year_income_ = 0.0L;
+  long double day_value_ = 0.0L;
 
   /* Result values */
-  long double balance_ = 0.0;
-  long double interest_total_ = 0.0;
-  long double tax_total_ = 0.0;
-  long double replenish_total_ = 0.0;
-  long double withdrawal_total_ = 0.0;
+  long double balance_ = 0.0L;
+  long double interest_total_ = 0.0L;
+  long double tax_total_ = 0.0L;
+  long double replenish_total_ = 0.0L;
+  long double withdrawal_total_ = 0.0L;
   std::vector<Event> event_list_{};
   std::vector<Tax> tax_list_{};
 
@@ -220,7 +220,7 @@ class Deposit {
                                             long double value, size_t step);
   void pushPaydaysSkipMonths(int step);
   void pushPaydaysSkipDays(int step);
-  void pushEvent(EventType event, Date date, long double change = 0.0);
+  void pushEvent(EventType event, Date date, long double change = 0.0L);
   void swapEvents(size_t first, size_t second) noexcept;
   bool validateSettings() const noexcept;
   bool checkReplenishes() const noexcept;

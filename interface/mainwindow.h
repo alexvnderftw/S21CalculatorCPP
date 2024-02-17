@@ -18,11 +18,12 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
  private slots:
-  void switchPage(QWidget *page);
+  void switchPage(QString text);
   void quit();
 
  private:
   Ui::MainWindow *ui;
   void connectSignals();
+  void setDefaultSizes();
 };
 #endif  // MAINWINDOW_H

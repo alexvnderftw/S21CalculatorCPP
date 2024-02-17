@@ -19,6 +19,14 @@ void CreditCalculator::setDefaultFocus() {
   ui->pushButtonFillCredit->setFocus();
 }
 
+void CreditCalculator::setDefaultSizes() {
+  ui->widgetMain->setMinimumHeight(150);
+}
+
+void CreditCalculator::nullDefaultSizes() {
+  ui->widgetMain->setMinimumHeight(0);
+}
+
 void CreditCalculator::connectSignals() {
   connect(ui->pushButtonFillCredit, SIGNAL(clicked()), this, SLOT(calculate()));
   connect(ui->comboBoxTimeType, SIGNAL(currentIndexChanged(int)), this,

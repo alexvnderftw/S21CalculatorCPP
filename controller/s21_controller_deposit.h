@@ -38,6 +38,7 @@ class ControllerDeposit {
   std::vector<Deposit::Tax>::const_iterator getTaxListElement(
       size_t index) const noexcept;
   double getBalance() const noexcept;
+  double getRemainderLimit() const noexcept;
   double getInterestTotal() const noexcept;
   double getTaxTotal() const noexcept;
   double getReplenishTotal() const noexcept;

@@ -10,6 +10,7 @@ DepositCalculator::DepositCalculator(QWidget *parent) :
     setInitialState();
     //setValues();
     connectSignals();
+    hideOperationWidget();
 }
 
 DepositCalculator::~DepositCalculator()
@@ -19,6 +20,16 @@ DepositCalculator::~DepositCalculator()
 
 void DepositCalculator::setDefaultFocus() {
     ui->pushButtonCalculate->setFocus();
+}
+
+void DepositCalculator::setDefaultSizes() {
+    ui->widgetMain->setMinimumWidth(360);
+    ui->widgetMain->setMinimumHeight(220);
+}
+
+void DepositCalculator::nullDefaultSizes() {
+    ui->widgetMain->setMinimumWidth(0);
+    ui->widgetMain->setMinimumHeight(0);
 }
 
 void DepositCalculator::setUiParameters() {
@@ -42,8 +53,21 @@ void DepositCalculator::connectSignals() {
     connect(ui->pushButtonRemoveReplenish, SIGNAL(clicked()), this, SLOT(removeReplenish()));
     connect(ui->pushButtonAddWithdrawal, SIGNAL(clicked()), this, SLOT(addWithdrawal()));
     connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this, SLOT(removeWithdrawal()));
+    connect(ui->pushButtonHideOperations, SIGNAL(clicked()), this, SLOT(hideOperationWidget()));
+    connect(ui->pushButtonShowOperations, SIGNAL(clicked()), this, SLOT(showOperationWidget()));
+    connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this, SLOT(removeWithdrawal()));
     connect(ui->checkBoxCapitalization, SIGNAL(stateChanged(int)), this, SLOT(setCapitalization(int)));
-    connect(ui->comboBoxTermUnit, SIGNAL(currentIndexChanged(QString)), this, SLOT(setTermLimit(QString)));
+    connect(ui->comboBoxTermUnit, SIGNAL(currentTextChanged(QString)), this, SLOT(setTermLimit(QString)));
+}
+
+void DepositCalculator::hideOperationWidget() {
+    ui->widgetHidder->hide();
+    ui->widgetShower->show();
+}
+
+void DepositCalculator::showOperationWidget() {
+    ui->widgetHidder->show();
+    ui->widgetShower->hide();
 }
 
 void DepositCalculator::setTermLimit(QString text) {
@@ -94,36 +118,45 @@ void DepositCalculator::calculate() {
 }
 
 void DepositCalculator::fillTable() {
-    //ui->tableWidgetEvents->setRowCount(data.getEventListSize() + 1);
     ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
     for (size_t i = 0; i < data.getEventListSize(); ++i) {
         if (data.getEventListElement(i)->event() != s21::Deposit::E_NEWYEAR) {
             ui->tableWidgetEvents->setItem(
                 ui->tableWidgetEvents->rowCount() - 1, 0,
                 new QTableWidgetItem(getDateString(data.getEventListElement(i)->date())));
-            if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY) ui->tableWidgetEvents->setItem(
-                ui->tableWidgetEvents->rowCount() - 1, 1,
-                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->gain(), false, 'f', 2)));
-            if (data.getEventListElement(i)->event() != s21::Deposit::E_PAYDAY ||
-                (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == true)) ui->tableWidgetEvents->setItem(
-                ui->tableWidgetEvents->rowCount() - 1, 2,
-                    new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance_change(), true, 'f', 2)));
-            if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == false) ui->tableWidgetEvents->setItem(
-                ui->tableWidgetEvents->rowCount() - 1, 3,
-                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->payment(), false, 'f', 2)));
-            ui->tableWidgetEvents->setItem(
-                ui->tableWidgetEvents->rowCount() - 1, 4,
-                new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance(), false, 'f', 2)));
-            ui->tableWidgetEvents->setItem(
-                ui->tableWidgetEvents->rowCount() - 1, 5,
-                new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
+            if (data.getEventListElement(i)->event() != s21::Deposit::E_DECLINE) {
+                if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY) ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 1,
+                    new QTableWidgetItem(outputNumber(data.getEventListElement(i)->gain(), false, 'f', 2)));
+                if (data.getEventListElement(i)->event() != s21::Deposit::E_PAYDAY ||
+                    (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == true)) ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 2,
+                        new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance_change(), true, 'f', 2)));
+                if (data.getEventListElement(i)->event() == s21::Deposit::E_PAYDAY && data.isCapitalization() == false) ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 3,
+                    new QTableWidgetItem(outputNumber(data.getEventListElement(i)->payment(), false, 'f', 2)));
+                ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 4,
+                    new QTableWidgetItem(outputNumber(data.getEventListElement(i)->balance(), false, 'f', 2)));
+                ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 5,
+                    new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
+            } else {
+                ui->tableWidgetEvents->setItem(
+                        ui->tableWidgetEvents->rowCount() - 1, 1,
+                        new QTableWidgetItem("Withdrawal (" + outputNumber(data.getEventListElement(i)->balance_change(), false, 'f', 2) +
+                                                                                   ") was declined due to minimum balance limit (" + outputNumber(data.getRemainderLimit(), false, 'f', 2) + ")"));
+                ui->tableWidgetEvents->setItem(
+                    ui->tableWidgetEvents->rowCount() - 1, 5,
+                    new QTableWidgetItem(getEventString(data.getEventListElement(i)->event())));
+                ui->tableWidgetEvents->setSpan(ui->tableWidgetEvents->rowCount() - 1,1,ui->tableWidgetEvents->rowCount() - 1,4);
+            }
             ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
         }
 //        } else {
 //            ui->tableWidgetEvents->removeRow(ui->tableWidgetEvents->rowCount());
 //        }
     }
-    //ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
     ui->tableWidgetEvents->setItem(ui->tableWidgetEvents->rowCount() - 1, 0,
                                    new QTableWidgetItem("Total:"));
     ui->tableWidgetEvents->setItem(
@@ -211,6 +244,7 @@ void DepositCalculator::addReplenish() {
     ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
     ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetReplenishes->selectRow(ui->tableWidgetReplenishes->rowCount() - 1);
+    ui->tableWidgetReplenishes->resizeRowsToContents();
     //    QPushButton *removeButton = new QPushButton("Remove", this);
 //    ui->tableWidgetReplenishes->setCellWidget(ui->tableWidgetReplenishes->rowCount() - 1, 3, removeButton);
 //    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeReplenish()));
@@ -244,6 +278,7 @@ void DepositCalculator::addWithdrawal() {
     ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 1, new QTableWidgetItem(getDateString(date)));
     ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetWithdrawals->selectRow(ui->tableWidgetWithdrawals->rowCount() - 1);
+        ui->tableWidgetWithdrawals->resizeRowsToContents();
 }
 
 // error!!!

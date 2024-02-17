@@ -117,10 +117,7 @@ void Calculation::Calculate() {
       x1 = calc_stack_.top();
       calc_stack_.pop();
       calc_stack_.push(GetBinaryCallback(token.type)(x1, x2));
-    } /* else {
-      status_ = CALCULATE_ERROR;
-      return;
-    } */
+    }
   }
   result_ = calc_stack_.top();
   calc_stack_.pop();

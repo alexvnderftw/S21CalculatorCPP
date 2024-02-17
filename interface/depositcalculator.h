@@ -18,6 +18,8 @@ public:
     ~DepositCalculator();
 
     void setDefaultFocus();
+    void setDefaultSizes();
+    void nullDefaultSizes();
 
 private slots:
     void calculate();
@@ -27,6 +29,8 @@ private slots:
     void removeWithdrawal();
     void setCapitalization(int value);
     void setTermLimit(QString text);
+    void hideOperationWidget();
+    void showOperationWidget();
 
 private:
     Ui::DepositCalculator *ui;

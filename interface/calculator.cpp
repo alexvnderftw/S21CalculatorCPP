@@ -14,6 +14,20 @@ Calculator::~Calculator() { delete ui; }
 
 void Calculator::setDefaultFocus() { ui->lineEditExpression->setFocus(); }
 
+void Calculator::setDefaultSizes() {
+  ui->widgetCalculator->setMinimumWidth(335);
+  ui->widgetCalculator->setMinimumHeight(426);
+  ui->widgetPlot->setMinimumWidth(426);
+  ui->widgetPlot->setMinimumHeight(426);
+}
+
+void Calculator::nullDefaultSizes() {
+  ui->widgetCalculator->setMinimumWidth(0);
+  ui->widgetCalculator->setMinimumHeight(0);
+  ui->widgetPlot->setMinimumWidth(0);
+  ui->widgetPlot->setMinimumHeight(0);
+}
+
 void Calculator::initializeGraph() {
   size = ui->widgetPlot->width();
   x.resize(size);
@@ -131,7 +145,7 @@ void Calculator::connectSignals() {
                            appendLeftPar(ui->pushButtonAcos->text()));
   signalMapper->setMapping(ui->pushButtonAtan,
                            appendLeftPar(ui->pushButtonAtan->text()));
-  connect(signalMapper, SIGNAL(mapped(QString)), this,
+  connect(signalMapper, SIGNAL(mappedString(QString)), this,
           SLOT(inputLineText(QString)));
 }
 

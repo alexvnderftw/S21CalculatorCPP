@@ -17,6 +17,8 @@ class CreditCalculator : public QWidget {
   ~CreditCalculator();
 
   void setDefaultFocus();
+  void setDefaultSizes();
+  void nullDefaultSizes();
 
  private slots:
   void calculate();
