@@ -46,7 +46,8 @@
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="styleSheet">
        <string notr="true">QWidget {
-background-color: rgb(8, 1, 18);
+/*background-color: rgb(8, 1, 18);*/
+background-color: rgb(16, 16, 35);
 border: none;
 }</string>
       </property>
@@ -194,6 +195,16 @@ background-color: rgb(71, 5, 9);
            <property name="text">
             <string>Quit</string>
            </property>
+           <property name="icon">
+            <iconset resource="../misc/resource.qrc">
+             <normaloff>:/icons/exit_to_app_yellow.svg</normaloff>:/icons/exit_to_app_yellow.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
           </widget>
          </widget>
         </item>
@@ -277,13 +288,10 @@ font: 13pt &quot;Anta&quot;;
 color: black;
 border: none;
 background: none;
-image: url(:/icons/menu_black.svg);
-
 }
 
 QPushButton:hover {
 color: rgb(255, 210, 128);
-image: url(:/icons/menu_yellow.svg);
 }
 
 QPushButton:pressed {
@@ -293,7 +301,6 @@ border-radius: 4px;
 border-width: 0px;
 border-style: solid;
 border-color: transparent;
-image: url(:/icons/menu_black.svg);
 }</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -312,18 +319,37 @@ image: url(:/icons/menu_black.svg);
        <property name="spacing">
         <number>0</number>
        </property>
-       <item row="0" column="1">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButtonCredit">
+         <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>22</width>
+           <height>22</height>
           </size>
          </property>
-        </spacer>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	image: url(:/icons/payments_black.svg);
+}
+
+QPushButton:hover {
+image: url(:/icons/payments_yellow.svg);
+}
+
+QPushButton:pressed {
+image: url(:/icons/payments_black.svg);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>17</width>
+           <height>17</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="pushButtonMenu">
@@ -340,7 +366,94 @@ image: url(:/icons/menu_black.svg);
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">QPushButton {
+image: url(:/icons/menu_black.svg);
+}
+
+QPushButton:hover {
+image: url(:/icons/menu_yellow.svg);
+}
+
+QPushButton:pressed {
+image: url(:/icons/menu_black.svg);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>17</width>
+           <height>17</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButtonCalculator">
+         <property name="minimumSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	image: url(:/icons/calculate_black.svg);
+}
+
+QPushButton:hover {
+image: url(:/icons/calculate_yellow.svg);
+}
+
+QPushButton:pressed {
+image: url(:/icons/calculate_black.svg);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>17</width>
+           <height>17</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="pushButtonDeposit">
+         <property name="minimumSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	image: url(:/icons/savings_black.svg);
+}
+
+QPushButton:hover {
+image: url(:/icons/savings_yellow.svg);
+}
+
+QPushButton:pressed {
+image: url(:/icons/savings_black.svg);
+}</string>
          </property>
          <property name="text">
           <string/>
@@ -410,6 +523,8 @@ image: url(:/icons/menu_black.svg);
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../misc/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

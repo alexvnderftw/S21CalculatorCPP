@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow {
  private slots:
   void switchPage(QString text);
   void quit();
-  void changeMenuIcon();
+  void resetIcons();
 
  private:
   Ui::MainWindow *ui;

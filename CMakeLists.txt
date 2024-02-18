@@ -3,7 +3,7 @@ project(S21CalculatorCPP)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17 -g -O0 --coverage -fno-inline")
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -Wpedantic -std=c++17 -g --coverage")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB TEST_SRC CONFIGURE_DEPENDS "tests/*.h" "tests/*.cpp")
@@ -26,7 +26,7 @@ add_executable(
 )
 target_link_libraries(
   model_test
-  ${CMAKE_SOURCE_DIR}/s21_calculator_model.a
+  ${CMAKE_SOURCE_DIR}/libs/s21_calculator_model.a
   GTest::gtest
 )
 

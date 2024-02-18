@@ -20,6 +20,7 @@ void DepositCalculator::setDefaultFocus() {
 void DepositCalculator::setDefaultSizes() {
   ui->widgetMain->setMinimumWidth(360);
   ui->widgetMain->setMinimumHeight(220);
+  // this->setMinimumHeight(700);
 }
 
 void DepositCalculator::nullDefaultSizes() {
@@ -92,11 +93,13 @@ void DepositCalculator::connectSignals() {
 void DepositCalculator::hideOperationWidget() {
   ui->widgetHidder->hide();
   ui->widgetShower->show();
+  // this->setMinimumHeight(700);
 }
 
 void DepositCalculator::showOperationWidget() {
   ui->widgetHidder->show();
   ui->widgetShower->hide();
+  // this->setMinimumHeight(800);
 }
 
 void DepositCalculator::setTermLimit(QString text) {
@@ -258,9 +261,6 @@ void DepositCalculator::clearContent() {
   ui->lineEditTotal->clear();
   ui->lineEditGain->clear();
   ui->lineEditTotalTax->clear();
-  ui->lineEditPayment->clear();
-  ui->lineEditInterest->clear();
-  ui->lineEditTotal->clear();
 }
 
 QString DepositCalculator::getDateString(s21::Date date) {

@@ -25,5 +25,26 @@
         <file>icons/keyboard_arrow_up_yellow.svg</file>
         <file>icons/check_black.svg</file>
         <file>icons/check_yellow.svg</file>
+        <file>icons/account_balance_black.svg</file>
+        <file>icons/add_card_black.svg</file>
+        <file>icons/calculate_black.svg</file>
+        <file>icons/credit_card_black.svg</file>
+        <file>icons/credit_card_off_black.svg</file>
+        <file>icons/payments_black.svg</file>
+        <file>icons/price_check_black.svg</file>
+        <file>icons/savings_black.svg</file>
+        <file>icons/calculate_yellow.svg</file>
+        <file>icons/payments_yellow.svg</file>
+        <file>icons/savings_yellow.svg</file>
+        <file>icons/add_card_yellow.svg</file>
+        <file>icons/credit_card_off_yellow.svg</file>
+        <file>icons/exit_to_app_black.svg</file>
+        <file>icons/exit_to_app_yellow.svg</file>
+        <file>icons/function_black.svg</file>
+        <file>icons/function_yellow.svg</file>
+        <file>icons/input_black.svg</file>
+        <file>icons/logout_black.svg</file>
+        <file>icons/output_black.svg</file>
+        <file>icons/output_yellow.svg</file>
     </qresource>
 </RCC>

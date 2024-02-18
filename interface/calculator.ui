@@ -196,6 +196,9 @@ QRadioButton::indicator:unchecked {
         <height>31</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">padding: 0 8px 0 35px;</string>
+      </property>
       <property name="inputMask">
        <string/>
       </property>
@@ -214,6 +217,9 @@ QRadioButton::indicator:unchecked {
         <width>241</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">padding: 0 8px 0 35px;</string>
       </property>
       <property name="readOnly">
        <bool>true</bool>
@@ -1015,6 +1021,19 @@ QRadioButton::indicator:unchecked {
         <height>30</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">/*QPushButton {
+background-color: rgb(0, 179, 116);
+}
+
+QPushButton:hover {
+background-color: rgb(0, 230, 149);
+}
+
+QPushButton:pressed {
+background-color: rgb(0, 51, 33);
+}*/</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1024,8 +1043,8 @@ QRadioButton::indicator:unchecked {
       </property>
       <property name="iconSize">
        <size>
-        <width>18</width>
-        <height>18</height>
+        <width>25</width>
+        <height>25</height>
        </size>
       </property>
      </widget>
@@ -1372,8 +1391,66 @@ height: 31;
 border-top-right-radius: 0px;
 border-bottom-right-radius: 0px;
 background: rgb(74, 71, 158);
+/*image: url(:/icons/close_yellow.svg);*/
+padding: 2px;
+font: 16px &quot;Anta&quot;;
+color: rgb(255, 210, 128);</string>
+      </property>
+      <property name="text">
+       <string>X</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelEnterFunction">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 1px solid rgb(74, 71, 158);
+border-radius: 6px;
+width: 31;
+height: 31;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+background: rgb(74, 71, 158);
 color: black;
-image: url(:/icons/close_yellow.svg);</string>
+image: url(:/icons/function_yellow.svg);
+padding: 4px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelResult">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 1px solid rgb(74, 71, 158);
+border-radius: 6px;
+width: 31;
+height: 31;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+background: rgb(74, 71, 158);
+color: black;
+image: url(:/icons/equal_yellow.svg);
+padding: 4px;</string>
       </property>
       <property name="text">
        <string/>
