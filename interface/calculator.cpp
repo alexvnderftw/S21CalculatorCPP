@@ -17,8 +17,8 @@ void Calculator::setDefaultFocus() { ui->lineEditExpression->setFocus(); }
 void Calculator::setDefaultSizes() {
   ui->widgetCalculator->setMinimumWidth(335);
   ui->widgetCalculator->setMinimumHeight(426);
-  ui->widgetPlot->setMinimumWidth(426);
-  ui->widgetPlot->setMinimumHeight(426);
+  ui->widgetPlot->setMinimumWidth(400);
+  ui->widgetPlot->setMinimumHeight(400);
 }
 
 void Calculator::nullDefaultSizes() {
@@ -32,6 +32,19 @@ void Calculator::initializeGraph() {
   size = ui->widgetPlot->width();
   x.resize(size);
   y.resize(size);
+  ui->widgetPlot->setBackground(QColor(238, 237, 247, 255));
+  ui->widgetPlot->xAxis->setLabelFont(QFont("Anta", 14));
+  ui->widgetPlot->yAxis->setLabelFont(QFont("Anta", 14));
+  ui->widgetPlot->xAxis->setTickLabelFont(QFont("Kode Mono"));
+  ui->widgetPlot->yAxis->setTickLabelFont(QFont("Kode Mono"));
+  ui->widgetPlot->xAxis->setNumberFormat("gb");
+  ui->widgetPlot->yAxis->setNumberFormat("gb");
+//  ui->widgetPlot->xAxis->setTickLength(1, 1);
+//  ui->widgetPlot->yAxis->setTickLength(1, 1);
+  ui->widgetPlot->xAxis->setSubTicks(true);
+  ui->widgetPlot->yAxis->setSubTicks(true);
+//  ui->widgetPlot->xAxis->setNumberPrecision(2);
+//  ui->widgetPlot->yAxis->setNumberPrecision(2);
   ui->widgetPlot->setAttribute(Qt::WA_OpaquePaintEvent);
   ui->widgetPlot->setNoAntialiasingOnDrag(true);
   ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
@@ -182,7 +195,10 @@ void Calculator::setRange() {
 /* Checks for limit boundaries on X axis and replot graph. */
 void Calculator::changeRangeX(const QCPRange &range) {
   QCPRange new_range = range;
-  if (new_range.lower < MIN_PLOT_RANGE) {
+  if (new_range.upper - new_range.lower < 2 * MIN_PLOT_DECIMAL) {
+    new_range.lower -= MIN_PLOT_DECIMAL;
+    new_range.upper += MIN_PLOT_DECIMAL;
+  } else if (new_range.lower < MIN_PLOT_RANGE) {
     new_range.lower = MIN_PLOT_RANGE;
     new_range.upper = MIN_PLOT_RANGE + new_range.size();
   } else if (new_range.upper > MAX_PLOT_RANGE) {
@@ -198,7 +214,10 @@ void Calculator::changeRangeX(const QCPRange &range) {
 /* Checks for limit boundaries on Y axis and replot graph. */
 void Calculator::changeRangeY(const QCPRange &range) {
   QCPRange new_range = range;
-  if (new_range.lower < MIN_PLOT_RANGE) {
+  if (new_range.upper - new_range.lower < 2 * MIN_PLOT_DECIMAL) {
+    new_range.lower -= MIN_PLOT_DECIMAL;
+    new_range.upper += MIN_PLOT_DECIMAL;
+  } else if (new_range.lower < MIN_PLOT_RANGE) {
     new_range.lower = MIN_PLOT_RANGE;
     new_range.upper = MIN_PLOT_RANGE + new_range.size();
   } else if (new_range.upper > MAX_PLOT_RANGE) {

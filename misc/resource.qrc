@@ -1,16 +1,29 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/add_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/arrow_back_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/backspace_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/cancel_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/close_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/done_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/equal_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/menu_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/paid_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/refresh_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/remove_FILL0_wght400_GRAD0_opsz24.svg</file>
-        <file>icons/start_FILL0_wght400_GRAD0_opsz24.svg</file>
+        <file>icons/add_black.svg</file>
+        <file>icons/arrow_back_black.svg</file>
+        <file>icons/backspace_black.svg</file>
+        <file>icons/cancel_black.svg</file>
+        <file>icons/close_black.svg</file>
+        <file>icons/done_black.svg</file>
+        <file>icons/equal_black.svg</file>
+        <file>icons/menu_black.svg</file>
+        <file>icons/paid_black.svg</file>
+        <file>icons/refresh_black.svg</file>
+        <file>icons/remove_black.svg</file>
+        <file>icons/start_black.svg</file>
+        <file>icons/backspace_yellow.svg</file>
+        <file>icons/equal_yellow.svg</file>
+        <file>icons/menu_yellow.svg</file>
+        <file>icons/refresh_yellow.svg</file>
+        <file>icons/keyboard_arrow_down_black.svg</file>
+        <file>icons/add_yellow.svg</file>
+        <file>icons/close_yellow.svg</file>
+        <file>icons/remove_yellow.svg</file>
+        <file>icons/keyboard_arrow_down_yellow.svg</file>
+        <file>icons/keyboard_arrow_up_black.svg</file>
+        <file>icons/keyboard_arrow_up_yellow.svg</file>
+        <file>icons/check_black.svg</file>
+        <file>icons/check_yellow.svg</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QListView>
+#include <QMouseEvent>
 #include "../controller/s21_controller_deposit.h"
 
 namespace Ui {
@@ -20,6 +21,9 @@ public:
     void setDefaultFocus();
     void setDefaultSizes();
     void nullDefaultSizes();
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
 
 private slots:
     void calculate();

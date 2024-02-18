@@ -35,6 +35,7 @@ class CreditCalculator : public QWidget {
       "January", "February", "March",     "April",   "May",      "June",
       "July",    "August",   "September", "October", "November", "December"};
 
+  void setUiParameters();
   void clearContent();
   void fillTable();
   void fillLines();

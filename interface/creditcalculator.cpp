@@ -5,9 +5,7 @@
 CreditCalculator::CreditCalculator(QWidget *parent)
     : QWidget(parent), ui(new Ui::CreditCalculator) {
   ui->setupUi(this);
-  ui->tableWidgetCredit->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  ui->tableWidgetCredit->horizontalHeader()->setSectionResizeMode(
-      QHeaderView::Stretch);
+  setUiParameters();
   setLimits();
   setData();
   connectSignals();
@@ -20,11 +18,22 @@ void CreditCalculator::setDefaultFocus() {
 }
 
 void CreditCalculator::setDefaultSizes() {
-  ui->widgetMain->setMinimumHeight(150);
+  ui->widgetMain->setMinimumHeight(160);
 }
 
 void CreditCalculator::nullDefaultSizes() {
   ui->widgetMain->setMinimumHeight(0);
+}
+
+void CreditCalculator::setUiParameters() {
+  ui->tableWidgetCredit->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  ui->tableWidgetCredit->horizontalHeader()->setSectionResizeMode(
+      QHeaderView::Stretch);
+  ui->tableWidgetCredit->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+  ui->tableWidgetCredit->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+  ui->tableWidgetCredit->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+  ui->tableWidgetCredit->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
 }
 
 void CreditCalculator::connectSignals() {
@@ -47,6 +56,7 @@ void CreditCalculator::calculate() {
   if (ctrl.calculate() == true) {
     fillTable();
     fillLines();
+    ui->tableWidgetCredit->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
   }
 }
 
@@ -84,6 +94,10 @@ void CreditCalculator::fillTable() {
       new QTableWidgetItem(QString::number(ctrl.getSumRatePart(), 'f', 2) +
                            "\nInterest paid"));
   // ui->tableWidgetCredit->resizeColumnsToContents();
+//  background-color: rgb(243, 89, 97);
+//color: rgb(2, 1, 18);
+//  ui->tableWidgetCredit->item(ctrl.getDataSize(), 0)->setBackground(QColor(243, 89, 97));
+//  ui->tableWidgetCredit->item(ctrl.getDataSize(), 0)->setBackground(QColor(2, 1, 18));
   ui->tableWidgetCredit->resizeRowsToContents();
 }
 

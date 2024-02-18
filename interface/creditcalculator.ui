@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>700</width>
     <height>450</height>
    </rect>
   </property>
@@ -24,102 +24,273 @@ background: none;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>150</height>
+       <height>160</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">QComboBox {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
 padding: 0 5px;
-background-color: rgba(218, 216, 255, 130);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QComboBox::drop-down:button {
+color: rgb(255, 210, 128);
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(74, 71, 158);
+padding: 0px;
+width: 20px;
+}
+
+QComboBox::down-arrow {
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QComboBox::drop-down:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QComboBox::drop-down:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
 }
 
 QComboBox QAbstractItemView {
-color: black;
+color: rgb(255, 210, 128);
 border: 0px solid;
-border-radius: 0px;
+border-radius: 4px;
 border-color: rgba(130, 127, 255, 133);
-background-color: rgb(172, 191, 255);
-selection-color: black;
+background-color: rgb(2, 1, 18);
+}
+
+QComboBox:item {
+color: rgb(255, 210, 128);
 }
 
 QComboBox:item:selected {
-background-color: rgb(255, 105, 103)
+background-color: rgb(74, 71, 158);
+color: rgb(255, 210, 128);
+/*background-color: rgb(255, 105, 103);*/
 }
 
+
 QPushButton {
-font: 15pt &quot;Drexs&quot;;
-color: black;
-border-style: outset;
-border-width: 1.5px;
-border-radius: 7px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+border-radius: 6px;
+border-style: solid;
+border-width: 2px;
+border-color: rgb(8, 1, 18);
+background-color: rgb(74, 71, 158);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
 }
 
 QPushButton:pressed {
-background-color: rgb(182, 183, 255);
-border-style: inset;
+background-color: rgb(25, 24, 53);
 }
 
 QLineEdit {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
 padding: 0 8px;
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
+background-color: rgb(33, 32, 70);/*rgb(11, 1, 24);*/
+selection-background-color: rgb(248, 160, 165);
 selection-color: black;
-}
 
-QLineEdit::input:focus {
-/*border: 2px solid #006080;
-border-color: rgba(130, 127, 255, 133);*/
-background-color: rgba(130, 127, 255, 133);
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
 }
 
 QDoubleSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
 selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
 }
 
-QSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
+
+QDoubleSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 15.5px;
+ }
+
+
+QDoubleSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 15.5px;
+ }
+
+QDoubleSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDoubleSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
 }
 
 QLabel {
-color: black;
-font: 13pt &quot;Drexs&quot;;
+font: 16pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton::indicator {
+width: 10px;
+height: 10px;
+border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 15.5px;
+ }
+
+
+QSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 15.5px;
+ }
+
+QSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLabel {
+color: rgb(255, 210, 128);
+font: 14pt &quot;Kode Mono&quot;;
 }
 </string>
      </property>
      <widget class="QSpinBox" name="spinBoxTime">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>190</x>
         <y>40</y>
         <width>71</width>
         <height>31</height>
@@ -138,7 +309,7 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QComboBox" name="comboBoxTimeType">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>270</x>
         <y>40</y>
         <width>101</width>
         <height>31</height>
@@ -161,21 +332,31 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QPushButton" name="pushButtonFillCredit">
       <property name="geometry">
        <rect>
-        <x>360</x>
-        <y>90</y>
-        <width>100</width>
-        <height>41</height>
+        <x>340</x>
+        <y>100</y>
+        <width>61</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Calculate</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="../misc/resource.qrc">
+        <normaloff>:/icons/equal_yellow.svg</normaloff>:/icons/equal_yellow.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
       </property>
      </widget>
      <widget class="QComboBox" name="comboBoxCreditType">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>101</y>
+        <x>130</x>
+        <y>100</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -199,7 +380,7 @@ font: 13pt &quot;Drexs&quot;;
        <rect>
         <x>20</x>
         <y>40</y>
-        <width>121</width>
+        <width>141</width>
         <height>31</height>
        </rect>
       </property>
@@ -247,9 +428,9 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLineEdit" name="lineEditPayment">
       <property name="geometry">
        <rect>
-        <x>480</x>
+        <x>420</x>
         <y>20</y>
-        <width>271</width>
+        <width>231</width>
         <height>31</height>
        </rect>
       </property>
@@ -260,9 +441,9 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLineEdit" name="lineEditInterest">
       <property name="geometry">
        <rect>
-        <x>480</x>
+        <x>420</x>
         <y>70</y>
-        <width>271</width>
+        <width>231</width>
         <height>31</height>
        </rect>
       </property>
@@ -273,9 +454,9 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLineEdit" name="lineEditTotal">
       <property name="geometry">
        <rect>
-        <x>480</x>
+        <x>420</x>
         <y>120</y>
-        <width>271</width>
+        <width>231</width>
         <height>31</height>
        </rect>
       </property>
@@ -286,7 +467,7 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLabel" name="labelPayment">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>420</x>
         <y>0</y>
         <width>251</width>
         <height>21</height>
@@ -299,7 +480,7 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLabel" name="labelInterest">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>420</x>
         <y>50</y>
         <width>251</width>
         <height>21</height>
@@ -312,7 +493,7 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLabel" name="labelTotal">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>420</x>
         <y>100</y>
         <width>251</width>
         <height>21</height>
@@ -351,7 +532,7 @@ font: 13pt &quot;Drexs&quot;;
      <widget class="QLabel" name="labelTerm">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>190</x>
         <y>20</y>
         <width>58</width>
         <height>21</height>
@@ -370,16 +551,8 @@ font: 13pt &quot;Drexs&quot;;
         <height>31</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Drexs</family>
-        <pointsize>18</pointsize>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
       <property name="styleSheet">
-       <string notr="true">font: 18pt &quot;Drexs&quot;;</string>
+       <string notr="true">font: 18px &quot;Kode Mono&quot;;</string>
       </property>
       <property name="text">
        <string>%</string>
@@ -390,7 +563,147 @@ font: 13pt &quot;Drexs&quot;;
    <item row="1" column="0">
     <widget class="QTableWidget" name="tableWidgetCredit">
      <property name="styleSheet">
-      <string notr="true">background-color: none;</string>
+      <string notr="true">QTableWidget {
+    /*background-color: rgb(2, 1, 18);*/
+background-color: rgb(74, 71, 158);
+border: 0px inset;
+border-color: rgb(2, 1, 18);
+    border-radius: 5px;
+    font: 12pt &quot;Anta&quot;;
+}
+
+QHeaderView {
+    background-color: rgb(74, 71, 158);
+    padding: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border: 0px solid rgb(74, 71, 158);
+    font: 13pt &quot;Anta&quot;;
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 210, 128);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(11, 1, 24);
+}
+
+QHeaderView::section:first {
+}
+
+QHeaderView::section:last {
+
+}
+
+QHeaderView::section:pressed {
+	background-color: rgb(246, 136, 142);
+}
+
+QHeaderView::section:checked {
+	background-color: rgb(246, 136, 142);
+}
+
+QTableWidget QTableCornerButton::section {
+   background-color: rgb(74, 71, 158);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(74, 71, 158);
+    border-top-left-radius: 5px;
+}
+
+QTableView::item {
+background-color: rgb(74, 71, 158);
+    border: 0px solid rgb(74, 71, 158);
+    color: rgb(255, 210, 128);
+/*
+selection-color: rgb(2, 1, 18);
+selection-background-color: rgb(243, 89, 97);
+*/
+}
+
+
+QTableView::item:selected {
+background-color: rgb(246, 136, 142);
+    border: 0px solid rgb(74, 71, 158);
+color: rgb(2, 1, 18);
+}
+
+QScrollBar:vertical {
+background-color: rgb(2, 1, 18);
+border: 1px solid rgb(74, 71, 158);
+color:  rgb(255, 210, 128);
+border-width: 0px;border-style: solid;
+margin: 25px 0 25px 0;
+width: 22px;
+}
+
+QScrollBar::handle:vertical {
+background-color: rgb(74, 71, 158);
+border: 1px solid rgb(74, 71, 158);
+image: url(:/icons/menu_yellow.svg);
+/*
+border-top: 1px solid rgb(2, 1, 18);
+border-bottom: 1px solid rgb(2, 1, 18);
+border: 1px solid rgb(2, 1, 18);
+*/
+}
+
+QScrollBar::handle:vertical:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QScrollBar::handle:vertical:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_up_yellow.svg);
+}
+
+QScrollBar::add-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::sub-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::add-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -398,8 +711,17 @@ font: 13pt &quot;Drexs&quot;;
      <property name="sizeAdjustPolicy">
       <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
      <property name="textElideMode">
       <enum>Qt::ElideLeft</enum>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::DotLine</enum>
      </property>
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>false</bool>
@@ -436,6 +758,8 @@ font: 13pt &quot;Drexs&quot;;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../misc/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

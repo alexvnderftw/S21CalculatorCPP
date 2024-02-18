@@ -52,8 +52,8 @@ void MainWindow::switchPage(QString text) {
     ui->pageCredit->setDefaultSizes();
     ui->stackedWidget->setCurrentWidget(ui->pageCredit);
     ui->pageCredit->setDefaultFocus();
-    this->setMinimumSize(800, 450);
-    this->resize(800, 550);
+    this->setMinimumSize(700, 450);
+    this->resize(700, 550);
   } else if (text == "Deposit") {
     setDefaultSizes();
     ui->pageDeposit->setDefaultSizes();
@@ -61,12 +61,12 @@ void MainWindow::switchPage(QString text) {
     ui->pageDeposit->setDefaultFocus();
     this->setMinimumSize(800, 500);
     this->resize(800, 650);
-  } else if (text == "Menu") {
+  } else if (text == "") {
     setDefaultSizes();
     ui->stackedWidget->setCurrentWidget(ui->pageMenu);
     ui->pushButtonToCalculator->setFocus();
-    this->setMinimumSize(400, 430);
-    this->resize(400, 430);
+    this->setMinimumSize(400, 426);
+    this->resize(400, 426);
   }
 }
 
@@ -74,6 +74,10 @@ void MainWindow::setDefaultSizes() {
   ui->pageCalculator->nullDefaultSizes();
   ui->pageCredit->nullDefaultSizes();
   ui->pageDeposit->nullDefaultSizes();
+}
+
+void MainWindow::changeMenuIcon() {
+  ui->pushButtonMenu->setIcon(QIcon("/icons/menu_yellow.svg"));
 }
 
 void MainWindow::quit() { QApplication::quit(); }

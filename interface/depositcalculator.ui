@@ -7,14 +7,503 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>500</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: none;</string>
+   <string notr="true">QDateEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDateEdit::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDateEdit::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDateEdit::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDateEdit::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QComboBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 5px;
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QComboBox::drop-down:button {
+color: rgb(255, 210, 128);
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(74, 71, 158);
+padding: 0px;
+width: 20px;
+}
+
+QComboBox::down-arrow {
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QComboBox::drop-down:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QComboBox::drop-down:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QComboBox QAbstractItemView {
+color: rgb(255, 210, 128);
+border: 0px solid;
+border-radius: 4px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgb(2, 1, 18);
+}
+
+QComboBox:item {
+color: rgb(255, 210, 128);
+}
+
+QComboBox:item:selected {
+background-color: rgb(74, 71, 158);
+color: rgb(255, 210, 128);
+/*background-color: rgb(255, 105, 103);*/
+}
+
+
+QPushButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+border-radius: 6px;
+border-style: solid;
+border-width: 2px;
+border-color: rgb(8, 1, 18);
+background-color: rgb(74, 71, 158);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QPushButton:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLineEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 8px;
+background-color: rgb(33, 32, 70);/*rgb(11, 1, 24);*/
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox#doubleSpinBoxRate {
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox#doubleSpinBoxTax{
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDoubleSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDoubleSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDoubleSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLabel {
+background: none;
+font: 16pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QLabel {
+color: rgb(255, 210, 128);
+font: 14pt &quot;Kode Mono&quot;;
+}
+
+QRadioButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton::indicator {
+width: 10px;
+height: 10px;
+border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QCheckBox {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+spacing: 4px;
+}
+
+QCheckBox::QLabel {
+}
+
+QCheckBox::indicator {
+width: 13px;
+height: 13px;
+border-radius: 3px;
+}
+
+QCheckBox::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+	image: url(:/icons/check_yellow.svg);
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QTableWidget {
+    /*background-color: rgb(2, 1, 18);*/
+background-color: rgb(74, 71, 158);
+border: 0px inset;
+border-color: rgb(2, 1, 18);
+    border-radius: 5px;
+    font: 12pt &quot;Anta&quot;;
+}
+
+QHeaderView {
+    background-color: rgb(74, 71, 158);
+    padding: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border: 0px solid rgb(74, 71, 158);
+    font: 13pt &quot;Anta&quot;;
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 210, 128);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(11, 1, 24);
+}
+
+QHeaderView::section:first {
+}
+
+QHeaderView::section:last {
+
+}
+
+QHeaderView::section:pressed {
+	background-color: rgb(246, 136, 142);
+}
+
+QHeaderView::section:checked {
+	background-color: rgb(246, 136, 142);
+}
+
+QTableWidget QTableCornerButton::section {
+   background-color: rgb(74, 71, 158);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(74, 71, 158);
+    border-top-left-radius: 5px;
+}
+
+QTableView::item {
+background-color: rgb(74, 71, 158);
+    border: 0px solid rgb(74, 71, 158);
+    color: rgb(255, 210, 128);
+/*
+selection-color: rgb(2, 1, 18);
+selection-background-color: rgb(243, 89, 97);
+*/
+}
+
+
+QTableView::item:selected {
+background-color: rgb(246, 136, 142);
+    border: 0px solid rgb(74, 71, 158);
+color: rgb(2, 1, 18);
+}
+
+QScrollBar:vertical {
+background-color: rgb(2, 1, 18);
+border: 1px solid rgb(74, 71, 158);
+color:  rgb(255, 210, 128);
+border-width: 0px;border-style: solid;
+margin: 25px 0 25px 0;
+width: 22px;
+}
+
+QScrollBar::handle:vertical {
+background-color: rgb(74, 71, 158);
+border: 1px solid rgb(74, 71, 158);
+image: url(:/icons/menu_yellow.svg);
+/*
+border-top: 1px solid rgb(2, 1, 18);
+border-bottom: 1px solid rgb(2, 1, 18);
+border: 1px solid rgb(2, 1, 18);
+*/
+}
+
+QScrollBar::handle:vertical:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QScrollBar::handle:vertical:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_up_yellow.svg);
+}
+
+QScrollBar::add-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::sub-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::add-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="topMargin">
@@ -37,18 +526,24 @@
        <height>0</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+background-color: rgb(65, 8, 145);
+border-radius: 7px;
+}</string>
+     </property>
      <layout class="QGridLayout" name="gridLayout_7">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -91,6 +586,11 @@
          </property>
          <item row="0" column="0">
           <widget class="QPushButton" name="pushButtonHideOperations">
+           <property name="styleSheet">
+            <string notr="true">border: none;
+border-radius: 4px;
+background-color: none;</string>
+           </property>
            <property name="text">
             <string>Hide replenishments / withdrawals</string>
            </property>
@@ -118,6 +618,498 @@
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QDateEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDateEdit::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDateEdit::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDateEdit::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDateEdit::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QComboBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 5px;
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QComboBox::drop-down:button {
+color: rgb(255, 210, 128);
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(74, 71, 158);
+padding: 0px;
+width: 20px;
+}
+
+QComboBox::down-arrow {
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QComboBox::drop-down:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QComboBox::drop-down:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QComboBox QAbstractItemView {
+color: rgb(255, 210, 128);
+border: 0px solid;
+border-radius: 4px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgb(2, 1, 18);
+}
+
+QComboBox:item {
+color: rgb(255, 210, 128);
+}
+
+QComboBox:item:selected {
+background-color: rgb(74, 71, 158);
+color: rgb(255, 210, 128);
+/*background-color: rgb(255, 105, 103);*/
+}
+
+
+QPushButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+border-radius: 6px;
+border-style: solid;
+border-width: 2px;
+border-color: rgb(8, 1, 18);
+background-color: rgb(74, 71, 158);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QPushButton:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLineEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 8px;
+background-color: rgb(33, 32, 70);/*rgb(11, 1, 24);*/
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox#doubleSpinBoxRate {
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox#doubleSpinBoxTax{
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDoubleSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDoubleSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDoubleSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLabel {
+background: none;
+font: 16pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QLabel {
+color: rgb(255, 210, 128);
+font: 14pt &quot;Kode Mono&quot;;
+}
+
+QRadioButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton::indicator {
+width: 10px;
+height: 10px;
+border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QCheckBox {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+spacing: 4px;
+}
+
+QCheckBox::QLabel {
+}
+
+QCheckBox::indicator {
+width: 13px;
+height: 13px;
+border-radius: 3px;
+}
+
+QCheckBox::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+	image: url(:/icons/check_yellow.svg);
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QTableWidget {
+    /*background-color: rgb(2, 1, 18);*/
+background-color: rgb(74, 71, 158);
+border: 0px inset;
+border-color: rgb(2, 1, 18);
+    border-radius: 5px;
+    font: 12pt &quot;Anta&quot;;
+}
+
+QHeaderView {
+    background-color: rgb(74, 71, 158);
+    padding: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border: 0px solid rgb(74, 71, 158);
+    font: 13pt &quot;Anta&quot;;
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 210, 128);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(11, 1, 24);
+}
+
+QHeaderView::section:first {
+}
+
+QHeaderView::section:last {
+
+}
+
+QHeaderView::section:pressed {
+	background-color: rgb(246, 136, 142);
+}
+
+QHeaderView::section:checked {
+	background-color: rgb(246, 136, 142);
+}
+
+QTableWidget QTableCornerButton::section {
+   background-color: rgb(74, 71, 158);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(74, 71, 158);
+    border-top-left-radius: 5px;
+}
+
+QTableView::item {
+background-color: rgb(74, 71, 158);
+    border: 0px solid rgb(74, 71, 158);
+    color: rgb(255, 210, 128);
+/*
+selection-color: rgb(2, 1, 18);
+selection-background-color: rgb(243, 89, 97);
+*/
+}
+
+
+QTableView::item:selected {
+background-color: rgb(246, 136, 142);
+    border: 0px solid rgb(74, 71, 158);
+color: rgb(2, 1, 18);
+}
+
+QScrollBar:vertical {
+background-color: rgb(2, 1, 18);
+border: 1px solid rgb(74, 71, 158);
+color:  rgb(255, 210, 128);
+border-width: 0px;border-style: solid;
+margin: 25px 0 25px 0;
+width: 22px;
+}
+
+QScrollBar::handle:vertical {
+background-color: rgb(74, 71, 158);
+border: 1px solid rgb(74, 71, 158);
+image: url(:/icons/menu_yellow.svg);
+/*
+border-top: 1px solid rgb(2, 1, 18);
+border-bottom: 1px solid rgb(2, 1, 18);
+border: 1px solid rgb(2, 1, 18);
+*/
+}
+
+QScrollBar::handle:vertical:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QScrollBar::handle:vertical:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_up_yellow.svg);
+}
+
+QScrollBar::add-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::sub-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::add-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="leftMargin">
@@ -161,6 +1153,9 @@
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
            </property>
+           <property name="gridStyle">
+            <enum>Qt::DotLine</enum>
+           </property>
            <column>
             <property name="text">
              <string>Periodicity</string>
@@ -189,7 +1184,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>30</height>
+             <height>34</height>
             </size>
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
@@ -211,27 +1206,6 @@
             <property name="verticalSpacing">
              <number>-1</number>
             </property>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="pushButtonRemoveWithdrawal">
-              <property name="text">
-               <string>-</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QPushButton" name="pushButtonAddWithdrawal">
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="labelWithdrawals">
-              <property name="text">
-               <string>Withdrawals</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="3">
              <spacer name="horizontalSpacer">
               <property name="orientation">
@@ -244,6 +1218,56 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="pushButtonRemoveWithdrawal">
+              <property name="minimumSize">
+               <size>
+                <width>36</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-color: rgb(255, 210, 128);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../misc/resource.qrc">
+                <normaloff>:/icons/remove_yellow.svg</normaloff>:/icons/remove_yellow.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="pushButtonAddWithdrawal">
+              <property name="minimumSize">
+               <size>
+                <width>36</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-color: rgb(255, 210, 128);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../misc/resource.qrc">
+                <normaloff>:/icons/add_yellow.svg</normaloff>:/icons/add_yellow.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="labelWithdrawals">
+              <property name="text">
+               <string>Withdrawals</string>
+              </property>
+              <property name="margin">
+               <number>10</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -270,6 +1294,498 @@
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QDateEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDateEdit::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDateEdit::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDateEdit::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDateEdit::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QComboBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 5px;
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QComboBox::drop-down:button {
+color: rgb(255, 210, 128);
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(74, 71, 158);
+padding: 0px;
+width: 20px;
+}
+
+QComboBox::down-arrow {
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QComboBox::drop-down:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QComboBox::drop-down:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QComboBox QAbstractItemView {
+color: rgb(255, 210, 128);
+border: 0px solid;
+border-radius: 4px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgb(2, 1, 18);
+}
+
+QComboBox:item {
+color: rgb(255, 210, 128);
+}
+
+QComboBox:item:selected {
+background-color: rgb(74, 71, 158);
+color: rgb(255, 210, 128);
+/*background-color: rgb(255, 105, 103);*/
+}
+
+
+QPushButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+border-radius: 6px;
+border-style: solid;
+border-width: 2px;
+border-color: rgb(8, 1, 18);
+background-color: rgb(74, 71, 158);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QPushButton:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLineEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 8px;
+background-color: rgb(33, 32, 70);/*rgb(11, 1, 24);*/
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox#doubleSpinBoxRate {
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox#doubleSpinBoxTax{
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDoubleSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDoubleSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDoubleSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLabel {
+background: none;
+font: 16pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QLabel {
+color: rgb(255, 210, 128);
+font: 14pt &quot;Kode Mono&quot;;
+}
+
+QRadioButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton::indicator {
+width: 10px;
+height: 10px;
+border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QCheckBox {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+spacing: 4px;
+}
+
+QCheckBox::QLabel {
+}
+
+QCheckBox::indicator {
+width: 13px;
+height: 13px;
+border-radius: 3px;
+}
+
+QCheckBox::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+	image: url(:/icons/check_yellow.svg);
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QTableWidget {
+    /*background-color: rgb(2, 1, 18);*/
+background-color: rgb(74, 71, 158);
+border: 0px inset;
+border-color: rgb(2, 1, 18);
+    border-radius: 5px;
+    font: 12pt &quot;Anta&quot;;
+}
+
+QHeaderView {
+    background-color: rgb(74, 71, 158);
+    padding: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border: 0px solid rgb(74, 71, 158);
+    font: 13pt &quot;Anta&quot;;
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 210, 128);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(11, 1, 24);
+}
+
+QHeaderView::section:first {
+}
+
+QHeaderView::section:last {
+
+}
+
+QHeaderView::section:pressed {
+	background-color: rgb(246, 136, 142);
+}
+
+QHeaderView::section:checked {
+	background-color: rgb(246, 136, 142);
+}
+
+QTableWidget QTableCornerButton::section {
+   background-color: rgb(74, 71, 158);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(74, 71, 158);
+    border-top-left-radius: 5px;
+}
+
+QTableView::item {
+background-color: rgb(74, 71, 158);
+    border: 0px solid rgb(74, 71, 158);
+    color: rgb(255, 210, 128);
+/*
+selection-color: rgb(2, 1, 18);
+selection-background-color: rgb(243, 89, 97);
+*/
+}
+
+
+QTableView::item:selected {
+background-color: rgb(246, 136, 142);
+    border: 0px solid rgb(74, 71, 158);
+color: rgb(2, 1, 18);
+}
+
+QScrollBar:vertical {
+background-color: rgb(2, 1, 18);
+border: 1px solid rgb(74, 71, 158);
+color:  rgb(255, 210, 128);
+border-width: 0px;border-style: solid;
+margin: 25px 0 25px 0;
+width: 22px;
+}
+
+QScrollBar::handle:vertical {
+background-color: rgb(74, 71, 158);
+border: 1px solid rgb(74, 71, 158);
+image: url(:/icons/menu_yellow.svg);
+/*
+border-top: 1px solid rgb(2, 1, 18);
+border-bottom: 1px solid rgb(2, 1, 18);
+border: 1px solid rgb(2, 1, 18);
+*/
+}
+
+QScrollBar::handle:vertical:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QScrollBar::handle:vertical:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_up_yellow.svg);
+}
+
+QScrollBar::add-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::sub-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::add-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <property name="leftMargin">
@@ -298,7 +1814,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>30</height>
+             <height>34</height>
             </size>
            </property>
            <layout class="QGridLayout" name="gridLayout_9">
@@ -317,21 +1833,37 @@
             <property name="horizontalSpacing">
              <number>5</number>
             </property>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="pushButtonRemoveReplenish">
-              <property name="text">
-               <string>-</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
-             <widget class="QPushButton" name="pushButtonAddReplenish">
+             <widget class="QLabel" name="labelReplenishes">
               <property name="text">
-               <string>+</string>
+               <string>Replenishments</string>
+              </property>
+              <property name="margin">
+               <number>10</number>
               </property>
              </widget>
             </item>
             <item row="0" column="3">
+             <widget class="QPushButton" name="pushButtonRemoveReplenish">
+              <property name="minimumSize">
+               <size>
+                <width>36</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-color: rgb(255, 210, 128);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../misc/resource.qrc">
+                <normaloff>:/icons/remove_yellow.svg</normaloff>:/icons/remove_yellow.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -345,9 +1877,22 @@
              </spacer>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="labelReplenishes">
+             <widget class="QPushButton" name="pushButtonAddReplenish">
+              <property name="minimumSize">
+               <size>
+                <width>36</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-color: rgb(255, 210, 128);</string>
+              </property>
               <property name="text">
-               <string>Replenishments</string>
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../misc/resource.qrc">
+                <normaloff>:/icons/add_yellow.svg</normaloff>:/icons/add_yellow.svg</iconset>
               </property>
              </widget>
             </item>
@@ -380,6 +1925,9 @@
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
            </property>
+           <property name="gridStyle">
+            <enum>Qt::DotLine</enum>
+           </property>
            <column>
             <property name="text">
              <string>Periodicity</string>
@@ -411,7 +1959,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>28</height>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -419,6 +1967,498 @@
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QDateEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDateEdit::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDateEdit::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDateEdit::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDateEdit::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDateEdit::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QComboBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 5px;
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QComboBox::drop-down:button {
+color: rgb(255, 210, 128);
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(74, 71, 158);
+padding: 0px;
+width: 20px;
+}
+
+QComboBox::down-arrow {
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QComboBox::drop-down:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QComboBox::drop-down:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QComboBox QAbstractItemView {
+color: rgb(255, 210, 128);
+border: 0px solid;
+border-radius: 4px;
+border-color: rgba(130, 127, 255, 133);
+background-color: rgb(2, 1, 18);
+}
+
+QComboBox:item {
+color: rgb(255, 210, 128);
+}
+
+QComboBox:item:selected {
+background-color: rgb(74, 71, 158);
+color: rgb(255, 210, 128);
+/*background-color: rgb(255, 105, 103);*/
+}
+
+
+QPushButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+border-radius: 6px;
+border-style: solid;
+border-width: 2px;
+border-color: rgb(8, 1, 18);
+background-color: rgb(74, 71, 158);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QPushButton:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLineEdit {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+padding: 0 8px;
+background-color: rgb(33, 32, 70);/*rgb(11, 1, 24);*/
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+QDoubleSpinBox#doubleSpinBoxRate {
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox#doubleSpinBoxTax{
+padding: 0 20px 0 5px;
+}
+
+QDoubleSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QDoubleSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QDoubleSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QDoubleSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QDoubleSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QLabel {
+background: none;
+font: 16pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QLabel {
+color: rgb(255, 210, 128);
+font: 14pt &quot;Kode Mono&quot;;
+}
+
+QRadioButton {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+}
+
+QRadioButton::indicator {
+width: 10px;
+height: 10px;
+border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QCheckBox {
+font: 13pt &quot;Anta&quot;;
+color: rgb(255, 210, 128);
+spacing: 4px;
+}
+
+QCheckBox::QLabel {
+}
+
+QCheckBox::indicator {
+width: 13px;
+height: 13px;
+border-radius: 3px;
+}
+
+QCheckBox::indicator:checked {
+    background-color:  rgb(243, 89, 97);
+    border: 2px solid rgb(255, 210, 128);
+	image: url(:/icons/check_yellow.svg);
+}
+
+QCheckBox::indicator:unchecked {
+    background-color: rgb(8, 1, 18);
+    border: 2px solid rgb(255, 210, 128);
+}
+
+QSpinBox {
+color: rgb(255, 210, 128);
+border: 1px solid;
+font: 13pt &quot;Anta&quot;;
+padding: 0 5px;
+border-radius: 6px;
+border-color: rgb(255, 210, 128);
+background-color: rgb(11, 1, 24);
+selection-background-color: rgb(248, 160, 165);
+selection-color: black;
+background-color: rgb(33, 32, 70);
+
+color: rgb(11, 1, 24);
+background-color: rgb(255, 210, 128);
+border-color: rgb(74, 71, 158);
+}
+
+
+QSpinBox::up-button {
+subcontrol-origin: border;
+subcontrol-position: top right; 
+border-top-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/add_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+
+QSpinBox::down-button {
+subcontrol-origin: border;
+subcontrol-position: bottom right;
+border-bottom-right-radius: 3px;
+border-style: solid;
+border-width: 0px;
+border-color: rgb(74, 71, 158);
+background-color:  rgb(74, 71, 158);
+image: url(:/icons/remove_yellow.svg);
+padding: 0px;
+margin: 0px;
+width: 16px;
+height: 14px;
+ }
+
+QSpinBox::down-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::down-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QSpinBox::up-button:hover {
+background-color: rgb(169, 167, 215);
+}
+
+QSpinBox::up-button:pressed {
+background-color: rgb(25, 24, 53);
+}
+
+QTableWidget {
+    /*background-color: rgb(2, 1, 18);*/
+background-color: rgb(74, 71, 158);
+border: 0px inset;
+border-color: rgb(2, 1, 18);
+    border-radius: 5px;
+    font: 12pt &quot;Anta&quot;;
+}
+
+QHeaderView {
+    background-color: rgb(74, 71, 158);
+    padding: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border: 0px solid rgb(74, 71, 158);
+    font: 13pt &quot;Anta&quot;;
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 210, 128);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(11, 1, 24);
+}
+
+QHeaderView::section:first {
+}
+
+QHeaderView::section:last {
+
+}
+
+QHeaderView::section:pressed {
+	background-color: rgb(246, 136, 142);
+}
+
+QHeaderView::section:checked {
+	background-color: rgb(246, 136, 142);
+}
+
+QTableWidget QTableCornerButton::section {
+   background-color: rgb(74, 71, 158);
+    border: 1px solid rgb(74, 71, 158);
+    color: rgb(74, 71, 158);
+    border-top-left-radius: 5px;
+}
+
+QTableView::item {
+background-color: rgb(74, 71, 158);
+    border: 0px solid rgb(74, 71, 158);
+    color: rgb(255, 210, 128);
+/*
+selection-color: rgb(2, 1, 18);
+selection-background-color: rgb(243, 89, 97);
+*/
+}
+
+
+QTableView::item:selected {
+background-color: rgb(246, 136, 142);
+    border: 0px solid rgb(74, 71, 158);
+color: rgb(2, 1, 18);
+}
+
+QScrollBar:vertical {
+background-color: rgb(2, 1, 18);
+border: 1px solid rgb(74, 71, 158);
+color:  rgb(255, 210, 128);
+border-width: 0px;border-style: solid;
+margin: 25px 0 25px 0;
+width: 22px;
+}
+
+QScrollBar::handle:vertical {
+background-color: rgb(74, 71, 158);
+border: 1px solid rgb(74, 71, 158);
+image: url(:/icons/menu_yellow.svg);
+/*
+border-top: 1px solid rgb(2, 1, 18);
+border-bottom: 1px solid rgb(2, 1, 18);
+border: 1px solid rgb(2, 1, 18);
+*/
+}
+
+QScrollBar::handle:vertical:hover {
+background-color: rgb(169, 167, 215);
+border-color: rgb(169, 167, 215);
+}
+
+QScrollBar::handle:vertical:pressed {
+background-color: rgb(25, 24, 53);
+border-color: rgb(25, 24, 53);
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_down_yellow.svg);
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid rgb(74, 71, 158);
+background-color: rgb(74, 71, 158);
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+image: url(:/icons/keyboard_arrow_up_yellow.svg);
+}
+
+QScrollBar::add-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::sub-line:vertical:hover {
+border-color: rgb(169, 167, 215);
+background-color: rgb(169, 167, 215);
+}
+
+QScrollBar::add-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+border-color: rgb(25, 24, 53);
+background-color: rgb(25, 24, 53);
+}
+
+</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_10">
          <property name="leftMargin">
@@ -436,14 +2476,27 @@
          <property name="horizontalSpacing">
           <number>5</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QLabel" name="labelOperationPeriodicity">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <item row="1" column="7">
+          <widget class="QDoubleSpinBox" name="doubleSpinBoxValue">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>28</height>
+            </size>
            </property>
+           <property name="maximum">
+            <double>1000000000.000000000000000</double>
+           </property>
+           <property name="stepType">
+            <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+           </property>
+           <property name="value">
+            <double>10000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLabel" name="labelOperationDate">
            <property name="minimumSize">
             <size>
              <width>40</width>
@@ -451,12 +2504,25 @@
             </size>
            </property>
            <property name="text">
-            <string>Periodicity</string>
+            <string>Date</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
+         </item>
+         <item row="1" column="8">
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item row="1" column="1">
           <widget class="QComboBox" name="comboBoxOperationPeriodicity">
@@ -468,7 +2534,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>30</width>
+             <width>100</width>
              <height>0</height>
             </size>
            </property>
@@ -504,31 +2570,8 @@
            </item>
           </widget>
          </item>
-         <item row="1" column="5">
-          <widget class="QDoubleSpinBox" name="doubleSpinBoxValue">
-           <property name="maximum">
-            <double>1000000000.000000000000000</double>
-           </property>
-           <property name="stepType">
-            <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-           </property>
-           <property name="value">
-            <double>10000.000000000000000</double>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="2">
-          <widget class="QLabel" name="labelOperationDate">
-           <property name="text">
-            <string>Date</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="6">
-          <spacer name="horizontalSpacer_4">
+          <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -540,18 +2583,42 @@
            </property>
           </spacer>
          </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="labelOperationValue">
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelOperationPeriodicity">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
-            <string>Value</string>
+            <string>Periodicity</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
+         <item row="1" column="4">
           <widget class="QDateEdit" name="dateEditOperationDate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>28</height>
+            </size>
+           </property>
            <property name="minimumDate">
             <date>
              <year>1900</year>
@@ -560,6 +2627,35 @@
             </date>
            </property>
           </widget>
+         </item>
+         <item row="1" column="6">
+          <widget class="QLabel" name="labelOperationValue">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Value</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -725,7 +2821,7 @@
          <item row="5" column="1" colspan="2">
           <widget class="QWidget" name="widgetTax" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -739,7 +2835,7 @@
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>100</height>
+             <height>110</height>
             </size>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
@@ -758,20 +2854,19 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="labelTaxTable">
-              <property name="text">
-               <string>Taxes</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
+            <item row="2" column="0">
              <widget class="QTableWidget" name="tableWidgetTax">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOn</enum>
+              </property>
+              <property name="gridStyle">
+               <enum>Qt::DotLine</enum>
               </property>
               <column>
                <property name="text">
@@ -788,6 +2883,13 @@
                 <string>Tax</string>
                </property>
               </column>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelTaxTable">
+              <property name="text">
+               <string>Taxes</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -807,105 +2909,19 @@
         <property name="minimumSize">
          <size>
           <width>360</width>
-          <height>220</height>
+          <height>230</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-padding: 0 5px;
-background-color: rgba(218, 216, 255, 130);
-}
-
-QComboBox QAbstractItemView {
-color: black;
-border: 0px solid;
-border-radius: 0px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgb(172, 191, 255);
-selection-color: black;
-}
-
-QComboBox:item:selected {
-background-color: rgb(255, 105, 103)
-}
-
-QPushButton {
-font: 15pt &quot;Drexs&quot;;
-color: black;
-border-style: outset;
-border-width: 1.5px;
-border-radius: 7px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QPushButton:pressed {
-background-color: rgb(182, 183, 255);
-border-style: inset;
-}
-
-QLineEdit {
-color: black;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-padding: 0 8px;
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QLineEdit::input:focus {
-/*border: 2px solid #006080;
-border-color: rgba(130, 127, 255, 133);*/
-background-color: rgba(130, 127, 255, 133);
-}
-
-QDoubleSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QSpinBox {
-color: black;
-padding: 0 3px;
-border: 2px solid;
-border-style: inset;
-border-radius: 5px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(218, 216, 255, 130);
-selection-background-color: rgba(130, 127, 255, 133);
-selection-color: black;
-}
-
-QLabel {
-color: black;
-font: 13pt &quot;Drexs&quot;;
-}
-</string>
+         <string notr="true"/>
         </property>
         <widget class="QLabel" name="labelDeposit">
          <property name="geometry">
           <rect>
-           <x>20</x>
+           <x>30</x>
            <y>10</y>
            <width>91</width>
-           <height>21</height>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -918,10 +2934,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QComboBox" name="comboBoxTermUnit">
          <property name="geometry">
           <rect>
-           <x>210</x>
+           <x>250</x>
            <y>40</y>
-           <width>103</width>
-           <height>22</height>
+           <width>81</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="currentIndex">
@@ -946,10 +2962,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelTerm">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>20</x>
            <y>40</y>
            <width>101</width>
-           <height>21</height>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -962,10 +2978,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelStartDate">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>20</x>
            <y>70</y>
            <width>101</width>
-           <height>21</height>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -978,17 +2994,17 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QDateEdit" name="dateEditStartDate">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>70</y>
-           <width>110</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="minimumDateTime">
           <datetime>
-           <hour>0</hour>
-           <minute>0</minute>
-           <second>0</second>
+           <hour>15</hour>
+           <minute>21</minute>
+           <second>2</second>
            <year>1900</year>
            <month>1</month>
            <day>1</day>
@@ -1007,8 +3023,8 @@ font: 13pt &quot;Drexs&quot;;
           <rect>
            <x>10</x>
            <y>100</y>
-           <width>101</width>
-           <height>21</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -1021,10 +3037,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QCheckBox" name="checkBoxCapitalization">
          <property name="geometry">
           <rect>
-           <x>240</x>
+           <x>250</x>
            <y>70</y>
            <width>111</width>
-           <height>20</height>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">
@@ -1034,14 +3050,14 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelPeriodicity">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>130</y>
-           <width>101</width>
-           <height>21</height>
+           <width>121</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
-          <string>Pay periodicity</string>
+          <string>Periodicity</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1050,10 +3066,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QComboBox" name="comboBoxPeriodicity">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>130</y>
-           <width>131</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="currentIndex">
@@ -1099,9 +3115,9 @@ font: 13pt &quot;Drexs&quot;;
          <property name="geometry">
           <rect>
            <x>260</x>
-           <y>170</y>
-           <width>101</width>
-           <height>41</height>
+           <y>150</y>
+           <width>91</width>
+           <height>51</height>
           </rect>
          </property>
          <property name="text">
@@ -1111,10 +3127,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QDoubleSpinBox" name="doubleSpinBoxRate">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>100</y>
-           <width>91</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximum">
@@ -1130,10 +3146,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QDoubleSpinBox" name="doubleSpinBoxDeposit">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>10</y>
-           <width>191</width>
-           <height>22</height>
+           <width>201</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="decimals">
@@ -1152,10 +3168,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QSpinBox" name="spinBoxTerm">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>40</y>
-           <width>81</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="minimum">
@@ -1171,11 +3187,14 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelPercent">
          <property name="geometry">
           <rect>
-           <x>220</x>
+           <x>200</x>
            <y>100</y>
-           <width>31</width>
-           <height>21</height>
+           <width>16</width>
+           <height>28</height>
           </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(11, 1, 24);</string>
          </property>
          <property name="text">
           <string>%</string>
@@ -1184,10 +3203,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QDoubleSpinBox" name="doubleSpinBoxTax">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>160</y>
-           <width>91</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximum">
@@ -1200,10 +3219,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelTax">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>20</x>
            <y>160</y>
            <width>101</width>
-           <height>21</height>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -1216,10 +3235,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QDoubleSpinBox" name="doubleSpinBoxRemainderLimit">
          <property name="geometry">
           <rect>
-           <x>120</x>
+           <x>130</x>
            <y>190</y>
-           <width>121</width>
-           <height>22</height>
+           <width>111</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximum">
@@ -1232,10 +3251,10 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelRemainderLimit">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>190</y>
-           <width>101</width>
-           <height>20</height>
+           <width>121</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="text">
@@ -1248,11 +3267,14 @@ font: 13pt &quot;Drexs&quot;;
         <widget class="QLabel" name="labelPercentTax">
          <property name="geometry">
           <rect>
-           <x>220</x>
+           <x>210</x>
            <y>160</y>
-           <width>31</width>
-           <height>21</height>
+           <width>21</width>
+           <height>28</height>
           </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(11, 1, 24);</string>
          </property>
          <property name="text">
           <string>%</string>
@@ -1301,8 +3323,24 @@ font: 13pt &quot;Drexs&quot;;
       </property>
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButtonShowOperations">
+        <property name="styleSheet">
+         <string notr="true">
+
+QPushButton {
+background-color: rgb(147, 11, 18);
+}
+
+QPushButton:hover {
+background-color: rgb(239, 42, 51);
+}
+
+QPushButton:pressed {
+background-color: rgb(71, 5, 9);
+}
+</string>
+        </property>
         <property name="text">
-         <string>Replenishments / Withdrawals</string>
+         <string>Show replenishments / withdrawals</string>
         </property>
        </widget>
       </item>
@@ -1348,7 +3386,7 @@ font: 13pt &quot;Drexs&quot;;
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Final sheet</string>
+         <string>Result</string>
         </property>
        </widget>
       </item>
@@ -1359,6 +3397,12 @@ font: 13pt &quot;Drexs&quot;;
           <width>0</width>
           <height>100</height>
          </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::DotLine</enum>
         </property>
         <column>
          <property name="text">
@@ -1397,6 +3441,8 @@ font: 13pt &quot;Drexs&quot;;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../misc/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -20,12 +20,11 @@
      <height>400</height>
     </size>
    </property>
+   <property name="font">
+    <font/>
+   </property>
    <property name="styleSheet">
-    <string notr="true">QWidget {
-background-color: rgb(197, 201, 255);
-border-bottom: 1px solid;
-border-color: rgb(92, 95, 142);
-}</string>
+    <string notr="true"/>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -47,7 +46,7 @@ border-color: rgb(92, 95, 142);
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="styleSheet">
        <string notr="true">QWidget {
-background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(238,174,202,1), stop:1 rgba(148,187,233,1));
+background-color: rgb(8, 1, 18);
 border: none;
 }</string>
       </property>
@@ -86,25 +85,40 @@ border: none;
             <height>300</height>
            </size>
           </property>
+          <property name="font">
+           <font/>
+          </property>
           <property name="styleSheet">
            <string notr="true">QWidget {
 background:none;
 }
 
 QPushButton {
-font: 24pt &quot;Drexs&quot;;
-color: black;
-border-style: outset;
+font: 20pt &quot;Kode Mono&quot;;
+color: rgb(255, 210, 128);
+
+border-radius: 6px;
+
+border-style: solid;
 border-width: 2px;
-border-radius: 12px;
-border-color: rgba(130, 127, 255, 133);
-background-color: rgba(255, 255, 255, 95);
+
+/*
+rgb(240, 179, 61);
+rgb(123, 120, 195);
+border-color: rgb(123, 120, 195);
+*/
+background-color: rgb(100, 97, 184);
+}
+
+QPushButton:hover {
+background-color: rgb(169, 167, 215);
 }
 
 QPushButton:pressed {
-background-color: rgb(182, 183, 255);
-border-style: inset;
-}</string>
+background-color: rgb(25, 24, 53);
+}
+
+</string>
           </property>
           <widget class="QPushButton" name="pushButtonToCalculator">
            <property name="geometry">
@@ -164,7 +178,18 @@ border-style: inset;
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true"/>
+            <string notr="true">QPushButton {
+background-color: rgb(147, 11, 18);
+}
+
+QPushButton:hover {
+background-color: rgb(239, 42, 51);
+}
+
+QPushButton:pressed {
+background-color: rgb(71, 5, 9);
+}
+</string>
            </property>
            <property name="text">
             <string>Quit</string>
@@ -239,11 +264,41 @@ border-style: inset;
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">QWidget {
+background-color:rgb(151, 149, 208);
+/*background-color: rgb(65, 8, 145);*/
+/*background-color: rgb(8, 1, 18);*/
+border-bottom: 0px solid;
+border-color: rgb(30, 28, 27);
+}
+
+QPushButton {
+font: 13pt &quot;Anta&quot;;
+color: black;
+border: none;
+background: none;
+image: url(:/icons/menu_black.svg);
+
+}
+
+QPushButton:hover {
+color: rgb(255, 210, 128);
+image: url(:/icons/menu_yellow.svg);
+}
+
+QPushButton:pressed {
+background-color: rgb(255, 210, 128);
+color: black;
+border-radius: 4px;
+border-width: 0px;
+border-style: solid;
+border-color: transparent;
+image: url(:/icons/menu_black.svg);
+}</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <property name="leftMargin">
-        <number>12</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
         <number>0</number>
@@ -257,51 +312,6 @@ border-style: inset;
        <property name="spacing">
         <number>0</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pushButtonMenu">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>69</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-font: 12pt &quot;Drexs&quot;;
-color: black;
-border: none;
-background: none;
-}
-
-QPushButton:pressed {
-background-color: rgb(182, 183, 255);
-border-color: rgba(130, 127, 255, 133);
-border-style: inset;
-border-width: 2px;
-border-radius: 4px;
-}</string>
-         </property>
-         <property name="text">
-          <string>Menu</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../misc/resource.qrc">
-           <normaloff>:/icons/menu_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/menu_FILL0_wght400_GRAD0_opsz24.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>17</width>
-           <height>17</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -314,6 +324,34 @@ border-radius: 4px;
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButtonMenu">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>17</width>
+           <height>17</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -372,8 +410,6 @@ border-radius: 4px;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../misc/resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

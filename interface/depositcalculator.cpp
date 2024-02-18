@@ -45,6 +45,19 @@ void DepositCalculator::setUiParameters() {
     ui->tableWidgetTax->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidgetTax->horizontalHeader()->setSectionResizeMode(
         QHeaderView::Stretch);
+    ui->tableWidgetEvents->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+    ui->tableWidgetReplenishes->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+    ui->tableWidgetWithdrawals->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+    ui->tableWidgetTax->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+
+    ui->tableWidgetEvents->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+    ui->tableWidgetEvents->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
+    ui->tableWidgetTax->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+    ui->tableWidgetTax->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
+    ui->tableWidgetWithdrawals->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+    ui->tableWidgetWithdrawals->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
+    ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+    ui->tableWidgetReplenishes->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
 }
 
 void DepositCalculator::connectSignals() {
@@ -114,6 +127,8 @@ void DepositCalculator::calculate() {
     fillTable();
     fillTaxes();
     fillSummary();
+    ui->tableWidgetEvents->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
+    ui->tableWidgetTax->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
     }
 }
 
@@ -245,6 +260,7 @@ void DepositCalculator::addReplenish() {
     ui->tableWidgetReplenishes->setItem(ui->tableWidgetReplenishes->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetReplenishes->selectRow(ui->tableWidgetReplenishes->rowCount() - 1);
     ui->tableWidgetReplenishes->resizeRowsToContents();
+    ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
     //    QPushButton *removeButton = new QPushButton("Remove", this);
 //    ui->tableWidgetReplenishes->setCellWidget(ui->tableWidgetReplenishes->rowCount() - 1, 3, removeButton);
 //    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeReplenish()));
@@ -257,6 +273,9 @@ void DepositCalculator::removeReplenish() {
     data.removeReplenish(index);
     if (index > 0) ui->tableWidgetReplenishes->selectRow(index - 1);
     else ui->tableWidgetReplenishes->selectRow(0);
+    if (ui->tableWidgetReplenishes->rowCount() == 0) {
+            ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
+    }
 //    if (index > 0)
 //        ui->tableWidgetReplenishes->setCurrentCell(index - 1, 0);
 //    else
@@ -279,6 +298,7 @@ void DepositCalculator::addWithdrawal() {
     ui->tableWidgetWithdrawals->setItem(ui->tableWidgetWithdrawals->rowCount() - 1, 2, new QTableWidgetItem(outputNumber(ui->doubleSpinBoxValue->value(), false, 'f', 2)));
     ui->tableWidgetWithdrawals->selectRow(ui->tableWidgetWithdrawals->rowCount() - 1);
         ui->tableWidgetWithdrawals->resizeRowsToContents();
+    ui->tableWidgetWithdrawals->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
 }
 
 // error!!!
@@ -289,6 +309,9 @@ void DepositCalculator::removeWithdrawal() {
     data.removeWithdrawal(index);
     if (index > 0) ui->tableWidgetWithdrawals->selectRow(index - 1);
     else ui->tableWidgetWithdrawals->selectRow(0);
+    }
+    if (ui->tableWidgetWithdrawals->rowCount() == 0) {
+        ui->tableWidgetWithdrawals->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
     }
 }
 
@@ -392,4 +415,12 @@ bool DepositCalculator::isAllZeros(QString number) {
         if (*i != QChar(',') && *i != QChar('0')) return false;
     }
     return true;
+}
+
+void DepositCalculator::mousePressEvent(QMouseEvent *event)
+{
+    QModelIndex item = ui->tableWidgetEvents->indexAt(event->pos());
+    //QTreeView::mousePressEvent(event);
+    if (!item.isValid())
+        ui->tableWidgetEvents->clearSelection();
 }

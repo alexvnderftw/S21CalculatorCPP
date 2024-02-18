@@ -41,6 +41,7 @@ class Calculator : public QWidget {
 
   const double MIN_PLOT_RANGE = -1000000.0;
   const double MAX_PLOT_RANGE = 1000000.0;
+  const double MIN_PLOT_DECIMAL = 1e-08;
 
   double min_x = 0.0, max_x = 0.0, min_y = 0.0, max_y = 0.0;
   int size;
