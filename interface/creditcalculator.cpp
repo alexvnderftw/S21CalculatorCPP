@@ -32,8 +32,10 @@ void CreditCalculator::setUiParameters() {
   ui->tableWidgetCredit->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
   ui->tableWidgetCredit->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-  ui->tableWidgetCredit->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 5px;}");
-  ui->tableWidgetCredit->verticalHeader()->setStyleSheet("QHeaderView::section:last {border-bottom-left-radius: 5px;}");
+  ui->tableWidgetCredit->horizontalHeader()->setStyleSheet(
+      "QHeaderView::section:first {border-top-left-radius: 5px;}");
+  ui->tableWidgetCredit->verticalHeader()->setStyleSheet(
+      "QHeaderView::section:last {border-bottom-left-radius: 5px;}");
 }
 
 void CreditCalculator::connectSignals() {
@@ -56,7 +58,8 @@ void CreditCalculator::calculate() {
   if (ctrl.calculate() == true) {
     fillTable();
     fillLines();
-    ui->tableWidgetCredit->horizontalHeader()->setStyleSheet("QHeaderView::section:first {border-top-left-radius: 0px;}");
+    ui->tableWidgetCredit->horizontalHeader()->setStyleSheet(
+        "QHeaderView::section:first {border-top-left-radius: 0px;}");
   }
 }
 
@@ -94,10 +97,12 @@ void CreditCalculator::fillTable() {
       new QTableWidgetItem(QString::number(ctrl.getSumRatePart(), 'f', 2) +
                            "\nInterest paid"));
   // ui->tableWidgetCredit->resizeColumnsToContents();
-//  background-color: rgb(243, 89, 97);
-//color: rgb(2, 1, 18);
-//  ui->tableWidgetCredit->item(ctrl.getDataSize(), 0)->setBackground(QColor(243, 89, 97));
-//  ui->tableWidgetCredit->item(ctrl.getDataSize(), 0)->setBackground(QColor(2, 1, 18));
+  //  background-color: rgb(243, 89, 97);
+  // color: rgb(2, 1, 18);
+  //  ui->tableWidgetCredit->item(ctrl.getDataSize(),
+  //  0)->setBackground(QColor(243, 89, 97));
+  //  ui->tableWidgetCredit->item(ctrl.getDataSize(),
+  //  0)->setBackground(QColor(2, 1, 18));
   ui->tableWidgetCredit->resizeRowsToContents();
 }
 

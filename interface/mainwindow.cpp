@@ -31,9 +31,12 @@ void MainWindow::connectSignals() {
   connect(ui->pushButtonToDeposit, SIGNAL(clicked()), signalMapper,
           SLOT(map()));
   signalMapper->setMapping(ui->pushButtonMenu, ui->pushButtonMenu->text());
-  signalMapper->setMapping(ui->pushButtonToCalculator, ui->pushButtonToCalculator->text());
-  signalMapper->setMapping(ui->pushButtonToCredit, ui->pushButtonToCredit->text());
-  signalMapper->setMapping(ui->pushButtonToDeposit, ui->pushButtonToDeposit->text());
+  signalMapper->setMapping(ui->pushButtonToCalculator,
+                           ui->pushButtonToCalculator->text());
+  signalMapper->setMapping(ui->pushButtonToCredit,
+                           ui->pushButtonToCredit->text());
+  signalMapper->setMapping(ui->pushButtonToDeposit,
+                           ui->pushButtonToDeposit->text());
   connect(signalMapper, SIGNAL(mappedString(QString)), this,
           SLOT(switchPage(QString)));
   connect(ui->pushButtonExit, SIGNAL(clicked()), this, SLOT(quit()));

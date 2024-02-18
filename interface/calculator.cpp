@@ -39,12 +39,12 @@ void Calculator::initializeGraph() {
   ui->widgetPlot->yAxis->setTickLabelFont(QFont("Kode Mono"));
   ui->widgetPlot->xAxis->setNumberFormat("gb");
   ui->widgetPlot->yAxis->setNumberFormat("gb");
-//  ui->widgetPlot->xAxis->setTickLength(1, 1);
-//  ui->widgetPlot->yAxis->setTickLength(1, 1);
+  //  ui->widgetPlot->xAxis->setTickLength(1, 1);
+  //  ui->widgetPlot->yAxis->setTickLength(1, 1);
   ui->widgetPlot->xAxis->setSubTicks(true);
   ui->widgetPlot->yAxis->setSubTicks(true);
-//  ui->widgetPlot->xAxis->setNumberPrecision(2);
-//  ui->widgetPlot->yAxis->setNumberPrecision(2);
+  //  ui->widgetPlot->xAxis->setNumberPrecision(2);
+  //  ui->widgetPlot->yAxis->setNumberPrecision(2);
   ui->widgetPlot->setAttribute(Qt::WA_OpaquePaintEvent);
   ui->widgetPlot->setNoAntialiasingOnDrag(true);
   ui->widgetPlot->setInteraction(QCP::iRangeDrag, true);
