@@ -44,12 +44,6 @@ void CreditCalculator::connectSignals() {
           SLOT(limitTime(int)));
   connect(ui->comboBoxCreditType, SIGNAL(currentIndexChanged(int)), this,
           SLOT(setType(int)));
-  //    connect(ui->spinBoxCredit, SIGNAL(returnPressed()), this,
-  //            SLOT(calculate()));
-  //    connect(ui->spinBoxTime, SIGNAL(returnPressed()), this,
-  //            SLOT(calculate()));
-  //    connect(ui->doubleSpinBoxRate, SIGNAL(returnPressed()), this,
-  //            SLOT(calculate()));
 }
 
 void CreditCalculator::calculate() {
@@ -96,13 +90,6 @@ void CreditCalculator::fillTable() {
       ctrl.getDataSize(), 3,
       new QTableWidgetItem(QString::number(ctrl.getSumRatePart(), 'f', 2) +
                            "\nInterest paid"));
-  // ui->tableWidgetCredit->resizeColumnsToContents();
-  //  background-color: rgb(243, 89, 97);
-  // color: rgb(2, 1, 18);
-  //  ui->tableWidgetCredit->item(ctrl.getDataSize(),
-  //  0)->setBackground(QColor(243, 89, 97));
-  //  ui->tableWidgetCredit->item(ctrl.getDataSize(),
-  //  0)->setBackground(QColor(2, 1, 18));
   ui->tableWidgetCredit->resizeRowsToContents();
 }
 
@@ -161,8 +148,6 @@ void CreditCalculator::setType(int index) {
 /* Slots */
 
 void CreditCalculator::limitTime(int index) {
-  // if (index == 0 && ui->spinBoxTime->value() > MAX_TIME_Y)
-  // ui->spinBoxTime->setValue(MAX_TIME_Y);
   if (index == 0)
     ui->spinBoxTime->setMaximum(MAX_TIME_Y);
   else if (index == 1)

@@ -7,7 +7,6 @@ DepositCalculator::DepositCalculator(QWidget *parent)
   ui->setupUi(this);
   setUiParameters();
   setInitialState();
-  // setValues();
   connectSignals();
   hideOperationWidget();
 }
@@ -220,9 +219,6 @@ void DepositCalculator::fillTable() {
       }
       ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
     }
-    //        } else {
-    //            ui->tableWidgetEvents->removeRow(ui->tableWidgetEvents->rowCount());
-    //        }
   }
   ui->tableWidgetEvents->setItem(ui->tableWidgetEvents->rowCount() - 1, 0,
                                  new QTableWidgetItem("Total:"));
@@ -262,18 +258,14 @@ void DepositCalculator::clearContent() {
   ui->lineEditTotal->clear();
   ui->lineEditGain->clear();
   ui->lineEditTotalTax->clear();
-  //    ui->lineEditPayment->clear();
-  //    ui->lineEditInterest->clear();
-  //    ui->lineEditTotal->clear();
+  ui->lineEditPayment->clear();
+  ui->lineEditInterest->clear();
+  ui->lineEditTotal->clear();
 }
 
 QString DepositCalculator::getDateString(s21::Date date) {
   QDate qdate(date.getYear(), date.getMonth(), date.getDay());
   return qdate.toString("dd.MM.yyyy");
-  // return QString::number(date.getDay()) + "." +
-  // QString::number(date.getMonth()) + "." + QString::number(date.getYear());
-
-  //.toString("yyyy.MM.dd")
 }
 
 QString DepositCalculator::getEventString(s21::Deposit::EventType event) {
@@ -347,10 +339,6 @@ void DepositCalculator::addReplenish() {
   ui->tableWidgetReplenishes->resizeRowsToContents();
   ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet(
       "QHeaderView::section:first {border-top-left-radius: 0px;}");
-  //    QPushButton *removeButton = new QPushButton("Remove", this);
-  //    ui->tableWidgetReplenishes->setCellWidget(ui->tableWidgetReplenishes->rowCount()
-  //    - 1, 3, removeButton); connect(removeButton, SIGNAL(clicked()), this,
-  //    SLOT(removeReplenish()));
 }
 
 void DepositCalculator::removeReplenish() {
@@ -367,16 +355,6 @@ void DepositCalculator::removeReplenish() {
       ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet(
           "QHeaderView::section:first {border-top-left-radius: 5px;}");
     }
-    //    if (index > 0)
-    //        ui->tableWidgetReplenishes->setCurrentCell(index - 1, 0);
-    //    else
-    //        ui->tableWidgetReplenishes->setCurrentCell(0, 0);
-    //    }
-    //    QWidget *w = qobject_cast<QWidget *>(sender()->parent());
-    //    if(w){
-    //        int row = ui->tableWidgetReplenishes->indexAt(w->pos()).row();
-    //        ui->tableWidgetReplenishes->removeRow(row);
-    //        ui->tableWidgetReplenishes->setCurrentCell(0, 0);
   }
 }
 
@@ -482,7 +460,6 @@ void DepositCalculator::setInitialState() {
 
 QString DepositCalculator::outputNumber(double number, bool force_plus,
                                         char format, int decimal_digits) {
-  // QString ret = QString::number(number, format, decimal_digits);
   QString ret =
       removeTrailingZeros(QString::number(number, format, decimal_digits));
   if (isAllZeros(ret) == true) {
@@ -540,8 +517,7 @@ bool DepositCalculator::isAllZeros(QString number) {
   return true;
 }
 
-void DepositCalculator::mousePressEvent(QMouseEvent *event) {
+/* void DepositCalculator::mousePressEvent(QMouseEvent *event) {
   QModelIndex item = ui->tableWidgetEvents->indexAt(event->pos());
-  // QTreeView::mousePressEvent(event);
   if (!item.isValid()) ui->tableWidgetEvents->clearSelection();
-}
+} */

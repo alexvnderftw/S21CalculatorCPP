@@ -22,8 +22,8 @@ class DepositCalculator : public QWidget {
   void setDefaultSizes();
   void nullDefaultSizes();
 
- protected:
-  void mousePressEvent(QMouseEvent *event);
+  /*  protected:
+    void mousePressEvent(QMouseEvent *event); */
 
  private slots:
   void calculate();
