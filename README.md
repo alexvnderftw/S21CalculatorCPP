@@ -8,7 +8,7 @@
 
 - About code: it is written completely with C++ according to MVC pattern. UI was created in QT Creator, using QT Designer with stylesheets. Graph plot uses QCustomplot library, which is open-source library.
 
-- Unit tests for main logic are provided and require cmake for running. Tests use `gtest` library to perform. To create coverage report run `make gcov_report`. Make sure to install lcov/gcov. Total code coverage is 98.9%.
+- Unit tests for main logic are provided and require cmake for running. Tests use `gtest` library to perform. To create coverage report run `make gcov_report`. Make sure to install lcov/gcov. Total code coverage is 99.1%.
 
 ## Content
 
