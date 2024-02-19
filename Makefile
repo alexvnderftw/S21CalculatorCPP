@@ -19,7 +19,7 @@ CLIB = s21_calculator_model.a
 CLIB_DIR = libs
 # END Appears in root CMakeLists.txt
 
-QMAKE = /Users/alexvnderftw/Qt/6.6.0/macos/bin/qmake
+QMAKE = qmake
 CMAKE = cmake
 OUTPUT_DIR = SmartCalc_v2.0
 APP_LABEL = SmartCalc_v2
@@ -40,19 +40,17 @@ endif
 
 # Main targets
 
-all: uninstall libs font cmake_install
+all: install run
 
-install: uninstall libs font
+install:
 	$(MAKE) qmake_install || $(MAKE) cmake_install
 
-qmake_install:
+qmake_install: uninstall libs font
 	cd interface && $(QMAKE) && $(MAKE)
 	mkdir -p $(OUTPUT_DIR)
 	mv $(APP_OUTPUT) $(OUTPUT_DIR)/
-#cp README.md ../$(OUTPUT_DIR)
-#cp README_RUS.md ../$(OUTPUT_DIR)
 
-cmake_install:
+cmake_install: uninstall libs font
 	cd interface && $(CMAKE) -S . -B .
 	cd interface && $(CMAKE) --build .
 	mkdir -p $(OUTPUT_DIR)
@@ -90,6 +88,9 @@ style: clean
 
 memtest: clean test
 	$(CMEMTEST) ./$(TEST_FILE)
+
+memtest_app: install
+	$(CMEMTEST) ./$(OUTPUT_DIR)/$(APP_LABEL)
 
 clean:
 	rm -rf $(TEST_FILE)

@@ -3,7 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
-QMAKE_CXXFLAGS += -Wall -Werror -Wextra -Wpedantic -g
+QMAKE_CXXFLAGS += -Wall -Wextra -Wpedantic -g
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

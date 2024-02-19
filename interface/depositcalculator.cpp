@@ -82,8 +82,6 @@ void DepositCalculator::connectSignals() {
           SLOT(hideOperationWidget()));
   connect(ui->pushButtonShowOperations, SIGNAL(clicked()), this,
           SLOT(showOperationWidget()));
-  connect(ui->pushButtonRemoveWithdrawal, SIGNAL(clicked()), this,
-          SLOT(removeWithdrawal()));
   connect(ui->checkBoxCapitalization, SIGNAL(stateChanged(int)), this,
           SLOT(setCapitalization(int)));
   connect(ui->comboBoxTermUnit, SIGNAL(currentTextChanged(QString)), this,
@@ -212,13 +210,9 @@ void DepositCalculator::fillTable() {
                              false, 'f', 2) +
                 ") was declined due to minimum balance limit (" +
                 outputNumber(data.getRemainderLimit(), false, 'f', 2) + ")"));
-        ui->tableWidgetEvents->setItem(
-            ui->tableWidgetEvents->rowCount() - 1, 5,
-            new QTableWidgetItem(
-                getEventString(data.getEventListElement(i)->event())));
         ui->tableWidgetEvents->setSpan(ui->tableWidgetEvents->rowCount() - 1, 1,
-                                       ui->tableWidgetEvents->rowCount() - 1,
-                                       4);
+                                       1,
+                                       5);
       }
       ui->tableWidgetEvents->insertRow(ui->tableWidgetEvents->rowCount());
     }
@@ -351,10 +345,10 @@ void DepositCalculator::removeReplenish() {
       ui->tableWidgetReplenishes->selectRow(index - 1);
     else
       ui->tableWidgetReplenishes->selectRow(0);
-    if (ui->tableWidgetReplenishes->rowCount() == 0) {
-      ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet(
-          "QHeaderView::section:first {border-top-left-radius: 5px;}");
-    }
+  }
+  if (ui->tableWidgetReplenishes->rowCount() == 0) {
+    ui->tableWidgetReplenishes->horizontalHeader()->setStyleSheet(
+        "QHeaderView::section:first {border-top-left-radius: 5px;}");
   }
 }
 
@@ -381,9 +375,8 @@ void DepositCalculator::addWithdrawal() {
       "QHeaderView::section:first {border-top-left-radius: 0px;}");
 }
 
-// error!!!
 void DepositCalculator::removeWithdrawal() {
-  if (ui->tableWidgetWithdrawals->rowCount() > 0) {
+  if (data.getWithdrawalListSize() > 0) {
     int index = ui->tableWidgetWithdrawals->currentRow();
     ui->tableWidgetWithdrawals->removeRow(
         ui->tableWidgetWithdrawals->currentRow());

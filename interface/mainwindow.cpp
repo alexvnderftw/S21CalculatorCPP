@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
   foreach (QSpinBox *box, findChildren<QSpinBox *>()) {
     box->setAttribute(Qt::WA_MacShowFocusRect, 0);
   }
+  foreach (QDateEdit *line, findChildren<QDateEdit *>()) {
+    line->setAttribute(Qt::WA_MacShowFocusRect, 0);
+  }
 #endif
   ui->pushButtonMenu->setStyleSheet(
       "QPushButton {image: url(:/icons/menu_yellow.svg);} QPushButton:hover "
