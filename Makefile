@@ -1,3 +1,4 @@
+MAKE = make
 CC = gcc
 CFLAGS =-Wall -Werror -Wextra -Wpedantic -g -std=c++17
 UI_SRC = $(wildcard ./interface/*.cpp, ./interface/*.h)
@@ -18,16 +19,19 @@ CLIB = s21_calculator_model.a
 CLIB_DIR = libs
 # END Appears in root CMakeLists.txt
 
-#CCFLAGS = -L ./ -l:$(CLIB)
 QMAKE = /Users/alexvnderftw/Qt/6.6.0/macos/bin/qmake
+CMAKE = cmake
 OUTPUT_DIR = SmartCalc_v2.0
 APP_LABEL = SmartCalc_v2
-APP_MOVE = interface/SmartCalc_v2
+APP_OUTPUT = interface/SmartCalc_v2
+FONT_DIR = ~/.local/share/fonts/
+OPENER = xdg-open
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
-APP_MOVE = interface/SmartCalc_v2.app/Contents/MacOS/SmartCalc_v2
-#CCFLAGS = $(CLIB)
+APP_OUTPUT = interface/SmartCalc_v2.app/Contents/MacOS/SmartCalc_v2
+FONT_DIR = ~/Library/Fonts/
+OPENER = open
 CMEMTEST = leaks -atExit --
 endif
 
@@ -36,39 +40,48 @@ endif
 
 # Main targets
 
-all: install
+all: uninstall libs font cmake_install
 
-install: uninstall libs
-	cd interface && $(QMAKE) && make
+install: uninstall libs font
+	$(MAKE) qmake_install || $(MAKE) cmake_install
+
+qmake_install:
+	cd interface && $(QMAKE) && $(MAKE)
 	mkdir -p $(OUTPUT_DIR)
-#cp README.md ../$(APP_FILE)
-#cp README_RUS.md ../$(APP_FILE)
-	mv $(APP_MOVE) $(OUTPUT_DIR)/
+	mv $(APP_OUTPUT) $(OUTPUT_DIR)/
+#cp README.md ../$(OUTPUT_DIR)
+#cp README_RUS.md ../$(OUTPUT_DIR)
+
+cmake_install:
+	cd interface && $(CMAKE) -S . -B .
+	cd interface && $(CMAKE) --build .
+	mkdir -p $(OUTPUT_DIR)
+	mv $(APP_OUTPUT) $(OUTPUT_DIR)/
 
 run:
 	./$(OUTPUT_DIR)/$(APP_LABEL)
 
 uninstall:
-#rm -rf ../$(APP_FILE)
+	rm -rf ./$(OUTPUT_DIR)
 
 dist: clean distclean
-	tar -cf 3DViewer_v1.0.tar 3DViewer_v1 Makefile README.md 3DViewer_v1.0.h modules misc tests images
+	tar -cf SmartCalc_v2.0.tar interface model controller misc tests CMakeLists.txt Makefile README.md README_RUS.md
 
 dvi:
-	open README.md
+	$(OPENER) README.md
 
 dvi_rus:
-	open README_RUS.md
+	$(OPENER) README_RUS.md
 
 gcov_report: test
 	lcov -t "S21CalculatorCPP" -o s21_calculator_model.info -c -d ./model/
 	lcov -r s21_calculator_model.info '/usr/include/*' -o s21_calculator_model.info
 	genhtml -o report s21_calculator_model.info
-	open ./report/index.html
+	$(OPENER) ./report/index.html
 
 test: s21_calculator_model_cov.a
-	cmake -S . -B $(TEST_BUILD_DIR)
-	cmake --build $(TEST_BUILD_DIR)
+	$(CMAKE) -S . -B $(TEST_BUILD_DIR)
+	$(CMAKE) --build $(TEST_BUILD_DIR)
 	mv ./$(TEST_BUILD_DIR)/$(TEST_FILE) ./
 	./$(TEST_FILE)
 
@@ -87,6 +100,10 @@ clean:
 	rm -rf ./$(CLIB_DIR)
 	rm -rf interface/.qmake.stash interface/Makefile interface/moc_*
 	rm -rf interface/ui_*.h interface/*.o interface/$(APP_LABEL).app interface/qrc_resource.cpp
+	rm -rf interface/SmartCalc_v2_autogen interface/CMakeFiles interface/*.cmake interface/*Cache.txt
+
+distclean:
+	rm -rf SmartCalc_v2.0.tar
 
 rebuild: clean all
 
@@ -95,22 +112,30 @@ rebuild: clean all
 libs: s21_calculator_model.a
 
 s21_calculator_model.a: $(MODEL_OBJ)
-	mkdir -p $(CLIB_DIR)
 	rm -rf $(CLIB_DIR)/$(CLIB)
-	ar -rs $(CLIB) $(MODEL_OBJ)
-	mv $(CLIB) ./$(CLIB_DIR)/
+	mkdir -p $(CLIB_DIR)
+	ar -rs $(CLIB_DIR)/$(CLIB) $(MODEL_OBJ)
+#	mv $(CLIB) ./$(CLIB_DIR)/
 
 s21_calculator_model_cov.a: $(MODEL_OBJ_COV)
-	mkdir -p $(CLIB_DIR)
 	rm -rf $(CLIB_DIR)/$(CLIB)
-	ar -rs $(CLIB) $(MODEL_OBJ_COV)
-	mv $(CLIB) ./$(CLIB_DIR)/
+	mkdir -p $(CLIB_DIR)
+	ar -rs $(CLIB_DIR)/$(CLIB) $(MODEL_OBJ_COV)
+#	mv $(CLIB) ./$(CLIB_DIR)/
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o_cov: %.cpp
 	$(CC) --coverage $(CFLAGS) -c $< -o $@
+
+font:
+	mkdir -p $(FONT_DIR)
+	cp misc/fonts/Anta-Regular.ttf $(FONT_DIR)
+	cp misc/fonts/KodeMono-VariableFont_wght.ttf $(FONT_DIR)
+ifeq ($(UNAME_S), Linux)
+	fc-cache -fv $(FONT_DIR)
+endif
 
 style_fix: clean
 	clang-format -style=Google -i $(MODEL_SRC) $(MODEL_H) $(TEST_SRC) $(TEST_H) $(UI_SRC) $(CONTROLLER_SRC)

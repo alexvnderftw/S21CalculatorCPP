@@ -3,6 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
+QMAKE_CXXFLAGS += -Wall -Werror -Wextra -Wpedantic -g
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -11,14 +12,13 @@ CONFIG += c++17
 RESOURCES = \
     ../misc/resource.qrc
 
+LIBS += \
+    ../libs/s21_calculator_model.a
+
 SOURCES += \
     ../controller/s21_controller.cpp \
     ../controller/s21_controller_credit.cpp \
     ../controller/s21_controller_deposit.cpp \
-    ../model/s21_calculation.cpp \
-    ../model/s21_common.cpp \
-    ../model/s21_credit.cpp \
-    ../model/s21_deposit.cpp \
     calculator.cpp \
     creditcalculator.cpp \
     depositcalculator.cpp \
@@ -30,10 +30,6 @@ HEADERS += \
     ../controller/s21_controller.h \
     ../controller/s21_controller_credit.h \
     ../controller/s21_controller_deposit.h \
-    ../model/s21_calculation.h \
-    ../model/s21_common.h \
-    ../model/s21_credit.h \
-    ../model/s21_deposit.h \
     calculator.h \
     creditcalculator.h \
     depositcalculator.h \
