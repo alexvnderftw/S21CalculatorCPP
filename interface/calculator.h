@@ -31,7 +31,8 @@ class Calculator : public QWidget {
 
   void setDegree();
   void setRadian();
-  void inputLineText(const QString str);
+  void inputLineText();
+  void inputLineTextFunction();
   void deleteLineText();
   void backspaceLineText();
 

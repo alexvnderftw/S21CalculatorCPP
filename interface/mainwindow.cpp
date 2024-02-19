@@ -30,38 +30,22 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::connectSignals() {
-  QSignalMapper *signalMapper = new QSignalMapper(this);
-  connect(ui->pushButtonMenu, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonCalculator, SIGNAL(clicked()), signalMapper,
-          SLOT(map()));
-  connect(ui->pushButtonCredit, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonDeposit, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonToCalculator, SIGNAL(clicked()), signalMapper,
-          SLOT(map()));
-  connect(ui->pushButtonToCredit, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonToDeposit, SIGNAL(clicked()), signalMapper,
-          SLOT(map()));
-  signalMapper->setMapping(ui->pushButtonMenu,
-                           ui->pushButtonMenu->objectName());
-  signalMapper->setMapping(ui->pushButtonCalculator,
-                           ui->pushButtonCalculator->objectName());
-  signalMapper->setMapping(ui->pushButtonCredit,
-                           ui->pushButtonCredit->objectName());
-  signalMapper->setMapping(ui->pushButtonDeposit,
-                           ui->pushButtonDeposit->objectName());
-  signalMapper->setMapping(ui->pushButtonToCalculator,
-                           ui->pushButtonToCalculator->objectName());
-  signalMapper->setMapping(ui->pushButtonToCredit,
-                           ui->pushButtonToCredit->objectName());
-  signalMapper->setMapping(ui->pushButtonToDeposit,
-                           ui->pushButtonToDeposit->objectName());
-  connect(signalMapper, SIGNAL(mappedString(QString)), this,
-          SLOT(switchPage(QString)));
   connect(ui->pushButtonExit, SIGNAL(clicked()), this, SLOT(quit()));
+  connect(ui->pushButtonExit, SIGNAL(clicked()), this, SLOT(quit()));
+  connect(ui->pushButtonMenu, SIGNAL(clicked()), this, SLOT(switchPage()));
+  connect(ui->pushButtonCalculator, SIGNAL(clicked()), this,
+          SLOT(switchPage()));
+  connect(ui->pushButtonCredit, SIGNAL(clicked()), this, SLOT(switchPage()));
+  connect(ui->pushButtonDeposit, SIGNAL(clicked()), this, SLOT(switchPage()));
+  connect(ui->pushButtonToCalculator, SIGNAL(clicked()), this,
+          SLOT(switchPage()));
+  connect(ui->pushButtonToCredit, SIGNAL(clicked()), this, SLOT(switchPage()));
+  connect(ui->pushButtonToDeposit, SIGNAL(clicked()), this, SLOT(switchPage()));
 }
 
-void MainWindow::switchPage(QString text) {
-  if (text == "pushButtonToCalculator" || text == "pushButtonCalculator") {
+void MainWindow::switchPage() {
+  if (sender()->objectName() == "pushButtonToCalculator" ||
+      sender()->objectName() == "pushButtonCalculator") {
     resetIcons();
     ui->pushButtonCalculator->setStyleSheet(
         "QPushButton {image: url(:/icons/calculate_yellow.svg);} "
@@ -73,7 +57,8 @@ void MainWindow::switchPage(QString text) {
     ui->pageCalculator->setDefaultFocus();
     this->setMinimumSize(800, 520);
     this->resize(800, 520);
-  } else if (text == "pushButtonToCredit" || text == "pushButtonCredit") {
+  } else if (sender()->objectName() == "pushButtonToCredit" ||
+             sender()->objectName() == "pushButtonCredit") {
     resetIcons();
     setDefaultSizes();
     ui->pushButtonCredit->setStyleSheet(
@@ -85,7 +70,8 @@ void MainWindow::switchPage(QString text) {
     ui->pageCredit->setDefaultFocus();
     this->setMinimumSize(700, 450);
     this->resize(700, 550);
-  } else if (text == "pushButtonToDeposit" || text == "pushButtonDeposit") {
+  } else if (sender()->objectName() == "pushButtonToDeposit" ||
+             sender()->objectName() == "pushButtonDeposit") {
     resetIcons();
     ui->pushButtonDeposit->setStyleSheet(
         "QPushButton {image: url(:/icons/savings_yellow.svg);} "
@@ -97,7 +83,7 @@ void MainWindow::switchPage(QString text) {
     ui->pageDeposit->setDefaultFocus();
     this->setMinimumSize(800, 700);
     this->resize(800, 700);
-  } else if (text == "pushButtonMenu") {
+  } else if (sender()->objectName() == "pushButtonMenu") {
     resetIcons();
     ui->pushButtonMenu->setStyleSheet(
         "QPushButton {image: url(:/icons/menu_yellow.svg);} QPushButton:hover "

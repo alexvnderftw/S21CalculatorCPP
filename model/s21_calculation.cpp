@@ -3,7 +3,7 @@
 namespace s21 {
 
 void Calculation::SetX(double x) noexcept { x_ = x; }
-void Calculation::SetX(const std::string x_str) noexcept {
+void Calculation::SetX(const std::string& x_str) noexcept {
   double x = NAN;
   int shift = 0;
   std::string str = x_str;
@@ -15,7 +15,7 @@ void Calculation::SetX(const std::string x_str) noexcept {
   else
     SetX(x);
 }
-void Calculation::SetExpression(const std::string input) noexcept {
+void Calculation::SetExpression(const std::string& input) noexcept {
   expr_ = input;
   status_ = NEW_EXPRESSION;
 }
@@ -38,15 +38,15 @@ double Calculation::GetResult(double x) {
   SetX(x);
   return GetResult();
 }
-double Calculation::GetResult(const std::string input) {
+double Calculation::GetResult(const std::string& input) {
   SetExpression(input);
   return GetResult();
 }
-double Calculation::GetResult(const std::string input, double x) {
+double Calculation::GetResult(const std::string& input, double x) {
   SetX(x);
   return GetResult(input);
 }
-double Calculation::GetResult(const std::string input, const std::string x) {
+double Calculation::GetResult(const std::string& input, const std::string& x) {
   SetX(x);
   return GetResult(input);
 }
@@ -144,7 +144,7 @@ void Calculation::CalculateUnaryOrFunction(TokenType token_type) {
 
 void Calculation::ParseToken() {
   bool parsed = false;
-  std::string::iterator init = iter_;
+  std::string::const_iterator init = iter_;
   parsed = CheckNumber(init);
   if (!parsed) parsed = CheckX(init);
   if (!parsed) parsed = CheckFunction(init);
@@ -172,7 +172,7 @@ void Calculation::CheckHiddenMultiplication() {
   }
 }
 
-bool Calculation::CheckNumber(std::string::iterator input) {
+bool Calculation::CheckNumber(std::string::const_iterator input) {
   if (isdigit(*input) || *input == '.') {
     int shift = 0;
     double number = 0.0;
@@ -187,7 +187,7 @@ bool Calculation::CheckNumber(std::string::iterator input) {
   return false;
 }
 
-bool Calculation::CheckX(std::string::iterator input) {
+bool Calculation::CheckX(std::string::const_iterator input) {
   if (*input == 'x' && prev_ != X && prev_ != RIGHT_PAR) {
     output_queue_.push_back(Token{X, NAN});
     prev_ = X;
@@ -197,7 +197,7 @@ bool Calculation::CheckX(std::string::iterator input) {
   return false;
 }
 
-bool Calculation::CheckFunction(std::string::iterator input) {
+bool Calculation::CheckFunction(std::string::const_iterator input) {
   TokenType value = UNDEF;
   value = ParseFunction(input);
   if (value != UNDEF && prev_ != RIGHT_PAR && prev_ != X && prev_ != NUM) {
@@ -209,7 +209,8 @@ bool Calculation::CheckFunction(std::string::iterator input) {
   return false;
 }
 
-Calculation::TokenType Calculation::ParseFunction(std::string::iterator input) {
+Calculation::TokenType Calculation::ParseFunction(
+    std::string::const_iterator input) {
   for (const auto& [key, value] : functions) {
     size_t shift = GetString(key).size();
     if (!strncmp(&input[0], GetString(key).data(), shift) &&
@@ -220,7 +221,7 @@ Calculation::TokenType Calculation::ParseFunction(std::string::iterator input) {
   return UNDEF;
 }
 
-bool Calculation::CheckLeftParenthesis(std::string::iterator input) {
+bool Calculation::CheckLeftParenthesis(std::string::const_iterator input) {
   if (*input == '(') {
     stack_.push(LEFT_PAR);
     prev_ = LEFT_PAR;
@@ -230,7 +231,7 @@ bool Calculation::CheckLeftParenthesis(std::string::iterator input) {
   return false;
 }
 
-bool Calculation::CheckUnarOperator(std::string::iterator input) {
+bool Calculation::CheckUnarOperator(std::string::const_iterator input) {
   if (prev_ != NUM && prev_ != X && prev_ != RIGHT_PAR) {
     for (const auto& [key, value] : unary_operators) {
       if (!strncmp(&input[0], GetString(key).data(), GetString(key).size()) &&
@@ -245,7 +246,7 @@ bool Calculation::CheckUnarOperator(std::string::iterator input) {
   return false;
 }
 
-bool Calculation::CheckOperator(std::string::iterator input) {
+bool Calculation::CheckOperator(std::string::const_iterator input) {
   for (const auto& [key, value] : operators) {
     if (!strncmp(&input[0], GetString(key).data(), GetString(key).size())) {
       while (
@@ -266,7 +267,7 @@ bool Calculation::CheckOperator(std::string::iterator input) {
   return false;
 }
 
-bool Calculation::CheckRightParenthesis(std::string::iterator input) {
+bool Calculation::CheckRightParenthesis(std::string::const_iterator input) {
   if (*input == ')') {
     while (!stack_.empty() && stack_.top() != LEFT_PAR &&
            (IsBinaryOperator(stack_.top()) || IsUnaryOperator(stack_.top()))) {

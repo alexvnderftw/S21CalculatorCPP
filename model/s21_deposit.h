@@ -1,6 +1,7 @@
 #ifndef S21_DEPOSIT_H
 #define S21_DEPOSIT_H
 
+#include <algorithm>
 #include <vector>
 
 #include "s21_common.h"
@@ -30,7 +31,9 @@ class Deposit {
     O_ANNUALLY
   };
 
-  enum EventType { E_PAYDAY, E_REPLENISH, E_WITHDRAWAL, E_DECLINE, E_NEWYEAR };
+  /* WARNING: the order of enum is essential and is used to compare Event
+   * objects. */
+  enum EventType { E_REPLENISH, E_WITHDRAWAL, E_DECLINE, E_PAYDAY, E_NEWYEAR };
 
   enum TermType { T_DAY, T_MONTH, T_YEAR };
 
@@ -221,16 +224,15 @@ class Deposit {
   void pushPaydaysSkipMonths(int step);
   void pushPaydaysSkipDays(int step);
   void pushEvent(EventType event, Date date, long double change = 0.0L);
-  void swapEvents(size_t first, size_t second) noexcept;
   bool validateSettings() const noexcept;
   bool checkReplenishes() const noexcept;
   bool checkWithdrawals() const noexcept;
   bool checkPositiveDouble(double value) const noexcept;
   bool checkDates() const noexcept;
-  static Date nextMonthDate(Date& date, int n);
+  static Date nextMonthDate(const Date& date, int n);
   static long double calculateDayValue(int year, long double rate) noexcept;
   static bool isLeapYear(int year) noexcept;
-  static bool dateComparator(Event& first, Event& second) noexcept;
+  static bool dateComparator(const Event& first, const Event& second) noexcept;
 };
 }  // namespace s21
 

@@ -246,18 +246,6 @@ void Deposit::fixEventList(bool splice_on) noexcept {
         --i;
       }
     }
-    /* Purpose of the commented code below is to correct std::sort job in case
-     * of inconsistencies. Turn it on if std::sort messes things up in regard to
-     * Events with same date.  */
-    /* if (event_list_[i].date_ == event_list_[i + 1].date_ &&
-        event_list_[i].event_ == E_NEWYEAR &&
-        event_list_[i + 1].event_ == E_PAYDAY)
-      swapEvents(i, i + 1);
-    if (event_list_[i].date_ == event_list_[i + 1].date_ &&
-        event_list_[i].event_ == E_PAYDAY &&
-        (event_list_[i + 1].event_ == E_PAYDAY ||
-         event_list_[i + 1].event_ == E_WITHDRAWAL))
-      swapEvents(i, i + 1); */
   }
 }
 
@@ -393,12 +381,6 @@ void Deposit::pushEvent(EventType event, Date date, long double change) {
   event_list_.push_back(Event(event, date, 0.0L, change, 0.0L, 0.0L));
 }
 
-void Deposit::swapEvents(size_t first, size_t second) noexcept {
-  Event buffer = event_list_[first];
-  event_list_[first] = event_list_[second];
-  event_list_[second] = buffer;
-}
-
 bool Deposit::validateSettings() const noexcept {
   return checkReplenishes() && checkWithdrawals() &&
          checkPositiveDouble(deposit_) && checkPositiveDouble(interest_) &&
@@ -440,7 +422,7 @@ bool Deposit::checkDates() const noexcept {
          start_date_.getYear() <= MAX_START_YEAR;
 }
 
-Date Deposit::nextMonthDate(Date& date, int n) {
+Date Deposit::nextMonthDate(const Date& date, int n) {
   Date ret = date;
   int days = date.getDay();
   if (date.getDay() >= 29) {
@@ -474,7 +456,10 @@ bool Deposit::isLeapYear(int year) noexcept {
   return false;
 }
 
-bool Deposit::dateComparator(Event& first, Event& second) noexcept {
+bool Deposit::dateComparator(const Event& first, const Event& second) noexcept {
+  if (first.date_ == second.date_) {
+    return first.event_ < second.event_;
+  }
   return first.date_ < second.date_;
 }
 

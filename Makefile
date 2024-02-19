@@ -23,13 +23,15 @@ QMAKE = qmake
 CMAKE = cmake
 OUTPUT_DIR = SmartCalc_v2.0
 APP_LABEL = SmartCalc_v2
-APP_OUTPUT = interface/SmartCalc_v2
+APP_OUTPUT_QMAKE = interface/SmartCalc_v2
+APP_OUTPUT_CMAKE = interface/SmartCalc_v2
 FONT_DIR = ~/.local/share/fonts/
 OPENER = xdg-open
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
-APP_OUTPUT = interface/SmartCalc_v2.app/Contents/MacOS/SmartCalc_v2
+APP_OUTPUT_QMAKE = interface/SmartCalc_v2.app/Contents/MacOS/SmartCalc_v2
+APP_OUTPUT_CMAKE = interface/SmartCalc_v2.app/Contents/MacOS/SmartCalc_v2
 FONT_DIR = ~/Library/Fonts/
 OPENER = open
 CMEMTEST = leaks -atExit --
@@ -45,16 +47,16 @@ all: install run
 install:
 	$(MAKE) qmake_install || $(MAKE) cmake_install
 
-qmake_install: uninstall libs font
+qmake_install: clean libs font
 	cd interface && $(QMAKE) && $(MAKE)
 	mkdir -p $(OUTPUT_DIR)
-	mv $(APP_OUTPUT) $(OUTPUT_DIR)/
+	mv $(APP_OUTPUT_QMAKE) $(OUTPUT_DIR)/
 
-cmake_install: uninstall libs font
+cmake_install: clean libs font
 	cd interface && $(CMAKE) -S . -B .
 	cd interface && $(CMAKE) --build .
 	mkdir -p $(OUTPUT_DIR)
-	mv $(APP_OUTPUT) $(OUTPUT_DIR)/
+	mv $(APP_OUTPUT_CMAKE) $(OUTPUT_DIR)/
 
 run:
 	./$(OUTPUT_DIR)/$(APP_LABEL)

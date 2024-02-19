@@ -84,82 +84,48 @@ void Calculator::connectSignals() {
   connect(ui->widgetPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), this,
           SLOT(changeRangeY(QCPRange)));
 
-  QSignalMapper *signalMapper = new QSignalMapper(this);
-  connect(ui->pushButton0, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton1, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton2, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton3, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton4, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton5, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton6, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton7, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton8, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButton9, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonX, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonDot, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonLeftPar, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonRightPar, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonPlus, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonMinus, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonAltMinus, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonMult, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonDiv, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonPow, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonMod, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonLn, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonLog, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonSqrt, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonSin, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonCos, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonTan, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonAsin, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonAcos, SIGNAL(clicked()), signalMapper, SLOT(map()));
-  connect(ui->pushButtonAtan, SIGNAL(clicked()), signalMapper, SLOT(map()));
-
-  signalMapper->setMapping(ui->pushButton0, ui->pushButton0->text());
-  signalMapper->setMapping(ui->pushButton1, ui->pushButton1->text());
-  signalMapper->setMapping(ui->pushButton2, ui->pushButton2->text());
-  signalMapper->setMapping(ui->pushButton3, ui->pushButton3->text());
-  signalMapper->setMapping(ui->pushButton4, ui->pushButton4->text());
-  signalMapper->setMapping(ui->pushButton5, ui->pushButton5->text());
-  signalMapper->setMapping(ui->pushButton6, ui->pushButton6->text());
-  signalMapper->setMapping(ui->pushButton7, ui->pushButton7->text());
-  signalMapper->setMapping(ui->pushButton8, ui->pushButton8->text());
-  signalMapper->setMapping(ui->pushButton9, ui->pushButton9->text());
-  signalMapper->setMapping(ui->pushButtonX, ui->pushButtonX->text());
-  signalMapper->setMapping(ui->pushButtonDot, ui->pushButtonDot->text());
-  signalMapper->setMapping(ui->pushButtonLeftPar,
-                           ui->pushButtonLeftPar->text());
-  signalMapper->setMapping(ui->pushButtonRightPar,
-                           ui->pushButtonRightPar->text());
-  signalMapper->setMapping(ui->pushButtonPlus, ui->pushButtonPlus->text());
-  signalMapper->setMapping(ui->pushButtonMinus, ui->pushButtonMinus->text());
-  signalMapper->setMapping(ui->pushButtonAltMinus,
-                           ui->pushButtonAltMinus->text());
-  signalMapper->setMapping(ui->pushButtonMult, ui->pushButtonMult->text());
-  signalMapper->setMapping(ui->pushButtonDiv, ui->pushButtonDiv->text());
-  signalMapper->setMapping(ui->pushButtonPow, ui->pushButtonPow->text());
-  signalMapper->setMapping(ui->pushButtonMod, ui->pushButtonMod->text());
-  signalMapper->setMapping(ui->pushButtonLn,
-                           appendLeftPar(ui->pushButtonLn->text()));
-  signalMapper->setMapping(ui->pushButtonLog,
-                           appendLeftPar(ui->pushButtonLog->text()));
-  signalMapper->setMapping(ui->pushButtonSqrt,
-                           appendLeftPar(ui->pushButtonSqrt->text()));
-  signalMapper->setMapping(ui->pushButtonSin,
-                           appendLeftPar(ui->pushButtonSin->text()));
-  signalMapper->setMapping(ui->pushButtonCos,
-                           appendLeftPar(ui->pushButtonCos->text()));
-  signalMapper->setMapping(ui->pushButtonTan,
-                           appendLeftPar(ui->pushButtonTan->text()));
-  signalMapper->setMapping(ui->pushButtonAsin,
-                           appendLeftPar(ui->pushButtonAsin->text()));
-  signalMapper->setMapping(ui->pushButtonAcos,
-                           appendLeftPar(ui->pushButtonAcos->text()));
-  signalMapper->setMapping(ui->pushButtonAtan,
-                           appendLeftPar(ui->pushButtonAtan->text()));
-  connect(signalMapper, SIGNAL(mappedString(QString)), this,
-          SLOT(inputLineText(QString)));
+  connect(ui->pushButton0, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton1, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton2, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton3, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton4, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton5, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton6, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton7, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton8, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButton9, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonX, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonDot, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonLeftPar, SIGNAL(clicked()), this,
+          SLOT(inputLineText()));
+  connect(ui->pushButtonRightPar, SIGNAL(clicked()), this,
+          SLOT(inputLineText()));
+  connect(ui->pushButtonPlus, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonMinus, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonAltMinus, SIGNAL(clicked()), this,
+          SLOT(inputLineText()));
+  connect(ui->pushButtonMult, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonDiv, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonPow, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonMod, SIGNAL(clicked()), this, SLOT(inputLineText()));
+  connect(ui->pushButtonLn, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonLog, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonSqrt, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonSin, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonCos, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonTan, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonAsin, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonAcos, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
+  connect(ui->pushButtonAtan, SIGNAL(clicked()), this,
+          SLOT(inputLineTextFunction()));
 }
 
 /* All slots */
@@ -246,11 +212,21 @@ void Calculator::setRadian() { ctrl.setRadian(); }
 
 void Calculator::setDegree() { ctrl.setDegree(); }
 
-void Calculator::inputLineText(const QString str) {
+void Calculator::inputLineText() {
+  QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
   if (ui->lineEditX->hasFocus() == true) {
-    ui->lineEditX->insert(str);
+    ui->lineEditX->insert(buttonSender->text());
   } else {
-    ui->lineEditExpression->insert(str);
+    ui->lineEditExpression->insert(buttonSender->text());
+  }
+}
+
+void Calculator::inputLineTextFunction() {
+  QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
+  if (ui->lineEditX->hasFocus() == true) {
+    ui->lineEditX->insert(appendLeftPar(buttonSender->text()));
+  } else {
+    ui->lineEditExpression->insert(appendLeftPar(buttonSender->text()));
   }
 }
 
@@ -274,7 +250,7 @@ void Calculator::backspaceLineText() {
 /* Misc */
 
 /* Convert double to QString with formatting.
-Trails all useless zeros, up to 16 digits + scientific if too low or too big. */
+Trails all useless zeros, up to 16 digits. */
 QString Calculator::doubleToQString(double value) {
   QString str = QString::number(value, 'g', 16);
   if (hasDot(str) && !hasExp(str)) {

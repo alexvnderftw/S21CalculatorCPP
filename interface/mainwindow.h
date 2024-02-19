@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSignalMapper>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,7 +17,7 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
  private slots:
-  void switchPage(QString text);
+  void switchPage();
   void quit();
   void resetIcons();
 

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
 project(SmartCalc_v2 VERSION 0.0 LANGUAGES CXX)
 

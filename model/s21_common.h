@@ -1,6 +1,8 @@
 #ifndef S21_COMMON_H
 #define S21_COMMON_H
 
+#include <math.h>
+
 #include <cmath>
 #include <ctime>
 #include <stdexcept>
@@ -55,8 +57,8 @@ class Date {
   static const int BASE_YEAR = 1900;
   static const int BASE_MONTH = 1;
   static const int BASE_DAY = 1;
-  struct std::tm base_;
-  struct std::tm current_;
+  struct std::tm base_ = {};
+  struct std::tm current_ = {};
 
   int getDaysSinceBase() const;
   int getDiff(const struct std::tm& end, const struct std::tm& start) const;

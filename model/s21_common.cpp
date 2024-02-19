@@ -29,7 +29,8 @@ double bankRoundTwoDecimal(double number) noexcept {
 
 /* Regular bank round of long double number to integer value. */
 long double bankRoundLong(long double number) noexcept {
-  if (number >= 0.0 &&
+  return bankRound(number);
+  /* if (number >= 0.0 &&
       std::fabsl(std::fabsl(number - std::floorl(number)) - 0.5) < 1e-10L) {
     if (std::fabsl(std::fmodl(std::fmodl(std::floorl(number), 10.0), 2.0)) <
         1e-10L)
@@ -41,13 +42,13 @@ long double bankRoundLong(long double number) noexcept {
                  1e-10L) {
     if (std::fabsl(std::fmodl(std::fmodl(std::ceill(number), 10.0), 2.0)) <
         1e-10L)
-      number = std::ceil(number);
+      number = std::ceill(number);
     else
       number = std::floorl(number);
   } else {
     number = std::roundl(number);
   }
-  return number;
+  return number; */
 }
 
 /* Bank rounding of number to number with two decimal digits. */
@@ -223,10 +224,22 @@ int Date::getDaysSinceBase() const { return getDiff(current_, base_); }
 
 int Date::getDiff(const struct std::tm& end,
                   const struct std::tm& start) const {
-  struct std::tm end_new = end, start_new = start;
+  struct std::tm end_new = {}, start_new = {};
+  end_new.tm_sec = end.tm_sec;
+  end_new.tm_min = end.tm_min;
+  end_new.tm_hour = end.tm_hour;
+  end_new.tm_mday = end.tm_mday;
+  end_new.tm_mon = end.tm_mon;
+  end_new.tm_year = end.tm_year;
+  start_new.tm_sec = start.tm_sec;
+  start_new.tm_min = start.tm_min;
+  start_new.tm_hour = start.tm_hour;
+  start_new.tm_mday = start.tm_mday;
+  start_new.tm_mon = start.tm_mon;
+  start_new.tm_year = start.tm_year;
   double difference =
       std::round(std::difftime(std::mktime(&end_new), std::mktime(&start_new)) /
-                 (60 * 60 * 24));
+                 (60.0 * 60.0 * 24.0));
   return static_cast<int>(difference);
 }
 

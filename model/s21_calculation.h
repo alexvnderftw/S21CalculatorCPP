@@ -33,8 +33,8 @@ class Calculation {
 
   /* Set methods */
   void SetX(double x) noexcept;
-  void SetX(const std::string x_str) noexcept;
-  void SetExpression(const std::string input) noexcept;
+  void SetX(const std::string& x_str) noexcept;
+  void SetExpression(const std::string& input) noexcept;
   void SetRadian() noexcept;
   void SetDegree() noexcept;
 
@@ -45,9 +45,9 @@ class Calculation {
   double GetX() const noexcept;
   double GetResult();
   double GetResult(double x);
-  double GetResult(const std::string input);
-  double GetResult(const std::string input, double x);
-  double GetResult(const std::string input, const std::string x);
+  double GetResult(const std::string& input);
+  double GetResult(const std::string& input, double x);
+  double GetResult(const std::string& input, const std::string& x);
 
  private:
   enum TokenType {
@@ -97,7 +97,7 @@ class Calculation {
   TrigType trig_value_ = RAD;
 
   /* Parsing variables */
-  std::string::iterator iter_;
+  std::string::const_iterator iter_;
   std::stack<TokenType> stack_{};
   TokenType prev_ = UNDEF;
 
@@ -117,14 +117,14 @@ class Calculation {
 
   void ParseToken();
   void CheckHiddenMultiplication();
-  bool CheckNumber(std::string::iterator input);
-  bool CheckX(std::string::iterator input);
-  bool CheckFunction(std::string::iterator input);
-  TokenType ParseFunction(std::string::iterator input);
-  bool CheckLeftParenthesis(std::string::iterator input);
-  bool CheckRightParenthesis(std::string::iterator input);
-  bool CheckUnarOperator(std::string::iterator input);
-  bool CheckOperator(std::string::iterator input);
+  bool CheckNumber(std::string::const_iterator input);
+  bool CheckX(std::string::const_iterator input);
+  bool CheckFunction(std::string::const_iterator input);
+  TokenType ParseFunction(std::string::const_iterator input);
+  bool CheckLeftParenthesis(std::string::const_iterator input);
+  bool CheckRightParenthesis(std::string::const_iterator input);
+  bool CheckUnarOperator(std::string::const_iterator input);
+  bool CheckOperator(std::string::const_iterator input);
 
   int GetPriority(TokenType value);
   const std::string GetString(TokenType value);
