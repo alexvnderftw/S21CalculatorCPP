@@ -3,6 +3,9 @@
 ## Introduction
 
 - The program is an implementation of calculator, graph plotter, credit/deposit calculator combined, created for educational purpose.
+
+![Menu](./misc/images/1_menu.png "Menu")
+
 - About code: it is written completely with C++ according to MVC pattern. UI was created in QT Creator, using QT Designer with stylesheets. Graph plot uses QCustomplot library, which is open-source library.
 
 - Unit tests for main logic are provided and require cmake for running. Tests use `gtest` library to perform. To create coverage report run `make gcov_report`. Make sure to install lcov/gcov. Total code coverage is 98.9%.
@@ -45,35 +48,36 @@
 
 ## Main menu
 
-![Menu](./misc/images/1_menu.png "Menu")
-
 - Options are regular calculator with graph plot, bank credit or deposit calculator.
 - To select program modules you also can use top panel in any time.
 
-## Calculator and graph plot
+![Menu](./misc/images/1_menu.png "Menu")
 
-![Calculator](./misc/images/2_calculator.png "Calculator")
+## Calculator and graph plot
 
 - Provides ordinary calculation functions and operators. Expression can have `x`, and its value can be put into the field below. To get result of calculation, as well as graph, click `=` button.
 - The programm supports Radian/Degree switching. Axis is scaled by setting limitations, scale is also can be changed by zooming and swiping on the plot using mouse.
 - If result can't be represented it puts `nan` or `infinity`, if error occured - `Error`.
 
-## Credit calculator
+![Calculator](./misc/images/2_calculator.png "Calculator")
 
-![Credit](./misc/images/3_credit.png "Credit")
+## Credit calculator
 
 - The module calculates bank credit payments by both annuity and differential methods. It provides calculated monthly payments and total values at the end of period.
 - Behaviour replicates `calcus.ru` implementation of credit calculator.
 
-## Deposit calculator
+![Credit](./misc/images/3_credit.png "Credit")
 
-![Deposit hidden](./misc/images/4_deposit_hide.png "Deposit hidden")
+## Deposit calculator
 
 - The module calculates deposit payments by period of time considering start values. It supports capitalization, tax calculation, setting minimum balance remainder, etc.
 
-![Deposit showed](./misc/images/5_deposit_show.png "Deposit showed")
+![Deposit hidden](./misc/images/4_deposit_hide.png "Deposit hidden")
 
 - In order to set up replenishments and withdrawal schedule you can open widget in the middle. To remove row from any of two tables, select it and press according `-` button.
+
+![Deposit showed](./misc/images/5_deposit_show.png "Deposit showed")
+
 - The program tries to repeat `calcus.ru` implementation of deposit calculator, though it has some inconsistencies.
 
 ## Author
