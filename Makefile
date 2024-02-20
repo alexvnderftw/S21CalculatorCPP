@@ -37,8 +37,7 @@ OPENER = open
 CMEMTEST = leaks -atExit --
 endif
 
-
-.PHONY: all s21_calculator_model.a s21_calculator_model_cov.a gcov_report test style style_fix memtest clean rebuild
+.PHONY: all install qmake_install cmake_install run uninstall dist dvi dv_rus gcov_report test style memtest memtest_app clean dist_clean libs rebuild s21_calculator_model.a s21_calculator_model_cov.a style_fix font
 
 # Main targets
 
